@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Simul
 {
-    public class TypeCompetence
+    public class SkillType
     {
-        string nom;
+        string name;
 
-        public TypeCompetence(string nom)
+        public SkillType(string name)
         {
-            this.nom = nom;
+            this.name = name;
         }
     }
 }

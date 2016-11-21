@@ -12,37 +12,37 @@ namespace Simul
 {
     public partial class Form1 : Form
     {
-        PersonneController personneController;
+        PersonController personController;
 
         public Form1()
         {
             InitializeComponent();
-            personneController = new PersonneController();
+            personController = new PersonController();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            foreach(Personne personne in personneController.personnes)
+            foreach(Person person in personController.persons)
             {
-                lstPersonnes.Items.Add(personne.nom);
+                lstPersonnes.Items.Add(person.name);
             }
         }
 
-        private void RemplirListe()
+        private void FillList()
         {
 
         }
 
-        private void AfficherPersonne()
+        private void DisplayPerson()
         {
 
         }
 
         private void lstPersonnes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Personne personne = personneController.personnes.First(x => x.nom == lstPersonnes.SelectedItem.ToString());
-            txtNom.Text = personne.nom;
-            txtMonnaie.Text = personne.monnaie.ToString();
+            Person person = personController.persons.First(x => x.name == lstPersonnes.SelectedItem.ToString());
+            txtNom.Text = person.name;
+            txtMonnaie.Text = person.money.ToString();
         }
     }
 }
