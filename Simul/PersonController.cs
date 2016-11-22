@@ -13,9 +13,9 @@ namespace Simul
         public PersonController()
         {
             persons = new List<Person>();
-            persons.Add(new Person("Keven", 10, new Dictionary<Skill, float>(), new Inventory(), 5));
-            persons.Add(new Person("Noèmie", 10, new Dictionary<Skill, float>(), new Inventory(), 5));
-            persons.Add(new Person("David", 10, new Dictionary<Skill, float>(), new Inventory(), 5));
+            persons.Add(new Person("Keven", 10, new Skillset(new Dictionary<Skill, float>()), new Inventory(), 5));
+            persons.Add(new Person("Noèmie", 10, new Skillset(new Dictionary<Skill, float>()), new Inventory(), 5));
+            persons.Add(new Person("David", 10, new Skillset(new Dictionary<Skill, float>()), new Inventory(), 5));
         }
     }
 }

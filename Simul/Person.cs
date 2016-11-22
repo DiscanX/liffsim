@@ -31,50 +31,12 @@ namespace Simul
 
         private void IncrementStrength()
         {
-            if (strength <= 10)
-            {
-                strength++;
-            }
-            else if (strength <= 50)
-            {
-                strength += 0.5f;
-            }
-            else if (strength <= 100)
-            {
-                strength += 0.25f;
-            }
-            else if (strength <= 200)
-            {
-                strength += 0.10f;
-            }
-            else
-            {
-                strength += 0.05f;
-            }
+            strength += Calculator.IncrementStrength(strength);
         }
 
         private void IncrementSkill(Skill skill)
         {
-            if (skillset.skills[skill] <= 1)
-            {
-                skillset.skills[skill]++;
-            }
-            else if (skillset.skills[skill] <= 5)
-            {
-                skillset.skills[skill] += 0.5f;
-            }
-            else if (skillset.skills[skill] <= 10)
-            {
-                skillset.skills[skill] += 0.25f;
-            }
-            else if (skillset.skills[skill] <= 20)
-            {
-                skillset.skills[skill] += 0.10f;
-            }
-            else
-            {
-                skillset.skills[skill] += 0.05f;
-            }
+            skillset.skills[skill] += Calculator.IncrementSkill(skillset.skills[skill]);
         }
     }
 }

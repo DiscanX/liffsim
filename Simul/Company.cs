@@ -20,6 +20,11 @@ namespace Simul
 
         public void Produce(Contract contract)
         {
+            if(contract.company != this)
+            {
+                throw new Exception("The contract is not linked to the company");
+            }
+
             
         }
     }

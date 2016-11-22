@@ -47,7 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculator.cs" />
     <Compile Include="Company.cs" />
+    <Compile Include="IMarket.cs" />
+    <Compile Include="JobMarket.cs" />
+    <Compile Include="JobOffer.cs" />
     <Compile Include="Skill.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="Form1.cs">
@@ -58,8 +62,8 @@
     </Compile>
     <Compile Include="Inventory.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Market.cs" />
-    <Compile Include="Offer.cs" />
+    <Compile Include="ResourceMarket.cs" />
+    <Compile Include="ResourceOffer.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="PersonController.cs" />
     <Compile Include="Program.cs" />

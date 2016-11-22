@@ -19,7 +19,7 @@ namespace Simul
             this.inventory = inventory;
         }
 
-        public void Buy(Offer offer, int quantity)
+        public void Buy(ResourceOffer offer, int quantity)
         {
             decimal totalPrice = offer.quantity * offer.unitPrice;
 
@@ -48,7 +48,7 @@ namespace Simul
             inventory.resources[offer.resource] += quantity;
         }
 
-        public void Sell(Offer offer)
+        public void Sell(ResourceOffer offer)
         {
             if(offer.owner != this)
             {
