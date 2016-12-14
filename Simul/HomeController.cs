@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Simul
 {
-    interface IMarket
+    public class HomeController
     {
 
     }

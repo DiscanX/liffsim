@@ -19,6 +19,11 @@ namespace Simul
             this.inventory = inventory;
         }
 
+        public string DisplayMoney()
+        {
+            return money.ToString();
+        }
+
         public void Buy(ResourceOffer offer, int quantity)
         {
             decimal totalPrice = offer.quantity * offer.unitPrice;
@@ -66,7 +71,18 @@ namespace Simul
             }
 
             inventory.resources[offer.resource] -= offer.quantity;
-            offer.market.offers.Add(offer);
+            offer.market.AddOffer(offer);
+        }
+
+        public void RemoveOffer(ResourceOffer offer)
+        {
+            if (offer.owner != this)
+            {
+                throw new Exception("The player can only remove offers he owns");
+            }
+
+            offer.market.DeleteOffer(offer);
+            inventory.resources[offer.resource] += offer.quantity;
         }
 
         public void GiveTo(Player receiver, Resource ressource, int quantite)

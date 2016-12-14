@@ -9,12 +9,17 @@ namespace Simul
     public class JobMarket
     {
         public string name { get; set; }
-        public List<JobOffer> offers { get; set; }
+        private List<JobOffer> offers;
 
         public JobMarket(string nom, List<JobOffer> offers)
         {
             this.name = name;
             this.offers = offers;
+        }
+
+        public void AddOffer(JobOffer offer)
+        {
+            throw new NotImplementedException();
         }
 
         public void DeleteOffer(JobOffer offer)

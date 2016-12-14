@@ -9,6 +9,7 @@ namespace Simul
     public class JobOffer
     {
         public JobMarket market { get; set; }
+        public Player owner { get; set; }
 
         public JobOffer(JobMarket market)
         {

@@ -49,16 +49,29 @@
   <ItemGroup>
     <Compile Include="Calculator.cs" />
     <Compile Include="Company.cs" />
-    <Compile Include="IMarket.cs" />
+    <Compile Include="frmCreate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCreate.Designer.cs">
+      <DependentUpon>frmCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMainMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMainMenu.Designer.cs">
+      <DependentUpon>frmMainMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameController.cs" />
+    <Compile Include="HomeController.cs" />
     <Compile Include="JobMarket.cs" />
     <Compile Include="JobOffer.cs" />
     <Compile Include="Skill.cs" />
     <Compile Include="Contract.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="frmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="frmPrincipal.Designer.cs">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Inventory.cs" />
     <Compile Include="Player.cs" />
@@ -72,8 +85,14 @@
     <Compile Include="Skillset.cs" />
     <Compile Include="SkillType.cs" />
     <Compile Include="ResourceType.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="frmCreate.resx">
+      <DependentUpon>frmCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMainMenu.resx">
+      <DependentUpon>frmMainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPrincipal.resx">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

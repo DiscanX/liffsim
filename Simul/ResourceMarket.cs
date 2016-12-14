@@ -9,12 +9,17 @@ namespace Simul
     public class ResourceMarket
     {
         public string name { get; set; }
-        public List<ResourceOffer> offers { get; set; }
+        private List<ResourceOffer> offers;
 
         public ResourceMarket(string nom, List<ResourceOffer> offers)
         {
             this.name = name;
             this.offers = offers;
+        }
+
+        public void AddOffer(ResourceOffer offer)
+        {
+            throw new NotImplementedException();
         }
 
         public void DeleteOffer(ResourceOffer offer)
