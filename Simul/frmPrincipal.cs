@@ -29,14 +29,14 @@ namespace Simul
 
         private void FillList()
         {
-            personController.FillDisplayedList(lstPersonnes);
+            personController.FillDisplayedList(lstPersons);
         }
 
         private void DisplayPerson()
         {
-            Person person = personController.GetPersonByName(lstPersonnes.SelectedItem.ToString());
-            txtNom.Text = person.name;
-            txtMonnaie.Text = person.DisplayMoney();
+            Person person = personController.GetPersonByName(lstPersons.SelectedItem.ToString());
+            txtName.Text = person.name;
+            txtMoney.Text = person.DisplayMoney();
         }
 
         private void lstPersonnes_SelectedIndexChanged(object sender, EventArgs e)
@@ -53,7 +53,12 @@ namespace Simul
         {
             if(currentPanel != newPanel)
             {
-                currentPanel.Visible = false;
+                var panelstoBeDisabled = Controls.OfType<Panel>().Where(p => p.Name != newPanel.Name);
+                foreach(Panel panel in panelstoBeDisabled)
+                {
+                    panel.Visible = false;
+                }
+
                 newPanel.Visible = true;
                 currentPanel = newPanel;
             }
@@ -67,6 +72,16 @@ namespace Simul
         private void tsmOptions_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnResourceMarket_Click(object sender, EventArgs e)
+        {
+            ChangePanelTo(panResourceMarket);
+        }
+
+        private void btnJobMarket_Click(object sender, EventArgs e)
+        {
+            ChangePanelTo(panJobMarket);
         }
     }
 }
