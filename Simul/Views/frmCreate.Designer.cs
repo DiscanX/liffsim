@@ -1,4 +1,4 @@
-﻿namespace Simul
+﻿namespace Simul.Views
 {
     partial class frmCreate
     {
@@ -79,7 +79,7 @@
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label1);
             this.Name = "frmCreate";
-            this.Text = "frmCreate";
+            this.Text = "Create";
             this.ResumeLayout(false);
             this.PerformLayout();
 

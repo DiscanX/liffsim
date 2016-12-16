@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simul
+namespace Simul.Models
 {
-    public class SkillType
+    public class ResourceType
     {
         string name;
 
-        public SkillType(string name)
+        public ResourceType(string name)
         {
             this.name = name;
         }

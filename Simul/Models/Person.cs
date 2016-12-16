@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simul
+namespace Simul.Models
 {
     public class Person : Player
     {

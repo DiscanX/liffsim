@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simul
+namespace Simul.Models
 {
     public class Skill
     {
-        public SkillType skillType { get; set; }
+        public string name { get; set; }
 
-        public Skill(SkillType skillType)
+        public Skill(string name)
         {
-            this.skillType = skillType;
+            this.name = name;
         }
     }
 }

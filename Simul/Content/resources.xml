@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <resource>
+    <name>wheat</name>
+    <type>primary</type>
+    <improvedSkill>farming</improvedSkill>
+  </resource>
+  <resource>
+    <name>iron</name>
+    <type>primary</type>
+    <improvedSkill>mining</improvedSkill>
+  </resource>
+  <resource>
+    <name>bread</name>
+    <type>tertiary</type>
+    <improvedSkill>cooking</improvedSkill>
+  </resource>
+  <resource>
+    <name>weapon</name>
+    <type>tertiary</type>
+    <improvedSkill>manufacturing</improvedSkill>
+  </resource>
+</resources>

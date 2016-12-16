@@ -1,4 +1,4 @@
-﻿namespace Simul
+﻿namespace Simul.Views
 {
     partial class frmPrincipal
     {
@@ -42,6 +42,12 @@
             this.btnHome = new System.Windows.Forms.Button();
             this.btnSearchPerson = new System.Windows.Forms.Button();
             this.panHome = new System.Windows.Forms.Panel();
+            this.txtProductivity = new System.Windows.Forms.TextBox();
+            this.txtStrength = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnNextDay = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -51,12 +57,6 @@
             this.panResourceMarket = new System.Windows.Forms.Panel();
             this.panJobMarket = new System.Windows.Forms.Panel();
             this.btnJobMarket = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtStrength = new System.Windows.Forms.TextBox();
-            this.txtProductivity = new System.Windows.Forms.TextBox();
             this.panPersonnes.SuspendLayout();
             this.panHome.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -218,6 +218,66 @@
             this.panHome.Size = new System.Drawing.Size(971, 534);
             this.panHome.TabIndex = 9;
             // 
+            // txtProductivity
+            // 
+            this.txtProductivity.BackColor = System.Drawing.SystemColors.Control;
+            this.txtProductivity.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtProductivity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProductivity.Location = new System.Drawing.Point(165, 409);
+            this.txtProductivity.Name = "txtProductivity";
+            this.txtProductivity.Size = new System.Drawing.Size(100, 19);
+            this.txtProductivity.TabIndex = 12;
+            this.txtProductivity.Text = "---";
+            // 
+            // txtStrength
+            // 
+            this.txtStrength.BackColor = System.Drawing.SystemColors.Control;
+            this.txtStrength.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtStrength.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStrength.Location = new System.Drawing.Point(165, 57);
+            this.txtStrength.Name = "txtStrength";
+            this.txtStrength.Size = new System.Drawing.Size(100, 19);
+            this.txtStrength.TabIndex = 11;
+            this.txtStrength.Text = "---";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(58, 409);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(101, 20);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Productivity : ";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(76, 56);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(83, 20);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Strength : ";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(334, 167);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Train";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(334, 494);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Work";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.SystemColors.Control;
@@ -298,66 +358,6 @@
             this.btnJobMarket.UseVisualStyleBackColor = true;
             this.btnJobMarket.Click += new System.EventHandler(this.btnJobMarket_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(334, 494);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Work";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(334, 167);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Train";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(76, 56);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(83, 20);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "Strength : ";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(58, 409);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(101, 20);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Productivity : ";
-            // 
-            // txtStrength
-            // 
-            this.txtStrength.BackColor = System.Drawing.SystemColors.Control;
-            this.txtStrength.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtStrength.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStrength.Location = new System.Drawing.Point(165, 57);
-            this.txtStrength.Name = "txtStrength";
-            this.txtStrength.Size = new System.Drawing.Size(100, 19);
-            this.txtStrength.TabIndex = 11;
-            this.txtStrength.Text = "---";
-            // 
-            // txtProductivity
-            // 
-            this.txtProductivity.BackColor = System.Drawing.SystemColors.Control;
-            this.txtProductivity.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtProductivity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProductivity.Location = new System.Drawing.Point(165, 409);
-            this.txtProductivity.Name = "txtProductivity";
-            this.txtProductivity.Size = new System.Drawing.Size(100, 19);
-            this.txtProductivity.TabIndex = 12;
-            this.txtProductivity.Text = "---";
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -378,7 +378,7 @@
             this.Name = "frmPrincipal";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Liff Sim";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panPersonnes.ResumeLayout(false);
             this.panPersonnes.PerformLayout();

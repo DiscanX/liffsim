@@ -4,34 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simul
+namespace Simul.Models
 {
-    public class ResourceMarket
+    public class JobMarket
     {
         public string name { get; set; }
-        private List<ResourceOffer> offers;
+        private List<JobOffer> offers;
 
-        public ResourceMarket(string nom, List<ResourceOffer> offers)
+        public JobMarket(string nom, List<JobOffer> offers)
         {
             this.name = name;
             this.offers = offers;
         }
 
-        public void AddOffer(ResourceOffer offer)
+        public void AddOffer(JobOffer offer)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteOffer(ResourceOffer offer)
+        public void DeleteOffer(JobOffer offer)
         {
             if (name != offer.market.name)
             {
                 throw new Exception("The market is not the good one for the offer");
             }
 
-            ResourceOffer foundOffer = offers.Find(x => x == offer);
+            JobOffer foundOffer = offers.Find(x => x == offer);
 
-            if(foundOffer == null)
+            if (foundOffer == null)
             {
                 throw new Exception("The market does not own the offer");
             }

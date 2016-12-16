@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Simul.Controllers;
+using Simul.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,17 +10,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Simul
+namespace Simul.Views
 {
     public partial class frmPrincipal : Form
     {
+        GameController gameController;
         PersonController personController;
         Panel currentPanel;
 
         public frmPrincipal()
         {
             InitializeComponent();
-            personController = new PersonController();
+
+            gameController = new GameController();
+            personController = new PersonController(gameController.persons);
+            
             currentPanel = panHome;
         }
 
@@ -29,7 +35,10 @@ namespace Simul
 
         private void FillList()
         {
-            personController.FillDisplayedList(lstPersons);
+            foreach (Person person in personController.persons)
+            {
+                lstPersons.Items.Add(person.name);
+            }
         }
 
         private void DisplayPerson()

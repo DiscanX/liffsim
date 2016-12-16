@@ -1,4 +1,4 @@
-﻿namespace Simul
+﻿namespace Simul.Views
 {
     partial class frmMainMenu
     {
@@ -48,7 +48,7 @@
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.label1);
             this.Name = "frmMainMenu";
-            this.Text = "frmMainMenu";
+            this.Text = "Main Menu";
             this.ResumeLayout(false);
             this.PerformLayout();
 
