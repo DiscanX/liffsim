@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
+using System.IO;
 
 namespace Simul.Helpers
 {
@@ -16,18 +18,17 @@ namespace Simul.Helpers
         {
             List<Resource> resources = new List<Resource>();
 
-            using (XmlReader reader = XmlReader.Create(RESOURCES_PATH))
-            {
-                while (reader.Read())
-                {
-                    if(reader.Name == "resource")
-                    {
-                        ResourceType type = new ResourceType(reader.GetAttribute("type"));
-                        Skill improvedSkill = new Skill(reader.GetAttribute("improvedSkill"));
+            StreamReader reader = new StreamReader(RESOURCES_PATH);
+            var xmlDoc = XDocument.Parse(reader.ReadToEnd());
+            reader.Close();
 
-                        resources.Add(new Resource(reader.GetAttribute("name"), type, improvedSkill));
-                    }
-                }
+            foreach(XElement resource in xmlDoc.Descendants("resources"))
+            {
+                string name = resource.Descendants("name").First().Value;
+                ResourceType type = new ResourceType(resource.Descendants("type").First().Value);
+                Skill improvedSkill = new Skill(resource.Descendants("improvedSkill").First().Value);
+
+                resources.Add(new Resource(name, type, improvedSkill));
             }
 
             return resources;
