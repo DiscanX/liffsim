@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simul.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,16 +9,21 @@ namespace Simul.Models
 {
     public class Inventory
     {
-        public Dictionary<Resource, int> resources { get; set; }
+        public Dictionary<Resource, int> stocks { get; set; }
 
         public Inventory()
         {
-            this.resources = new Dictionary<Resource, int>();
+            stocks = new Dictionary<Resource, int>();
+
+            foreach(Resource resource in ContentReader.ReadResources())
+            {
+                stocks.Add(resource, 0);
+            }
         }
 
-        public Inventory(Dictionary<Resource, int> resources)
+        public Inventory(Dictionary<Resource, int> stocks)
         {
-            this.resources = resources;
+            this.stocks = stocks;
         }
     }
 }

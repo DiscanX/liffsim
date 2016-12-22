@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panPersonnes = new System.Windows.Forms.Panel();
+            this.panPersons = new System.Windows.Forms.Panel();
             this.tllSkills = new System.Windows.Forms.TableLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -48,7 +48,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtControlledPerson = new System.Windows.Forms.TextBox();
             this.btnNextDay = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tsmSimulation = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,28 +57,28 @@
             this.panResourceMarket = new System.Windows.Forms.Panel();
             this.panJobMarket = new System.Windows.Forms.Panel();
             this.btnJobMarket = new System.Windows.Forms.Button();
-            this.panPersonnes.SuspendLayout();
+            this.panPersons.SuspendLayout();
             this.panHome.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panPersonnes
+            // panPersons
             // 
-            this.panPersonnes.Controls.Add(this.tllSkills);
-            this.panPersonnes.Controls.Add(this.label5);
-            this.panPersonnes.Controls.Add(this.label4);
-            this.panPersonnes.Controls.Add(this.tllInventory);
-            this.panPersonnes.Controls.Add(this.txtMoney);
-            this.panPersonnes.Controls.Add(this.txtName);
-            this.panPersonnes.Controls.Add(this.label3);
-            this.panPersonnes.Controls.Add(this.label2);
-            this.panPersonnes.Controls.Add(this.label1);
-            this.panPersonnes.Controls.Add(this.lstPersons);
-            this.panPersonnes.Location = new System.Drawing.Point(15, 56);
-            this.panPersonnes.Name = "panPersonnes";
-            this.panPersonnes.Size = new System.Drawing.Size(971, 534);
-            this.panPersonnes.TabIndex = 0;
-            this.panPersonnes.Visible = false;
+            this.panPersons.Controls.Add(this.tllSkills);
+            this.panPersons.Controls.Add(this.label5);
+            this.panPersons.Controls.Add(this.label4);
+            this.panPersons.Controls.Add(this.tllInventory);
+            this.panPersons.Controls.Add(this.txtMoney);
+            this.panPersons.Controls.Add(this.txtName);
+            this.panPersons.Controls.Add(this.label3);
+            this.panPersons.Controls.Add(this.label2);
+            this.panPersons.Controls.Add(this.label1);
+            this.panPersons.Controls.Add(this.lstPersons);
+            this.panPersons.Location = new System.Drawing.Point(15, 56);
+            this.panPersons.Name = "panPersons";
+            this.panPersons.Size = new System.Drawing.Size(971, 534);
+            this.panPersons.TabIndex = 0;
+            this.panPersons.Visible = false;
             // 
             // tllSkills
             // 
@@ -129,6 +129,7 @@
             this.txtMoney.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMoney.Location = new System.Drawing.Point(324, 95);
             this.txtMoney.Name = "txtMoney";
+            this.txtMoney.ReadOnly = true;
             this.txtMoney.Size = new System.Drawing.Size(100, 19);
             this.txtMoney.TabIndex = 5;
             this.txtMoney.Text = "---";
@@ -140,6 +141,7 @@
             this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtName.Location = new System.Drawing.Point(324, 56);
             this.txtName.Name = "txtName";
+            this.txtName.ReadOnly = true;
             this.txtName.Size = new System.Drawing.Size(100, 19);
             this.txtName.TabIndex = 4;
             this.txtName.Text = "---";
@@ -278,15 +280,18 @@
             this.button1.Text = "Work";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // txtControlledPerson
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(802, 27);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 19);
-            this.textBox1.TabIndex = 9;
+            this.txtControlledPerson.BackColor = System.Drawing.SystemColors.Control;
+            this.txtControlledPerson.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtControlledPerson.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtControlledPerson.Location = new System.Drawing.Point(802, 27);
+            this.txtControlledPerson.Name = "txtControlledPerson";
+            this.txtControlledPerson.ReadOnly = true;
+            this.txtControlledPerson.Size = new System.Drawing.Size(100, 19);
+            this.txtControlledPerson.TabIndex = 9;
+            this.txtControlledPerson.Text = "---";
+            this.txtControlledPerson.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnNextDay
             // 
@@ -366,22 +371,22 @@
             this.Controls.Add(this.btnJobMarket);
             this.Controls.Add(this.btnResourceMarket);
             this.Controls.Add(this.btnNextDay);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtControlledPerson);
             this.Controls.Add(this.btnSearchPerson);
             this.Controls.Add(this.btnHome);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.panPersonnes);
             this.Controls.Add(this.panHome);
             this.Controls.Add(this.panJobMarket);
             this.Controls.Add(this.panResourceMarket);
+            this.Controls.Add(this.panPersons);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmPrincipal";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Liff Sim";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.panPersonnes.ResumeLayout(false);
-            this.panPersonnes.PerformLayout();
+            this.panPersons.ResumeLayout(false);
+            this.panPersons.PerformLayout();
             this.panHome.ResumeLayout(false);
             this.panHome.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -393,7 +398,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panPersonnes;
+        private System.Windows.Forms.Panel panPersons;
         private System.Windows.Forms.ListBox lstPersons;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -407,7 +412,7 @@
         private System.Windows.Forms.Button btnHome;
         private System.Windows.Forms.Button btnSearchPerson;
         private System.Windows.Forms.Panel panHome;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtControlledPerson;
         private System.Windows.Forms.Button btnNextDay;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tsmSimulation;

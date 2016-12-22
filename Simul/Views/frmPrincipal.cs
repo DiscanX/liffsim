@@ -16,29 +16,29 @@ namespace Simul.Views
     {
         GameController gameController;
         PersonController personController;
+        CompanyController companyController;
         Panel currentPanel;
 
         public frmPrincipal()
         {
             InitializeComponent();
 
-            gameController = new GameController();
-            personController = new PersonController(gameController.persons);
-            
+            personController = new PersonController();
+            companyController = new CompanyController();
+            gameController = new GameController(personController.GetPersonByName("Keven"));
+
             currentPanel = panHome;
+            FillPanHome();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            FillList();
+            txtControlledPerson.Text = gameController.controlledPerson.name;
         }
 
-        private void FillList()
+        private void lstPersonnes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (Person person in personController.persons)
-            {
-                lstPersons.Items.Add(person.name);
-            }
+            DisplayPerson();
         }
 
         private void DisplayPerson()
@@ -48,22 +48,61 @@ namespace Simul.Views
             txtMoney.Text = person.DisplayMoney();
         }
 
-        private void lstPersonnes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DisplayPerson();
-        }
-
         private void btnHome_Click(object sender, EventArgs e)
         {
             ChangePanelTo(panHome);
+            FillPanHome();
+        }
+
+        private void btnSearchPerson_Click(object sender, EventArgs e)
+        {
+            ChangePanelTo(panPersons);
+            FillPanPersons();
+        }
+
+        private void btnResourceMarket_Click(object sender, EventArgs e)
+        {
+            ChangePanelTo(panResourceMarket);
+            FillPanResourceMaket();
+        }
+
+        private void btnJobMarket_Click(object sender, EventArgs e)
+        {
+            ChangePanelTo(panJobMarket);
+            FillPanJobMarket();
+        }
+
+        private void FillPanHome()
+        {
+            txtStrength.Text = gameController.controlledPerson.DisplayStrength();
+            txtProductivity.Text = gameController.controlledPerson.DisplayProductivity();
+        }
+
+        private void FillPanPersons()
+        {
+            lstPersons.Items.Clear();
+            foreach (Person person in personController.persons)
+            {
+                lstPersons.Items.Add(person.name);
+            }
+        }
+
+        private void FillPanResourceMaket()
+        {
+
+        }
+
+        private void FillPanJobMarket()
+        {
+
         }
 
         private void ChangePanelTo(Panel newPanel)
         {
-            if(currentPanel != newPanel)
+            if (currentPanel != newPanel)
             {
                 var panelstoBeDisabled = Controls.OfType<Panel>().Where(p => p.Name != newPanel.Name);
-                foreach(Panel panel in panelstoBeDisabled)
+                foreach (Panel panel in panelstoBeDisabled)
                 {
                     panel.Visible = false;
                 }
@@ -73,24 +112,9 @@ namespace Simul.Views
             }
         }
 
-        private void btnSearchPerson_Click(object sender, EventArgs e)
-        {
-            ChangePanelTo(panPersonnes);
-        }
-
         private void tsmOptions_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void btnResourceMarket_Click(object sender, EventArgs e)
-        {
-            ChangePanelTo(panResourceMarket);
-        }
-
-        private void btnJobMarket_Click(object sender, EventArgs e)
-        {
-            ChangePanelTo(panJobMarket);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Simul.Models;
+using Simul.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,12 @@ namespace Simul.Controllers
     {
         public List<Person> persons { get; set; }
 
-        public PersonController(List<Person> persons)
+        public PersonController()
         {
-            this.persons = persons;
+            persons = new List<Person>();
+            persons.Add(new Person("Keven", 10, new Skillset(), new Inventory(), 100, 5));
+            persons.Add(new Person("Noèmie", 10, new Skillset(), new Inventory(), 100, 5));
+            persons.Add(new Person("David", 10, new Skillset(), new Inventory(), 100, 5));
         }
 
         public Person GetPersonByName(string name)

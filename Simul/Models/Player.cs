@@ -50,7 +50,7 @@ namespace Simul.Models
                 offer.quantity -= quantity;
             }
 
-            inventory.resources[offer.resource] += quantity;
+            inventory.stocks[offer.resource] += quantity;
         }
 
         public void Sell(ResourceOffer offer)
@@ -60,17 +60,17 @@ namespace Simul.Models
                 throw new Exception("The player can only sell offers he owns");
             }
 
-            if(!inventory.resources.Any(x => x.Key == offer.resource))
+            if(!inventory.stocks.Any(x => x.Key == offer.resource))
             {
                 throw new Exception("The resource is not owned by the player");
             }
             
-            if(!inventory.resources.Any(x => x.Key == offer.resource && x.Value > offer.quantity))
+            if(!inventory.stocks.Any(x => x.Key == offer.resource && x.Value > offer.quantity))
             {
                 throw new Exception("The offer contains too much of this resource");
             }
 
-            inventory.resources[offer.resource] -= offer.quantity;
+            inventory.stocks[offer.resource] -= offer.quantity;
             offer.market.AddOffer(offer);
         }
 
@@ -82,7 +82,7 @@ namespace Simul.Models
             }
 
             offer.market.DeleteOffer(offer);
-            inventory.resources[offer.resource] += offer.quantity;
+            inventory.stocks[offer.resource] += offer.quantity;
         }
 
         public void GiveTo(Player receiver, Resource ressource, int quantite)
