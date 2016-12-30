@@ -56,12 +56,12 @@ namespace Simul.Models
 
         private void IncrementStrength()
         {
-            strength += Calculator.IncrementStrength(strength);
+            strength = Calculator.IncrementStrength(strength);
         }
 
         private void IncrementSkill(Skill skill)
         {
-            skillset.skills[skill] += Calculator.IncrementSkill(skillset.skills[skill]);
+            skillset.skills[skill] = Calculator.IncrementSkill(skillset.skills[skill]);
         }
     }
 }

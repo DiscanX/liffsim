@@ -17,6 +17,7 @@ namespace Simul.Views
         GameController gameController;
         PersonController personController;
         CompanyController companyController;
+        JobMarketController jobMarketController;
         Panel currentPanel;
 
         public frmPrincipal()
@@ -26,9 +27,10 @@ namespace Simul.Views
             personController = new PersonController();
             companyController = new CompanyController();
             gameController = new GameController(personController.GetPersonByName("Keven"));
+            jobMarketController = new JobMarketController();
 
             currentPanel = panHome;
-            FillPanHome();
+            ReloadPanHome();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -51,34 +53,36 @@ namespace Simul.Views
         private void btnHome_Click(object sender, EventArgs e)
         {
             ChangePanelTo(panHome);
-            FillPanHome();
+            ReloadPanHome();
         }
 
         private void btnSearchPerson_Click(object sender, EventArgs e)
         {
             ChangePanelTo(panPersons);
-            FillPanPersons();
+            ReloadPanPersons();
         }
 
         private void btnResourceMarket_Click(object sender, EventArgs e)
         {
             ChangePanelTo(panResourceMarket);
-            FillPanResourceMaket();
+            ReloadPanResourceMaket();
         }
 
         private void btnJobMarket_Click(object sender, EventArgs e)
         {
             ChangePanelTo(panJobMarket);
-            FillPanJobMarket();
+            ReloadPanJobMarket();
         }
 
-        private void FillPanHome()
+        private void ReloadPanHome()
         {
             txtStrength.Text = gameController.controlledPerson.DisplayStrength();
             txtProductivity.Text = gameController.controlledPerson.DisplayProductivity();
+
+            btnWork.Enabled = (gameController.controlledPerson.contract != null);
         }
 
-        private void FillPanPersons()
+        private void ReloadPanPersons()
         {
             lstPersons.Items.Clear();
             foreach (Person person in personController.persons)
@@ -87,12 +91,12 @@ namespace Simul.Views
             }
         }
 
-        private void FillPanResourceMaket()
+        private void ReloadPanResourceMaket()
         {
 
         }
 
-        private void FillPanJobMarket()
+        private void ReloadPanJobMarket()
         {
 
         }
@@ -115,6 +119,23 @@ namespace Simul.Views
         private void tsmOptions_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnNextDay_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnTrain_Click(object sender, EventArgs e)
+        {
+            gameController.controlledPerson.Train();
+            ReloadPanHome();
+        }
+
+        private void btnWork_Click(object sender, EventArgs e)
+        {
+            gameController.controlledPerson.Work();
+            ReloadPanHome();
         }
     }
 }

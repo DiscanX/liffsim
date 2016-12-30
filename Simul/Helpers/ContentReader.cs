@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.IO;
+using System.ComponentModel;
 
 namespace Simul.Helpers
 {
@@ -25,13 +26,39 @@ namespace Simul.Helpers
                 var xmlDoc = XDocument.Parse(reader.ReadToEnd());
                 reader.Close();
 
-                foreach (XElement resource in xmlDoc.Descendants("resources"))
+                foreach (XElement resource in xmlDoc.Elements("resources").Nodes())
                 {
-                    string name = resource.Descendants("name").First().Value;
-                    ResourceType type = new ResourceType(resource.Descendants("type").First().Value);
-                    Skill improvedSkill = new Skill(resource.Descendants("improvedSkill").First().Value);
+                    string name = resource.Element("name").Value;
+                    string type = resource.Element("type").Value;
+                    Skill improvedSkill = new Skill(resource.Element("improvedSkill").Value);
+                    int productionCost = int.Parse(resource.Element("productionCost").Value);
 
-                    resources.Add(new Resource(name, type, improvedSkill));
+                    //Possible because we are certain that primary resources are red before any 2nd or 3rd level resources
+                    Dictionary<Resource, int> requirements = new Dictionary<Resource, int>();
+                    foreach(XElement requirement in resource.Elements("requirements").Nodes())
+                    {
+                        Resource requiredResource = resources.First(x => x.name == requirement.Element("name").Value);
+                        int requiredQuantity = int.Parse(requirement.Element("quantity").Value);
+                        requirements.Add(requiredResource, requiredQuantity);
+                    }
+
+                    Resource createdResource;
+                    switch(type)
+                    {
+                        case "primary":
+                            createdResource = new PrimaryResource(name, improvedSkill, productionCost);
+                            break;
+                        case "secondary":
+                            createdResource = new SecondaryResource(name, improvedSkill, productionCost, requirements);
+                            break;
+                        case "tertiary":
+                            createdResource = new TertiaryResource(name, improvedSkill, productionCost, requirements);
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException();
+                    }
+
+                    resources.Add(createdResource);
                 }
             }
 

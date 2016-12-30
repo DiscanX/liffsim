@@ -59,5 +59,10 @@ namespace Simul.Models
 
             return strength;
         }
+
+        public static float IncrementProductionProgress(Resource resource)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

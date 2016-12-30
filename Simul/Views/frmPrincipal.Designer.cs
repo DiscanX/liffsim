@@ -46,8 +46,8 @@
             this.txtStrength = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnTrain = new System.Windows.Forms.Button();
+            this.btnWork = new System.Windows.Forms.Button();
             this.txtControlledPerson = new System.Windows.Forms.TextBox();
             this.btnNextDay = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -56,10 +56,12 @@
             this.btnResourceMarket = new System.Windows.Forms.Button();
             this.panResourceMarket = new System.Windows.Forms.Panel();
             this.panJobMarket = new System.Windows.Forms.Panel();
+            this.txtJobMarketName = new System.Windows.Forms.TextBox();
             this.btnJobMarket = new System.Windows.Forms.Button();
             this.panPersons.SuspendLayout();
             this.panHome.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.panJobMarket.SuspendLayout();
             this.SuspendLayout();
             // 
             // panPersons
@@ -213,8 +215,8 @@
             this.panHome.Controls.Add(this.txtStrength);
             this.panHome.Controls.Add(this.label6);
             this.panHome.Controls.Add(this.label7);
-            this.panHome.Controls.Add(this.button2);
-            this.panHome.Controls.Add(this.button1);
+            this.panHome.Controls.Add(this.btnTrain);
+            this.panHome.Controls.Add(this.btnWork);
             this.panHome.Location = new System.Drawing.Point(12, 56);
             this.panHome.Name = "panHome";
             this.panHome.Size = new System.Drawing.Size(971, 534);
@@ -262,23 +264,25 @@
             this.label7.TabIndex = 9;
             this.label7.Text = "Strength : ";
             // 
-            // button2
+            // btnTrain
             // 
-            this.button2.Location = new System.Drawing.Point(334, 167);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Train";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnTrain.Location = new System.Drawing.Point(334, 167);
+            this.btnTrain.Name = "btnTrain";
+            this.btnTrain.Size = new System.Drawing.Size(75, 23);
+            this.btnTrain.TabIndex = 1;
+            this.btnTrain.Text = "Train";
+            this.btnTrain.UseVisualStyleBackColor = true;
+            this.btnTrain.Click += new System.EventHandler(this.btnTrain_Click);
             // 
-            // button1
+            // btnWork
             // 
-            this.button1.Location = new System.Drawing.Point(334, 494);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Work";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnWork.Location = new System.Drawing.Point(334, 494);
+            this.btnWork.Name = "btnWork";
+            this.btnWork.Size = new System.Drawing.Size(75, 23);
+            this.btnWork.TabIndex = 0;
+            this.btnWork.Text = "Work";
+            this.btnWork.UseVisualStyleBackColor = true;
+            this.btnWork.Click += new System.EventHandler(this.btnWork_Click);
             // 
             // txtControlledPerson
             // 
@@ -301,6 +305,7 @@
             this.btnNextDay.TabIndex = 10;
             this.btnNextDay.Text = "Next day >>";
             this.btnNextDay.UseVisualStyleBackColor = true;
+            this.btnNextDay.Click += new System.EventHandler(this.btnNextDay_Click);
             // 
             // menuStrip1
             // 
@@ -347,11 +352,23 @@
             // 
             // panJobMarket
             // 
+            this.panJobMarket.Controls.Add(this.txtJobMarketName);
             this.panJobMarket.Location = new System.Drawing.Point(12, 56);
             this.panJobMarket.Name = "panJobMarket";
             this.panJobMarket.Size = new System.Drawing.Size(974, 534);
             this.panJobMarket.TabIndex = 14;
             this.panJobMarket.Visible = false;
+            // 
+            // txtJobMarketName
+            // 
+            this.txtJobMarketName.BackColor = System.Drawing.SystemColors.Control;
+            this.txtJobMarketName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtJobMarketName.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtJobMarketName.Location = new System.Drawing.Point(6, 4);
+            this.txtJobMarketName.Name = "txtJobMarketName";
+            this.txtJobMarketName.Size = new System.Drawing.Size(100, 28);
+            this.txtJobMarketName.TabIndex = 0;
+            this.txtJobMarketName.Text = "---";
             // 
             // btnJobMarket
             // 
@@ -391,6 +408,8 @@
             this.panHome.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.panJobMarket.ResumeLayout(false);
+            this.panJobMarket.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -421,12 +440,13 @@
         private System.Windows.Forms.Panel panResourceMarket;
         private System.Windows.Forms.Button btnJobMarket;
         private System.Windows.Forms.Panel panJobMarket;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnTrain;
+        private System.Windows.Forms.Button btnWork;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtProductivity;
         private System.Windows.Forms.TextBox txtStrength;
+        private System.Windows.Forms.TextBox txtJobMarketName;
     }
 }
 

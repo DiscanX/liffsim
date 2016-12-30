@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Simul.Models
 {
-    public class Resource
+    public abstract class Resource
     {
         public string name { get; set; }
-        public ResourceType resourceType { get; set; }
         public Skill improvedSkill { get; set; }
+        public int productionCost { get; set; }
 
-        public Resource(string name, ResourceType resourceType, Skill improvedSkill)
+        public Resource(string name, Skill improvedSkill, int productionCost)
         {
             this.name = name;
-            this.resourceType = resourceType;
             this.improvedSkill = improvedSkill;
+            this.productionCost = productionCost;
         }
     }
 }

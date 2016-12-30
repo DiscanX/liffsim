@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace Simul.Models
 {
-    public class ResourceType
+    public class PrimaryResource : Resource
     {
-        string name;
-
-        public ResourceType(string name)
+        public PrimaryResource(string name, Skill improvedSkill, int productionCost) : base(name, improvedSkill, productionCost)
         {
-            this.name = name;
+
         }
     }
 }
