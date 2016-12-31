@@ -2,29 +2,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Linq;
-using System.IO;
 using System.ComponentModel;
+using Simul.Properties;
 
 namespace Simul.Helpers
 {
     public static class ContentReader
     {
-        private const string RESOURCES_PATH = "Content/resources.xml";
-
         private static List<Resource> resources = new List<Resource>();
         private static List<Skill> skills = new List<Skill>();
 
-        public static List<Resource> ReadResources()
+        public static List<Resource> GetResources()
         {
             if (resources.Count == 0)
             {
-                StreamReader reader = new StreamReader(RESOURCES_PATH);
-                var xmlDoc = XDocument.Parse(reader.ReadToEnd());
-                reader.Close();
+                var xmlDoc = XDocument.Parse(Resources.resources);
 
                 foreach (XElement resource in xmlDoc.Elements("resources").Nodes())
                 {
@@ -65,13 +58,13 @@ namespace Simul.Helpers
             return resources;
         }
 
-        public static List<Skill> ReadSkills()
+        public static List<Skill> GetSkills()
         {
             if (skills.Count == 0)
             {
                 if (resources.Count == 0)
                 {
-                    ReadResources();
+                    GetResources();
                 }
 
                 foreach (Resource resource in resources)

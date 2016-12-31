@@ -16,7 +16,7 @@ namespace Simul.Controllers
         {
             companies = new List<Company>();
             //Where ReadResources()[0] is wheat (see resources.xml)
-            companies.Add(new Company("Sample Company", ContentReader.ReadResources()[0], 100, new Inventory()));
+            companies.Add(new Company("Sample Company", ContentReader.GetResources()[0], 100, new Inventory()));
         }
     }
 }

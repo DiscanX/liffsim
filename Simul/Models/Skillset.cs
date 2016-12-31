@@ -15,7 +15,7 @@ namespace Simul.Models
         {
             skills = new Dictionary<Skill, float>();
 
-            foreach(Skill skill in ContentReader.ReadSkills())
+            foreach(Skill skill in ContentReader.GetSkills())
             {
                 skills.Add(skill, 1);
             }

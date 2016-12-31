@@ -18,5 +18,11 @@ namespace Simul.Models
             this.improvedSkill = improvedSkill;
             this.productionCost = productionCost;
         }
+
+        public virtual Dictionary<Resource, int> GetRequirements()
+        {
+            //AKA no requirements
+            return null;
+        }
     }
 }

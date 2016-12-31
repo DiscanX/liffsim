@@ -15,7 +15,7 @@ namespace Simul.Models
         {
             stocks = new Dictionary<Resource, int>();
 
-            foreach(Resource resource in ContentReader.ReadResources())
+            foreach(Resource resource in ContentReader.GetResources())
             {
                 stocks.Add(resource, 0);
             }

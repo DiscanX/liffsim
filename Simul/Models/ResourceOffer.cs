@@ -22,6 +22,5 @@ namespace Simul.Models
             this.quantity = quantity;
             this.unitPrice = unitPrice;
         }
-
     }
 }

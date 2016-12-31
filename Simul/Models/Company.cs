@@ -15,7 +15,7 @@ namespace Simul.Models
         public Company(string name, Resource producedResource, decimal money, Inventory inventory) : base(name, money, inventory)
         {
             this.producedResource = producedResource;
-            this.contracts = new List<Contract>();
+            contracts = new List<Contract>();
         }
 
         public void Produce(Contract contract)
@@ -25,7 +25,42 @@ namespace Simul.Models
                 throw new Exception("The contract is not linked to the company");
             }
 
-            
+            float nbrProducedUnits = Calculator.CalculateProductionProgress(contract) / producedResource.productionCost;
+
+            foreach (KeyValuePair<Resource, int> requirement in producedResource.GetRequirements())
+            {
+                int nbrResourcesRequired = (int)Math.Ceiling(nbrProducedUnits * requirement.Value);
+                int stockAfterProduction = inventory.stocks[requirement.Key] - nbrResourcesRequired;
+
+                if(stockAfterProduction < 0)
+                {
+                    throw new Exception("Can't produce resource : one of the required resource stock would go below 0");
+                }
+
+                inventory.stocks[requirement.Key] = stockAfterProduction;
+            }
+
+            progress += nbrProducedUnits;
+
+            if(progress >= 1)
+            {
+                inventory.stocks[producedResource] += (int)progress;
+                progress %= 1;
+            }
+
+            PayEmployee(contract);
+        }
+        
+        private void PayEmployee(Contract contract)
+        {
+            decimal moneyAfterPay = money - contract.salary;
+
+            if(moneyAfterPay < 0)
+            {
+                throw new Exception("The company doesn't have enough money to pay the employee");
+            }
+
+            contract.person.money += moneyAfterPay;
         }
     }
 }

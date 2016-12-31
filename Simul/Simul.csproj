@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\JobMarketController.cs" />
+    <Compile Include="Controllers\ResourceMarketController.cs" />
     <Compile Include="Helpers\ContentReader.cs" />
     <Compile Include="Models\Calculator.cs" />
     <Compile Include="Models\Company.cs" />
@@ -110,7 +111,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -126,10 +129,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\resources.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Resources\bread.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iron.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\weapon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wheat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\resources.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

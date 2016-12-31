@@ -8,7 +8,7 @@ namespace Simul.Models
 {
     public static class Calculator
     {
-        public static float IncrementSkill(float skill)
+        public static float CalculateSkillIncrement(float skill)
         {
             if (skill <= 1)
             {
@@ -34,7 +34,7 @@ namespace Simul.Models
             return skill;
         }
 
-        public static float IncrementStrength(float strength)
+        public static float CalculateStrengthIncrement(float strength)
         {
             if (strength <= 10)
             {
@@ -60,9 +60,10 @@ namespace Simul.Models
             return strength;
         }
 
-        public static float IncrementProductionProgress(Resource resource)
+        public static float CalculateProductionProgress(Contract contract)
         {
-            throw new NotImplementedException();
+            KeyValuePair<Skill, float> skill = contract.person.skillset.skills.First(x => x.Key == contract.company.producedResource.improvedSkill);
+            return skill.Value;
         }
     }
 }

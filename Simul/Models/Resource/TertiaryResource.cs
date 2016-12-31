@@ -14,5 +14,10 @@ namespace Simul.Models
         {
             this.requirements = requirements;
         }
+
+        public override Dictionary<Resource, int> GetRequirements()
+        {
+            return requirements;
+        }
     }
 }
