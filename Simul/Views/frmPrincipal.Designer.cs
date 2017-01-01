@@ -55,15 +55,16 @@
             this.tsmOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.btnResourceMarket = new System.Windows.Forms.Button();
             this.panResourceMarket = new System.Windows.Forms.Panel();
+            this.cboResourceMarkets = new System.Windows.Forms.ComboBox();
             this.dlvResources = new BrightIdeasSoftware.DataListView();
             this.olvImgResource = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvSeller = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvQuantity = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvPrice = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvBuy = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.txtJobMarketName = new System.Windows.Forms.TextBox();
             this.panJobMarket = new System.Windows.Forms.Panel();
             this.btnJobMarket = new System.Windows.Forms.Button();
+            this.txtCurrentDay = new System.Windows.Forms.TextBox();
             this.panPersons.SuspendLayout();
             this.panHome.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -353,13 +354,23 @@
             // 
             // panResourceMarket
             // 
+            this.panResourceMarket.Controls.Add(this.cboResourceMarkets);
             this.panResourceMarket.Controls.Add(this.dlvResources);
-            this.panResourceMarket.Controls.Add(this.txtJobMarketName);
             this.panResourceMarket.Location = new System.Drawing.Point(12, 56);
             this.panResourceMarket.Name = "panResourceMarket";
             this.panResourceMarket.Size = new System.Drawing.Size(974, 534);
             this.panResourceMarket.TabIndex = 13;
             this.panResourceMarket.Visible = false;
+            // 
+            // cboResourceMarkets
+            // 
+            this.cboResourceMarkets.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboResourceMarkets.FormattingEnabled = true;
+            this.cboResourceMarkets.Location = new System.Drawing.Point(6, 16);
+            this.cboResourceMarkets.Name = "cboResourceMarkets";
+            this.cboResourceMarkets.Size = new System.Drawing.Size(393, 37);
+            this.cboResourceMarkets.TabIndex = 4;
+            this.cboResourceMarkets.SelectedIndexChanged += new System.EventHandler(this.cboResourceMarkets_SelectedIndexChanged);
             // 
             // dlvResources
             // 
@@ -368,6 +379,8 @@
             this.dlvResources.AllColumns.Add(this.olvQuantity);
             this.dlvResources.AllColumns.Add(this.olvPrice);
             this.dlvResources.AllColumns.Add(this.olvBuy);
+            this.dlvResources.AlternateRowBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dlvResources.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClick;
             this.dlvResources.CellEditUseWholeCell = false;
             this.dlvResources.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvImgResource,
@@ -379,9 +392,10 @@
             this.dlvResources.DataSource = null;
             this.dlvResources.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dlvResources.FullRowSelect = true;
-            this.dlvResources.Location = new System.Drawing.Point(6, 82);
+            this.dlvResources.GridLines = true;
+            this.dlvResources.Location = new System.Drawing.Point(6, 59);
             this.dlvResources.Name = "dlvResources";
-            this.dlvResources.Size = new System.Drawing.Size(649, 600);
+            this.dlvResources.Size = new System.Drawing.Size(582, 472);
             this.dlvResources.TabIndex = 3;
             this.dlvResources.UseAlternatingBackColors = true;
             this.dlvResources.UseCompatibleStateImageBehavior = false;
@@ -391,6 +405,7 @@
             // 
             this.olvImgResource.FillsFreeSpace = true;
             this.olvImgResource.Groupable = false;
+            this.olvImgResource.IsEditable = false;
             this.olvImgResource.Text = "Resource";
             this.olvImgResource.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvImgResource.Width = 97;
@@ -400,6 +415,7 @@
             this.olvSeller.AspectName = "owner.name";
             this.olvSeller.FillsFreeSpace = true;
             this.olvSeller.Groupable = false;
+            this.olvSeller.IsEditable = false;
             this.olvSeller.Text = "Seller";
             this.olvSeller.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -408,6 +424,7 @@
             this.olvQuantity.AspectName = "quantity";
             this.olvQuantity.FillsFreeSpace = true;
             this.olvQuantity.Groupable = false;
+            this.olvQuantity.IsEditable = false;
             this.olvQuantity.Text = "Quantity";
             this.olvQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvQuantity.Width = 90;
@@ -415,31 +432,23 @@
             // olvPrice
             // 
             this.olvPrice.AspectName = "unitPrice";
+            this.olvPrice.AspectToStringFormat = "{0:C}";
             this.olvPrice.FillsFreeSpace = true;
             this.olvPrice.Groupable = false;
+            this.olvPrice.IsEditable = false;
             this.olvPrice.Text = "Price per unit";
             this.olvPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvPrice.Width = 120;
             // 
             // olvBuy
             // 
+            this.olvBuy.AspectName = "unitPrice";
+            this.olvBuy.AspectToStringFormat = "Buy";
             this.olvBuy.FillsFreeSpace = true;
             this.olvBuy.Groupable = false;
             this.olvBuy.IsButton = true;
-            this.olvBuy.Text = "Buy";
+            this.olvBuy.Text = "";
             this.olvBuy.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtJobMarketName
-            // 
-            this.txtJobMarketName.BackColor = System.Drawing.SystemColors.Control;
-            this.txtJobMarketName.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtJobMarketName.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtJobMarketName.Location = new System.Drawing.Point(6, 7);
-            this.txtJobMarketName.Name = "txtJobMarketName";
-            this.txtJobMarketName.ReadOnly = true;
-            this.txtJobMarketName.Size = new System.Drawing.Size(100, 28);
-            this.txtJobMarketName.TabIndex = 2;
-            this.txtJobMarketName.Text = "---";
             // 
             // panJobMarket
             // 
@@ -459,11 +468,25 @@
             this.btnJobMarket.UseVisualStyleBackColor = true;
             this.btnJobMarket.Click += new System.EventHandler(this.btnJobMarket_Click);
             // 
+            // txtCurrentDay
+            // 
+            this.txtCurrentDay.BackColor = System.Drawing.SystemColors.Control;
+            this.txtCurrentDay.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCurrentDay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCurrentDay.Location = new System.Drawing.Point(696, 27);
+            this.txtCurrentDay.Name = "txtCurrentDay";
+            this.txtCurrentDay.ReadOnly = true;
+            this.txtCurrentDay.Size = new System.Drawing.Size(100, 19);
+            this.txtCurrentDay.TabIndex = 15;
+            this.txtCurrentDay.Text = "---";
+            this.txtCurrentDay.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(995, 602);
+            this.Controls.Add(this.txtCurrentDay);
             this.Controls.Add(this.btnJobMarket);
             this.Controls.Add(this.btnResourceMarket);
             this.Controls.Add(this.btnNextDay);
@@ -471,10 +494,10 @@
             this.Controls.Add(this.btnSearchPerson);
             this.Controls.Add(this.btnHome);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.panResourceMarket);
-            this.Controls.Add(this.panPersons);
             this.Controls.Add(this.panHome);
             this.Controls.Add(this.panJobMarket);
+            this.Controls.Add(this.panResourceMarket);
+            this.Controls.Add(this.panPersons);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmPrincipal";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -488,7 +511,6 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panResourceMarket.ResumeLayout(false);
-            this.panResourceMarket.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dlvResources)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -532,7 +554,8 @@
         private BrightIdeasSoftware.OLVColumn olvQuantity;
         private BrightIdeasSoftware.OLVColumn olvPrice;
         private BrightIdeasSoftware.OLVColumn olvBuy;
-        private System.Windows.Forms.TextBox txtJobMarketName;
+        private System.Windows.Forms.ComboBox cboResourceMarkets;
+        private System.Windows.Forms.TextBox txtCurrentDay;
     }
 }
 

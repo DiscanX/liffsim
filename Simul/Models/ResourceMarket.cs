@@ -9,9 +9,9 @@ namespace Simul.Models
     public class ResourceMarket
     {
         public string name { get; set; }
-        private List<ResourceOffer> offers;
+        public List<ResourceOffer> offers { get; set; }
 
-        public ResourceMarket(string nom, List<ResourceOffer> offers)
+        public ResourceMarket(string name, List<ResourceOffer> offers)
         {
             this.name = name;
             this.offers = offers;
@@ -19,7 +19,12 @@ namespace Simul.Models
 
         public void AddOffer(ResourceOffer offer)
         {
-            throw new NotImplementedException();
+            if (name != offer.market.name)
+            {
+                throw new Exception("The market is not the good one for the offer");
+            }
+
+            offers.Add(offer);
         }
 
         public void DeleteOffer(ResourceOffer offer)

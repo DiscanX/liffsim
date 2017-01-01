@@ -9,26 +9,33 @@ namespace Simul.Models
     public abstract class Player
     {
         public string name { get; set; }
-        public decimal money { get; set; }
         public Inventory inventory { get; set; }
+        public bool isHumanControlled { get; set; }
+        private decimal money;
+        public decimal Money
+        {
+            get { return money; }
+            set { if (money < 0) { throw new Exception("Money can't go below zero"); } else { money = value; } }
+        }
 
-        public Player(string name, decimal money, Inventory inventory)
+        public Player(string name, decimal money, Inventory inventory, bool isHumanControlled = false)
         {
             this.name = name;
-            this.money = money;
+            this.Money = money;
             this.inventory = inventory;
+            this.isHumanControlled = isHumanControlled;
         }
 
         public string DisplayMoney()
         {
-            return money.ToString();
+            return Money.ToString();
         }
 
         public void Buy(ResourceOffer offer, int quantity)
         {
             decimal totalPrice = offer.quantity * offer.unitPrice;
 
-            if (totalPrice > money)
+            if (totalPrice > Money)
             {
                 throw new Exception("The purchase is greater than the currency owned by the player");
             }
@@ -38,8 +45,8 @@ namespace Simul.Models
                 throw new Exception("The quantity requested is greater than the quantity offered");
             }
 
-            offer.owner.money += totalPrice;
-            money -= totalPrice;
+            offer.owner.Money += totalPrice;
+            Money -= totalPrice;
 
             if(quantity == offer.quantity)
             {

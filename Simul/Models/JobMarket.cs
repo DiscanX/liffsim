@@ -9,9 +9,9 @@ namespace Simul.Models
     public class JobMarket
     {
         public string name { get; set; }
-        private List<JobOffer> offers;
+        public List<JobOffer> offers { get; set; }
 
-        public JobMarket(string nom, List<JobOffer> offers)
+        public JobMarket(string name, List<JobOffer> offers)
         {
             this.name = name;
             this.offers = offers;

@@ -15,6 +15,7 @@ namespace Simul.Controllers
         {
             markets = new List<ResourceMarket>();
             markets.Add(new ResourceMarket("Main resource market", new List<ResourceOffer>()));
+            markets.Add(new ResourceMarket("Secondary resource market", new List<ResourceOffer>()));
         }
     }
 }

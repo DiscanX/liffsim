@@ -12,7 +12,7 @@ namespace Simul.Models
         public float progress { get; set; }
         public List<Contract> contracts { get; set; }
 
-        public Company(string name, Resource producedResource, decimal money, Inventory inventory) : base(name, money, inventory)
+        public Company(string name, Resource producedResource, decimal money, Inventory inventory, bool isHumanControlled = false) : base(name, money, inventory, isHumanControlled)
         {
             this.producedResource = producedResource;
             contracts = new List<Contract>();
@@ -53,14 +53,14 @@ namespace Simul.Models
         
         private void PayEmployee(Contract contract)
         {
-            decimal moneyAfterPay = money - contract.salary;
+            decimal moneyAfterPay = Money - contract.salary;
 
             if(moneyAfterPay < 0)
             {
                 throw new Exception("The company doesn't have enough money to pay the employee");
             }
 
-            contract.person.money += moneyAfterPay;
+            contract.person.Money += moneyAfterPay;
         }
     }
 }
