@@ -26,11 +26,6 @@ namespace Simul.Models
             this.isHumanControlled = isHumanControlled;
         }
 
-        public string DisplayMoney()
-        {
-            return Money.ToString();
-        }
-
         public void Buy(ResourceOffer offer, int quantity)
         {
             decimal totalPrice = offer.quantity * offer.unitPrice;

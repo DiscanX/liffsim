@@ -8,8 +8,6 @@ namespace Simul.Models
 {
     public class Person : Player
     {
-        private const int MAX_ENERGY = 100;
-
         public float strength { get; set; }
         public Contract contract { get; set; }
         public Skillset skillset { get; set; }
@@ -22,7 +20,7 @@ namespace Simul.Models
             set
             {
                 if (value < 0) { throw new Exception("Energy can't go below zero"); }
-                energy = value > MAX_ENERGY ? MAX_ENERGY : value;
+                energy = value > Constants.MAX_ENERGY ? Constants.MAX_ENERGY : value;
             }
         }
 
@@ -31,11 +29,6 @@ namespace Simul.Models
             this.skillset = skillset;
             this.strength = strength;
             Energy = energy;
-        }
-
-        public string DisplayStrength()
-        {
-            return strength.ToString();
         }
 
         public string DisplayProductivity()
@@ -71,6 +64,7 @@ namespace Simul.Models
             }
 
             IncrementStrength();
+            Energy -= 5;
             alreadyTrained = true;
         }
 

@@ -25,6 +25,7 @@ namespace Simul.Controllers
             {
                 foreach (Person person in persons)
                 {
+                    person.Energy += 5;
                     person.alreadyTrained = false;
                     person.alreadyWorked = false;
                 }

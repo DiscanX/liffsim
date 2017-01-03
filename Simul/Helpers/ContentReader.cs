@@ -5,6 +5,8 @@ using System.Linq;
 using System.Xml.Linq;
 using System.ComponentModel;
 using Simul.Properties;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace Simul.Helpers
 {
@@ -12,6 +14,7 @@ namespace Simul.Helpers
     {
         private static List<Resource> resources = new List<Resource>();
         private static List<Skill> skills = new List<Skill>();
+        private static ImageList resourcesImages;
 
         public static List<Resource> GetResources()
         {
@@ -38,13 +41,13 @@ namespace Simul.Helpers
                     Resource createdResource;
                     switch(type)
                     {
-                        case "primary":
+                        case "Primary":
                             createdResource = new PrimaryResource(name, improvedSkill, productionCost);
                             break;
-                        case "secondary":
+                        case "Secondary":
                             createdResource = new SecondaryResource(name, improvedSkill, productionCost, requirements);
                             break;
-                        case "tertiary":
+                        case "Tertiary":
                             createdResource = new TertiaryResource(name, improvedSkill, productionCost, requirements);
                             break;
                         default:
@@ -74,6 +77,22 @@ namespace Simul.Helpers
             }
 
             return skills;
+        }
+
+        public static ImageList GetResourcesImages()
+        {
+            if(resourcesImages == null)
+            {
+                resourcesImages = new ImageList();
+                resourcesImages.Images.Add("wheat", Resources.wheat);
+                resourcesImages.Images.Add("iron", Resources.iron);
+                resourcesImages.Images.Add("bread", Resources.bread);
+                resourcesImages.Images.Add("weapon", Resources.weapon);
+                resourcesImages.ImageSize = new Size(50, 50);
+                resourcesImages.ColorDepth = ColorDepth.Depth24Bit;
+            }
+
+            return resourcesImages;
         }
     }
 }

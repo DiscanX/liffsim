@@ -19,7 +19,12 @@ namespace Simul.Models
 
         public void AddOffer(JobOffer offer)
         {
-            throw new NotImplementedException();
+            if (name != offer.market.name)
+            {
+                throw new Exception("The market is not the good one for the offer");
+            }
+
+            offers.Add(offer);
         }
 
         public void DeleteOffer(JobOffer offer)
