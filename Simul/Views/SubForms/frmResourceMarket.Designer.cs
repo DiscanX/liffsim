@@ -56,8 +56,6 @@
             this.dlvResources.AllColumns.Add(this.olvResourceMarketPrice);
             this.dlvResources.AllColumns.Add(this.olvResourceMarketBuy);
             this.dlvResources.AlternateRowBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dlvResources.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClick;
-            this.dlvResources.CellEditUseWholeCell = false;
             this.dlvResources.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvResourceMarketImg,
             this.olvResourceMarketSeller,
@@ -117,11 +115,12 @@
             // 
             // olvResourceMarketBuy
             // 
-            this.olvResourceMarketBuy.AspectName = "unitPrice";
-            this.olvResourceMarketBuy.AspectToStringFormat = "Buy";
+            this.olvResourceMarketBuy.AspectName = "";
+            this.olvResourceMarketBuy.AspectToStringFormat = "";
             this.olvResourceMarketBuy.FillsFreeSpace = true;
             this.olvResourceMarketBuy.Groupable = false;
             this.olvResourceMarketBuy.IsButton = true;
+            this.olvResourceMarketBuy.IsEditable = false;
             this.olvResourceMarketBuy.Text = "";
             this.olvResourceMarketBuy.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 

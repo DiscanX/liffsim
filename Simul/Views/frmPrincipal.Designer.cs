@@ -39,6 +39,7 @@
             this.panMain = new System.Windows.Forms.Panel();
             this.btnJobMarket = new System.Windows.Forms.Button();
             this.txtCurrentDay = new System.Windows.Forms.TextBox();
+            this.txtMoney = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,7 +68,7 @@
             this.txtEnergy.BackColor = System.Drawing.SystemColors.Control;
             this.txtEnergy.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtEnergy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEnergy.Location = new System.Drawing.Point(621, 27);
+            this.txtEnergy.Location = new System.Drawing.Point(440, 27);
             this.txtEnergy.Multiline = true;
             this.txtEnergy.Name = "txtEnergy";
             this.txtEnergy.ReadOnly = true;
@@ -153,11 +154,26 @@
             this.txtCurrentDay.Text = "---";
             this.txtCurrentDay.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // txtMoney
+            // 
+            this.txtMoney.BackColor = System.Drawing.SystemColors.Control;
+            this.txtMoney.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtMoney.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMoney.Location = new System.Drawing.Point(621, 27);
+            this.txtMoney.Multiline = true;
+            this.txtMoney.Name = "txtMoney";
+            this.txtMoney.ReadOnly = true;
+            this.txtMoney.Size = new System.Drawing.Size(175, 23);
+            this.txtMoney.TabIndex = 16;
+            this.txtMoney.Text = "---";
+            this.txtMoney.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(995, 602);
+            this.Controls.Add(this.txtMoney);
             this.Controls.Add(this.txtCurrentDay);
             this.Controls.Add(this.btnJobMarket);
             this.Controls.Add(this.btnResourceMarket);
@@ -192,6 +208,7 @@
         private System.Windows.Forms.Panel panMain;
         private System.Windows.Forms.Button btnJobMarket;
         private System.Windows.Forms.TextBox txtCurrentDay;
+        private System.Windows.Forms.TextBox txtMoney;
     }
 }
 

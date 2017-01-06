@@ -10,21 +10,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BrightIdeasSoftware;
 
 namespace Simul.Views.SubForms
 {
     public partial class frmResourceMarket : Form, ISubForm
     {
         ResourceMarketController resourceMarketController;
+        GameController gameController;
 
-        public frmResourceMarket(ResourceMarketController resourceMarketController)
+        public frmResourceMarket(GameController gameController, ResourceMarketController resourceMarketController)
         {
             this.resourceMarketController = resourceMarketController;
+            this.gameController = gameController;
 
             InitializeComponent();
 
             dlvResources.SmallImageList = ContentReader.GetResourcesImages();
+            dlvResources.ButtonClick += DlvResources_Buy;
+
             olvResourceMarketImg.ImageGetter = delegate (object rowObject) { return ((ResourceOffer)rowObject).resource.name; };
+            olvResourceMarketBuy.AspectGetter = delegate { return "Buy"; };
+        }
+
+        private void DlvResources_Buy(object sender, CellClickEventArgs e)
+        {
+            ResourceOffer resourceOffer = (ResourceOffer)e.Model;
+            gameController.controlledPerson.Buy(resourceOffer, resourceOffer.quantity);
+
+            // If something about the object changed, you probably want to refresh the model
+            //dlvResources.RefreshObject(e.Model);
         }
 
         public void UpdateDisplay()

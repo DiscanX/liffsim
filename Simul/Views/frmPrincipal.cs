@@ -43,11 +43,11 @@ namespace Simul.Views
 
             frmHome = new frmHome(this, gameController);
             frmJobMarket = new frmJobMarket(jobMarketController);
-            frmResourceMarket = new frmResourceMarket(resourceMarketController);
+            frmResourceMarket = new frmResourceMarket(gameController, resourceMarketController);
             frmSearch = new frmSearch(gameController, personController);
 
-            resourceMarketController.markets[0].AddOffer(new ResourceOffer(resourceMarketController.markets[0], personController.persons[0], personController.persons[0].inventory.stocks.First().Key, 5, 10));
-            resourceMarketController.markets[0].AddOffer(new ResourceOffer(resourceMarketController.markets[0], personController.persons[0], personController.persons[0].inventory.stocks.Last().Key, 27, 5.50m));
+            resourceMarketController.markets[0].AddOffer(new ResourceOffer(resourceMarketController.markets[0], personController.persons[0], personController.persons[0].inventory.stocks.First().Key, 5, 1));
+            resourceMarketController.markets[0].AddOffer(new ResourceOffer(resourceMarketController.markets[0], personController.persons[0], personController.persons[0].inventory.stocks.Last().Key, 27, 0.50m));
 
             SetupMainPanels();
 
@@ -90,6 +90,7 @@ namespace Simul.Views
 
         public void ReloadMenu()
         {
+            txtMoney.Text = String.Format("{0:C}", gameController.controlledPerson.Money);
             txtEnergy.Text = "Energy : " + gameController.controlledPerson.Energy + "%";
             txtCurrentDay.Text = "Day " + gameController.currentDay;
         }
