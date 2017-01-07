@@ -11,35 +11,68 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
+using Simul.Views;
 
 namespace Simul.Views.SubForms
 {
     public partial class frmResourceMarket : Form, ISubForm
     {
+        frmPrincipal frmPrincipal;
         ResourceMarketController resourceMarketController;
         GameController gameController;
+        ResourceMarket selectedResourceMarket;
 
-        public frmResourceMarket(GameController gameController, ResourceMarketController resourceMarketController)
+        public frmResourceMarket(frmPrincipal frmPrincipal, GameController gameController, ResourceMarketController resourceMarketController)
         {
+            this.frmPrincipal = frmPrincipal;
             this.resourceMarketController = resourceMarketController;
             this.gameController = gameController;
 
             InitializeComponent();
 
-            dlvResources.SmallImageList = ContentReader.GetResourcesImages();
-            dlvResources.ButtonClick += DlvResources_Buy;
+            olvResources.SmallImageList = ContentReader.GetResourcesImages();
+            olvResources.ButtonClick += DlvResources_Buy;
+            olvResources.FormatRow += OlvResources_FormatRow;
 
-            olvResourceMarketImg.ImageGetter = delegate (object rowObject) { return ((ResourceOffer)rowObject).resource.name; };
-            olvResourceMarketBuy.AspectGetter = delegate { return "Buy"; };
+            olvResourceImg.ImageGetter = delegate (object rowObject) { return ((ResourceOffer)rowObject).resource.name; };
+            olvBuy.AspectGetter = delegate (object rowObject) { return "Buy"; };
+        }
+
+        private void OlvResources_FormatRow(object sender, FormatRowEventArgs e)
+        {
+            if (e.Item.Enabled)
+            {
+                ResourceOffer resourceOffer = (ResourceOffer)e.Model;
+
+                if (resourceOffer.unitPrice > gameController.controlledPerson.Money)
+                {
+                    olvResources.DisableObject(resourceOffer);
+                }
+            }
         }
 
         private void DlvResources_Buy(object sender, CellClickEventArgs e)
         {
             ResourceOffer resourceOffer = (ResourceOffer)e.Model;
-            gameController.controlledPerson.Buy(resourceOffer, resourceOffer.quantity);
 
-            // If something about the object changed, you probably want to refresh the model
-            //dlvResources.RefreshObject(e.Model);
+            if(resourceOffer.unitPrice > gameController.controlledPerson.Money)
+            {
+
+            }
+
+            gameController.controlledPerson.Buy(resourceOffer, 1);
+
+            frmPrincipal.ReloadMenu();
+
+            if(selectedResourceMarket.offers.Exists(x => x == e.Model))
+            {
+                olvResources.RefreshObject(e.Model);
+            }
+            else
+            {
+                olvResources.RemoveObject(e.Model);
+            }
+            
         }
 
         public void UpdateDisplay()
@@ -55,7 +88,8 @@ namespace Simul.Views.SubForms
 
         private void cboResourceMarkets_SelectedIndexChanged(object sender, EventArgs e)
         {
-            dlvResources.SetObjects(resourceMarketController.markets.First(x => x.name == cboResourceMarkets.SelectedItem.ToString()).offers);
+            selectedResourceMarket = resourceMarketController.markets.First(x => x.name == cboResourceMarkets.SelectedItem.ToString());
+            olvResources.SetObjects(selectedResourceMarket.offers);
         }
     }
 }

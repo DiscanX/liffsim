@@ -43,11 +43,11 @@ namespace Simul.Views
 
             frmHome = new frmHome(this, gameController);
             frmJobMarket = new frmJobMarket(jobMarketController);
-            frmResourceMarket = new frmResourceMarket(gameController, resourceMarketController);
+            frmResourceMarket = new frmResourceMarket(this, gameController, resourceMarketController);
             frmSearch = new frmSearch(gameController, personController);
 
-            resourceMarketController.markets[0].AddOffer(new ResourceOffer(resourceMarketController.markets[0], personController.persons[0], personController.persons[0].inventory.stocks.First().Key, 5, 1));
-            resourceMarketController.markets[0].AddOffer(new ResourceOffer(resourceMarketController.markets[0], personController.persons[0], personController.persons[0].inventory.stocks.Last().Key, 27, 0.50m));
+            resourceMarketController.markets[0].AddOffer(new ResourceOffer(resourceMarketController.markets[0], personController.persons[1], personController.persons[1].inventory.stocks.First().Key, 50, 1));
+            resourceMarketController.markets[0].AddOffer(new ResourceOffer(resourceMarketController.markets[0], personController.persons[2], personController.persons[2].inventory.stocks.Last().Key, 27, 110.50m));
 
             SetupMainPanels();
 

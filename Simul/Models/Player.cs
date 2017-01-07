@@ -28,7 +28,7 @@ namespace Simul.Models
 
         public void Buy(ResourceOffer offer, int quantity)
         {
-            decimal totalPrice = offer.quantity * offer.unitPrice;
+            decimal totalPrice = quantity * offer.unitPrice;
 
             if (totalPrice > Money)
             {
