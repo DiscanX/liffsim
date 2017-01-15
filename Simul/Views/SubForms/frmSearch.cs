@@ -1,4 +1,5 @@
 ﻿using Simul.Controllers;
+using Simul.Helpers;
 using Simul.Models;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,9 @@ namespace Simul.Views.SubForms
             this.personController = personController;
 
             InitializeComponent();
+
+            olvInventory.SmallImageList = ContentReader.GetResourcesImages();
+            olvResourceImg.ImageGetter = delegate (object rowObject) { return ((KeyValuePair<Resource, int>)rowObject).Key.name; };
         }
 
         public void UpdateDisplay()
@@ -49,6 +53,7 @@ namespace Simul.Views.SubForms
             txtStrengthPanSearch.Text = person.strength.ToString();
 
             dlvSkills.SetObjects(person.skillset.skills);
+            olvInventory.SetObjects(person.inventory.stocks);
         }
     }
 }

@@ -34,6 +34,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.btnTrain = new System.Windows.Forms.Button();
             this.btnWork = new System.Windows.Forms.Button();
+            this.txtCurrentEmployer = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtProductivity
@@ -100,11 +102,35 @@
             this.btnWork.UseVisualStyleBackColor = true;
             this.btnWork.Click += new System.EventHandler(this.btnWork_Click);
             // 
+            // txtCurrentEmployer
+            // 
+            this.txtCurrentEmployer.BackColor = System.Drawing.SystemColors.Control;
+            this.txtCurrentEmployer.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCurrentEmployer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCurrentEmployer.Location = new System.Drawing.Point(145, 399);
+            this.txtCurrentEmployer.Name = "txtCurrentEmployer";
+            this.txtCurrentEmployer.ReadOnly = true;
+            this.txtCurrentEmployer.Size = new System.Drawing.Size(233, 19);
+            this.txtCurrentEmployer.TabIndex = 19;
+            this.txtCurrentEmployer.Text = "---";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(42, 399);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(97, 20);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "Working at : ";
+            // 
             // frmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 534);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtCurrentEmployer);
             this.Controls.Add(this.txtProductivity);
             this.Controls.Add(this.txtStrength);
             this.Controls.Add(this.label6);
@@ -127,5 +153,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnTrain;
         private System.Windows.Forms.Button btnWork;
+        private System.Windows.Forms.TextBox txtCurrentEmployer;
+        private System.Windows.Forms.Label label1;
     }
 }

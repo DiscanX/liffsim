@@ -40,25 +40,29 @@ namespace Simul.Views.SubForms
 
         private void OlvResources_FormatRow(object sender, FormatRowEventArgs e)
         {
-            if (e.Item.Enabled)
-            {
-                ResourceOffer resourceOffer = (ResourceOffer)e.Model;
+            ResourceOffer resourceOffer = (ResourceOffer)e.Model;
+            FormatRow(resourceOffer);
+        }
 
-                if (resourceOffer.unitPrice > gameController.controlledPerson.Money)
-                {
-                    olvResources.DisableObject(resourceOffer);
-                }
+        private void FormatRow(ResourceOffer resourceOffer)
+        {
+            if (resourceOffer.unitPrice > gameController.controlledPerson.Money)
+            {
+                olvResources.FormatRow -= OlvResources_FormatRow;
+                olvResources.DisableObject(resourceOffer);
+                olvResources.FormatRow += OlvResources_FormatRow;
+            }
+            else if (resourceOffer.unitPrice <= gameController.controlledPerson.Money)
+            {
+                olvResources.FormatRow -= OlvResources_FormatRow;
+                olvResources.EnableObject(resourceOffer);
+                olvResources.FormatRow += OlvResources_FormatRow;
             }
         }
 
         private void DlvResources_Buy(object sender, CellClickEventArgs e)
         {
             ResourceOffer resourceOffer = (ResourceOffer)e.Model;
-
-            if(resourceOffer.unitPrice > gameController.controlledPerson.Money)
-            {
-
-            }
 
             gameController.controlledPerson.Buy(resourceOffer, 1);
 
@@ -82,7 +86,6 @@ namespace Simul.Views.SubForms
             {
                 cboResourceMarkets.Items.Add(resourceMarket.name);
             }
-
             cboResourceMarkets.SelectedIndex = 0;
         }
 
@@ -90,6 +93,12 @@ namespace Simul.Views.SubForms
         {
             selectedResourceMarket = resourceMarketController.markets.First(x => x.name == cboResourceMarkets.SelectedItem.ToString());
             olvResources.SetObjects(selectedResourceMarket.offers);
+
+            //As the event "FormatRow" is not triggered before a mouse hover
+            foreach (ResourceOffer resourceOffer in olvResources.Objects)
+            {
+                FormatRow(resourceOffer);
+            }
         }
     }
 }

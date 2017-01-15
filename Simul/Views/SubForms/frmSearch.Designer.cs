@@ -32,7 +32,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.dlvInventory = new BrightIdeasSoftware.DataListView();
             this.dlvSkills = new BrightIdeasSoftware.DataListView();
             this.olvSkillName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvSkillValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -40,8 +39,11 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lstPersons = new System.Windows.Forms.ListBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dlvInventory)).BeginInit();
+            this.olvInventory = new BrightIdeasSoftware.ObjectListView();
+            this.olvResourceImg = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvQuantity = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             ((System.ComponentModel.ISupportInitialize)(this.dlvSkills)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.olvInventory)).BeginInit();
             this.SuspendLayout();
             // 
             // txtStrengthPanSearch
@@ -86,18 +88,6 @@
             this.label4.TabIndex = 18;
             this.label4.Text = "Skills ";
             // 
-            // dlvInventory
-            // 
-            this.dlvInventory.CellEditUseWholeCell = false;
-            this.dlvInventory.Cursor = System.Windows.Forms.Cursors.Default;
-            this.dlvInventory.DataSource = null;
-            this.dlvInventory.Location = new System.Drawing.Point(498, 181);
-            this.dlvInventory.Name = "dlvInventory";
-            this.dlvInventory.Size = new System.Drawing.Size(470, 336);
-            this.dlvInventory.TabIndex = 17;
-            this.dlvInventory.UseCompatibleStateImageBehavior = false;
-            this.dlvInventory.View = System.Windows.Forms.View.Details;
-            // 
             // dlvSkills
             // 
             this.dlvSkills.AllColumns.Add(this.olvSkillName);
@@ -108,6 +98,9 @@
             this.olvSkillValue});
             this.dlvSkills.Cursor = System.Windows.Forms.Cursors.Default;
             this.dlvSkills.DataSource = null;
+            this.dlvSkills.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dlvSkills.FullRowSelect = true;
+            this.dlvSkills.GridLines = true;
             this.dlvSkills.Location = new System.Drawing.Point(206, 181);
             this.dlvSkills.Name = "dlvSkills";
             this.dlvSkills.Size = new System.Drawing.Size(286, 336);
@@ -176,16 +169,52 @@
             this.lstPersons.TabIndex = 12;
             this.lstPersons.SelectedIndexChanged += new System.EventHandler(this.lstPersons_SelectedIndexChanged);
             // 
+            // olvInventory
+            // 
+            this.olvInventory.AllColumns.Add(this.olvResourceImg);
+            this.olvInventory.AllColumns.Add(this.olvQuantity);
+            this.olvInventory.CellEditUseWholeCell = false;
+            this.olvInventory.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvResourceImg,
+            this.olvQuantity});
+            this.olvInventory.Cursor = System.Windows.Forms.Cursors.Default;
+            this.olvInventory.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.olvInventory.FullRowSelect = true;
+            this.olvInventory.GridLines = true;
+            this.olvInventory.Location = new System.Drawing.Point(498, 181);
+            this.olvInventory.Name = "olvInventory";
+            this.olvInventory.Size = new System.Drawing.Size(464, 336);
+            this.olvInventory.TabIndex = 22;
+            this.olvInventory.UseCompatibleStateImageBehavior = false;
+            this.olvInventory.View = System.Windows.Forms.View.Details;
+            // 
+            // olvResourceImg
+            // 
+            this.olvResourceImg.FillsFreeSpace = true;
+            this.olvResourceImg.Groupable = false;
+            this.olvResourceImg.IsEditable = false;
+            this.olvResourceImg.Text = "Resource";
+            this.olvResourceImg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // olvQuantity
+            // 
+            this.olvQuantity.AspectName = "Value";
+            this.olvQuantity.FillsFreeSpace = true;
+            this.olvQuantity.Groupable = false;
+            this.olvQuantity.IsEditable = false;
+            this.olvQuantity.Text = "Quantity";
+            this.olvQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // frmSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 534);
+            this.Controls.Add(this.olvInventory);
             this.Controls.Add(this.txtStrengthPanSearch);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.dlvInventory);
             this.Controls.Add(this.dlvSkills);
             this.Controls.Add(this.txtMoney);
             this.Controls.Add(this.txtName);
@@ -194,8 +223,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmSearch";
             this.Text = "frmSearch";
-            ((System.ComponentModel.ISupportInitialize)(this.dlvInventory)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dlvSkills)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.olvInventory)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,7 +236,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private BrightIdeasSoftware.DataListView dlvInventory;
         private BrightIdeasSoftware.DataListView dlvSkills;
         private BrightIdeasSoftware.OLVColumn olvSkillName;
         private BrightIdeasSoftware.OLVColumn olvSkillValue;
@@ -215,5 +243,8 @@
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox lstPersons;
+        private BrightIdeasSoftware.ObjectListView olvInventory;
+        private BrightIdeasSoftware.OLVColumn olvResourceImg;
+        private BrightIdeasSoftware.OLVColumn olvQuantity;
     }
 }

@@ -49,6 +49,10 @@ namespace Simul.Views
             resourceMarketController.markets[0].AddOffer(new ResourceOffer(resourceMarketController.markets[0], personController.persons[1], personController.persons[1].inventory.stocks.First().Key, 50, 1));
             resourceMarketController.markets[0].AddOffer(new ResourceOffer(resourceMarketController.markets[0], personController.persons[2], personController.persons[2].inventory.stocks.Last().Key, 27, 110.50m));
 
+            Contract sampleContract = new Contract(gameController.controlledPerson, companyController.companies[0], 5.50m);
+            companyController.companies[0].contracts.Add(sampleContract);
+            gameController.controlledPerson.contract = sampleContract;
+
             SetupMainPanels();
 
             SetCurrentSubForm(frmHome);

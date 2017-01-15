@@ -30,6 +30,8 @@ namespace Simul.Views.SubForms
             txtProductivity.Text = gameController.controlledPerson.DisplayProductivity();
 
             btnWork.Enabled = (gameController.controlledPerson.contract != null && !gameController.controlledPerson.alreadyWorked);
+            txtCurrentEmployer.Text = gameController.controlledPerson.contract == null ? "Nowhere" : gameController.controlledPerson.contract.company.name;
+
             btnTrain.Enabled = (!gameController.controlledPerson.alreadyTrained);
         }
 

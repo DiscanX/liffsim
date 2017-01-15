@@ -27,17 +27,21 @@ namespace Simul.Models
 
             float nbrProducedUnits = Calculator.CalculateProductionProgress(contract) / producedResource.productionCost;
 
-            foreach (KeyValuePair<Resource, int> requirement in producedResource.GetRequirements())
+            Dictionary<Resource, int> requirements = producedResource.GetRequirements();
+            if (requirements != null)
             {
-                int nbrResourcesRequired = (int)Math.Ceiling(nbrProducedUnits * requirement.Value);
-                int stockAfterProduction = inventory.stocks[requirement.Key] - nbrResourcesRequired;
-
-                if(stockAfterProduction < 0)
+                foreach (KeyValuePair<Resource, int> requirement in requirements)
                 {
-                    throw new Exception("Can't produce resource : one of the required resource stock would go below 0");
-                }
+                    int nbrResourcesRequired = (int)Math.Ceiling(nbrProducedUnits * requirement.Value);
+                    int stockAfterProduction = inventory.stocks[requirement.Key] - nbrResourcesRequired;
 
-                inventory.stocks[requirement.Key] = stockAfterProduction;
+                    if (stockAfterProduction < 0)
+                    {
+                        throw new Exception("Can't produce resource : one of the required resource stock would go below 0");
+                    }
+
+                    inventory.stocks[requirement.Key] = stockAfterProduction;
+                }
             }
 
             progress += nbrProducedUnits;
@@ -60,7 +64,8 @@ namespace Simul.Models
                 throw new Exception("The company doesn't have enough money to pay the employee");
             }
 
-            contract.person.Money += moneyAfterPay;
+            Money = moneyAfterPay;
+            contract.person.Money += contract.salary;
         }
     }
 }
