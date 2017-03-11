@@ -9,11 +9,14 @@ namespace Simul.Models
     public class JobOffer
     {
         public JobMarket market { get; set; }
-        public Player owner { get; set; }
+        public Company employer { get; set; }
+        public decimal salary { get; set; }
 
-        public JobOffer(JobMarket market)
+        public JobOffer(JobMarket market, Company employer, decimal salary)
         {
             this.market = market;
+            this.employer = employer;
+            this.salary = salary;
         }
     }
 }

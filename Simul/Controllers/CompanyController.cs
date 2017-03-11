@@ -18,5 +18,10 @@ namespace Simul.Controllers
             //Where ReadResources()[0] is wheat (see resources.xml)
             companies.Add(new Company("Sample Company", ContentReader.GetResources()[0], 100, new Inventory()));
         }
+
+        public Company GetCompanyByName(string name)
+        {
+            return companies.First(x => x.name == name);
+        }
     }
 }

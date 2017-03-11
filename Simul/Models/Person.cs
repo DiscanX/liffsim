@@ -9,7 +9,8 @@ namespace Simul.Models
     public class Person : Player
     {
         public float strength { get; set; }
-        public Contract contract { get; set; }
+        public Company employer { get; set; }
+        public decimal salary { get; set; }
         public Skillset skillset { get; set; }
         public bool alreadyWorked { get; set; }
         public bool alreadyTrained { get; set; }
@@ -33,9 +34,9 @@ namespace Simul.Models
 
         public string DisplayProductivity()
         {
-            if (contract != null)
+            if (employer != null)
             {
-                return skillset.skills.First(x => x.Key == contract.company.producedResource.improvedSkill).Value.ToString();
+                return skillset.skills.First(x => x.Key == employer.producedResource.improvedSkill).Value.ToString();
             }
             else
             {
@@ -50,8 +51,8 @@ namespace Simul.Models
                 throw new Exception("This person already worked");
             }
 
-            contract.company.Produce(contract);
-            IncrementSkill(contract.company.producedResource.improvedSkill);
+            employer.Produce(this, salary);
+            IncrementSkill(employer.producedResource.improvedSkill);
             Energy -= 10;
             alreadyWorked = true;
         }

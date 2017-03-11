@@ -10,22 +10,17 @@ namespace Simul.Models
     {
         public Resource producedResource { get; set; }
         public float progress { get; set; }
-        public List<Contract> contracts { get; set; }
+        public List<Person> employees { get; set; }
 
         public Company(string name, Resource producedResource, decimal money, Inventory inventory, bool isHumanControlled = false) : base(name, money, inventory, isHumanControlled)
         {
             this.producedResource = producedResource;
-            contracts = new List<Contract>();
+            employees = new List<Person>();
         }
 
-        public void Produce(Contract contract)
+        public void Produce(Person employee, decimal salary)
         {
-            if(contract.company != this)
-            {
-                throw new Exception("The contract is not linked to the company");
-            }
-
-            float nbrProducedUnits = Calculator.CalculateProductionProgress(contract) / producedResource.productionCost;
+            float nbrProducedUnits = Calculator.CalculateProductionProgress(this, employee) / producedResource.productionCost;
 
             Dictionary<Resource, int> requirements = producedResource.GetRequirements();
             if (requirements != null)
@@ -52,12 +47,12 @@ namespace Simul.Models
                 progress %= 1;
             }
 
-            PayEmployee(contract);
+            PayEmployee(employee, salary);
         }
         
-        private void PayEmployee(Contract contract)
+        private void PayEmployee(Person employee, decimal salary)
         {
-            decimal moneyAfterPay = Money - contract.salary;
+            decimal moneyAfterPay = Money - salary;
 
             if(moneyAfterPay < 0)
             {
@@ -65,7 +60,7 @@ namespace Simul.Models
             }
 
             Money = moneyAfterPay;
-            contract.person.Money += contract.salary;
+            employee.Money += salary;
         }
     }
 }

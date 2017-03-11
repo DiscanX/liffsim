@@ -29,8 +29,8 @@ namespace Simul.Views.SubForms
             txtStrength.Text = gameController.controlledPerson.strength.ToString();
             txtProductivity.Text = gameController.controlledPerson.DisplayProductivity();
 
-            btnWork.Enabled = (gameController.controlledPerson.contract != null && !gameController.controlledPerson.alreadyWorked);
-            txtCurrentEmployer.Text = gameController.controlledPerson.contract == null ? "Nowhere" : gameController.controlledPerson.contract.company.name;
+            btnWork.Enabled = (gameController.controlledPerson.employer != null && !gameController.controlledPerson.alreadyWorked);
+            txtCurrentEmployer.Text = gameController.controlledPerson.employer == null ? "Nowhere" : gameController.controlledPerson.employer.name;
 
             btnTrain.Enabled = (!gameController.controlledPerson.alreadyTrained);
         }

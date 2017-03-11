@@ -1,4 +1,5 @@
 ﻿using Simul.Controllers;
+using Simul.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,10 +14,14 @@ namespace Simul.Views.SubForms
 {
     public partial class frmJobMarket : Form, ISubForm
     {
+        frmPrincipal frmPrincipal;
         JobMarketController jobMarketController;
+        GameController gameController;
+        JobMarket selectedJobMarket;
 
-        public frmJobMarket(JobMarketController jobMarketController)
+        public frmJobMarket(GameController gameController, JobMarketController jobMarketController)
         {
+            this.gameController = gameController;
             this.jobMarketController = jobMarketController;
 
             InitializeComponent();

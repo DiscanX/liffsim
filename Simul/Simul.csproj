@@ -78,7 +78,6 @@
     <Compile Include="Models\JobMarket.cs" />
     <Compile Include="Models\JobOffer.cs" />
     <Compile Include="Models\Skill.cs" />
-    <Compile Include="Models\Contract.cs" />
     <Compile Include="Views\frmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>

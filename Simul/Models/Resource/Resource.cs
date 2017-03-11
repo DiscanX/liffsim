@@ -12,7 +12,7 @@ namespace Simul.Models
         public Skill improvedSkill { get; set; }
         public int productionCost { get; set; }
 
-        public Resource(string name, Skill improvedSkill, int productionCost)
+        internal Resource(string name, Skill improvedSkill, int productionCost)
         {
             this.name = name;
             this.improvedSkill = improvedSkill;
