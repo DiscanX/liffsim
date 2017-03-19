@@ -47,7 +47,7 @@ namespace Simul.Views.SubForms
 
         private void DisplayPerson()
         {
-            Person person = personController.GetPersonByName(lstPersons.SelectedItem.ToString());
+            Person person = personController.persons.First(x => x.name == lstPersons.SelectedItem.ToString());
             txtName.Text = person.name;
             txtMoney.Text = string.Format("{0:C}", person.Money);
             txtStrengthPanSearch.Text = person.strength.ToString();

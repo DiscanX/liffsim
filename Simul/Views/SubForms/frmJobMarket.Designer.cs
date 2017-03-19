@@ -32,8 +32,8 @@
             this.olvResourceImg = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvCompany = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvSalary = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvBuy = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.cboResourceMarkets = new System.Windows.Forms.ComboBox();
+            this.olvApply = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.cboJobMarkets = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.olvJobs)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,21 +42,21 @@
             this.olvJobs.AllColumns.Add(this.olvResourceImg);
             this.olvJobs.AllColumns.Add(this.olvCompany);
             this.olvJobs.AllColumns.Add(this.olvSalary);
-            this.olvJobs.AllColumns.Add(this.olvBuy);
+            this.olvJobs.AllColumns.Add(this.olvApply);
             this.olvJobs.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClick;
             this.olvJobs.CellEditUseWholeCell = false;
             this.olvJobs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvResourceImg,
             this.olvCompany,
             this.olvSalary,
-            this.olvBuy});
+            this.olvApply});
             this.olvJobs.Cursor = System.Windows.Forms.Cursors.Default;
             this.olvJobs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.olvJobs.FullRowSelect = true;
             this.olvJobs.GridLines = true;
             this.olvJobs.Location = new System.Drawing.Point(12, 52);
             this.olvJobs.Name = "olvJobs";
-            this.olvJobs.Size = new System.Drawing.Size(567, 470);
+            this.olvJobs.Size = new System.Drawing.Size(950, 470);
             this.olvJobs.TabIndex = 8;
             this.olvJobs.UseCompatibleStateImageBehavior = false;
             this.olvJobs.View = System.Windows.Forms.View.Details;
@@ -71,7 +71,7 @@
             // 
             // olvCompany
             // 
-            this.olvCompany.AspectName = "owner.name";
+            this.olvCompany.AspectName = "employer.name";
             this.olvCompany.FillsFreeSpace = true;
             this.olvCompany.Groupable = false;
             this.olvCompany.IsEditable = false;
@@ -80,37 +80,38 @@
             // 
             // olvSalary
             // 
-            this.olvSalary.AspectName = "quantity";
+            this.olvSalary.AspectName = "salary";
+            this.olvSalary.AspectToStringFormat = "{0:C}";
             this.olvSalary.FillsFreeSpace = true;
             this.olvSalary.Groupable = false;
             this.olvSalary.IsEditable = false;
             this.olvSalary.Text = "Salary";
             this.olvSalary.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // olvBuy
+            // olvApply
             // 
-            this.olvBuy.Groupable = false;
-            this.olvBuy.IsButton = true;
-            this.olvBuy.MaximumWidth = 60;
-            this.olvBuy.MinimumWidth = 60;
-            this.olvBuy.Text = "";
-            this.olvBuy.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvApply.FillsFreeSpace = true;
+            this.olvApply.Groupable = false;
+            this.olvApply.IsButton = true;
+            this.olvApply.Text = "";
+            this.olvApply.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // cboResourceMarkets
+            // cboJobMarkets
             // 
-            this.cboResourceMarkets.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboResourceMarkets.FormattingEnabled = true;
-            this.cboResourceMarkets.Location = new System.Drawing.Point(12, 9);
-            this.cboResourceMarkets.Name = "cboResourceMarkets";
-            this.cboResourceMarkets.Size = new System.Drawing.Size(393, 37);
-            this.cboResourceMarkets.TabIndex = 9;
+            this.cboJobMarkets.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboJobMarkets.FormattingEnabled = true;
+            this.cboJobMarkets.Location = new System.Drawing.Point(12, 9);
+            this.cboJobMarkets.Name = "cboJobMarkets";
+            this.cboJobMarkets.Size = new System.Drawing.Size(393, 37);
+            this.cboJobMarkets.TabIndex = 9;
+            this.cboJobMarkets.SelectedIndexChanged += new System.EventHandler(this.cboJobMarkets_SelectedIndexChanged);
             // 
             // frmJobMarket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 534);
-            this.Controls.Add(this.cboResourceMarkets);
+            this.Controls.Add(this.cboJobMarkets);
             this.Controls.Add(this.olvJobs);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmJobMarket";
@@ -126,7 +127,7 @@
         private BrightIdeasSoftware.OLVColumn olvResourceImg;
         private BrightIdeasSoftware.OLVColumn olvCompany;
         private BrightIdeasSoftware.OLVColumn olvSalary;
-        private BrightIdeasSoftware.OLVColumn olvBuy;
-        private System.Windows.Forms.ComboBox cboResourceMarkets;
+        private BrightIdeasSoftware.OLVColumn olvApply;
+        private System.Windows.Forms.ComboBox cboJobMarkets;
     }
 }

@@ -64,7 +64,7 @@ namespace Simul.Views.SubForms
         {
             ResourceOffer resourceOffer = (ResourceOffer)e.Model;
 
-            gameController.controlledPerson.Buy(resourceOffer, 1);
+            gameController.controlledPerson.Buy(selectedResourceMarket, resourceOffer, 1);
 
             frmPrincipal.ReloadMenu();
 

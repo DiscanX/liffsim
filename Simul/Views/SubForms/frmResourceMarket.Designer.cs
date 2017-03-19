@@ -69,7 +69,7 @@
             this.olvResources.GridLines = true;
             this.olvResources.Location = new System.Drawing.Point(12, 52);
             this.olvResources.Name = "olvResources";
-            this.olvResources.Size = new System.Drawing.Size(567, 470);
+            this.olvResources.Size = new System.Drawing.Size(950, 470);
             this.olvResources.TabIndex = 7;
             this.olvResources.UseCompatibleStateImageBehavior = false;
             this.olvResources.View = System.Windows.Forms.View.Details;
@@ -112,10 +112,9 @@
             // 
             // olvBuy
             // 
+            this.olvBuy.FillsFreeSpace = true;
             this.olvBuy.Groupable = false;
             this.olvBuy.IsButton = true;
-            this.olvBuy.MaximumWidth = 60;
-            this.olvBuy.MinimumWidth = 60;
             this.olvBuy.Text = "";
             this.olvBuy.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 

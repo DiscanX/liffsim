@@ -28,6 +28,7 @@ namespace Simul.Views
         frmJobMarket frmJobMarket;
         frmResourceMarket frmResourceMarket;
         frmSearch frmSearch;
+        frmSearchCompany frmSearchCompany;
 
         Form currentSubForm;
 
@@ -37,21 +38,25 @@ namespace Simul.Views
 
             personController = new PersonController();
             companyController = new CompanyController();
-            gameController = new GameController(personController.GetPersonByName("Keven"));
+            gameController = new GameController(personController.persons.First(x => x.name == "Keven"));
             resourceMarketController = new ResourceMarketController();
             jobMarketController = new JobMarketController();
 
             frmHome = new frmHome(this, gameController);
-            frmJobMarket = new frmJobMarket(gameController, jobMarketController);
+            frmJobMarket = new frmJobMarket(this, gameController, jobMarketController);
             frmResourceMarket = new frmResourceMarket(this, gameController, resourceMarketController);
             frmSearch = new frmSearch(gameController, personController);
+            frmSearchCompany = new frmSearchCompany(gameController, companyController);
 
-            resourceMarketController.markets[0].AddOffer(new ResourceOffer(resourceMarketController.markets[0], personController.persons[1], personController.persons[1].inventory.stocks.First().Key, 50, 1));
-            resourceMarketController.markets[0].AddOffer(new ResourceOffer(resourceMarketController.markets[0], personController.persons[2], personController.persons[2].inventory.stocks.Last().Key, 27, 110.50m));
+            resourceMarketController.markets[0].offers.Add(new ResourceOffer(personController.persons[1], personController.persons[1].inventory.stocks.First().Key, 50, 1));
+            resourceMarketController.markets[0].offers.Add(new ResourceOffer(personController.persons[2], personController.persons[2].inventory.stocks.Last().Key, 27, 110.50m));
 
             gameController.controlledPerson.employer = companyController.companies[0];
             gameController.controlledPerson.salary = 5.50m;
             companyController.companies[0].employees.Add(gameController.controlledPerson);
+
+            jobMarketController.markets[0].offers.Add(new JobOffer(companyController.companies[0], 5m));
+            jobMarketController.markets[0].offers.Add(new JobOffer(companyController.companies[1], 7m));
 
             SetupMainPanels();
 
@@ -61,13 +66,14 @@ namespace Simul.Views
 
         private void SetupMainPanels()
         {
-            frmHome.TopLevel = frmJobMarket.TopLevel = frmResourceMarket.TopLevel = frmSearch.TopLevel = false;
-            frmHome.Dock = frmJobMarket.Dock = frmResourceMarket.Dock = frmSearch.Dock = DockStyle.Fill;
+            frmHome.TopLevel = frmJobMarket.TopLevel = frmResourceMarket.TopLevel = frmSearch.TopLevel = frmSearchCompany.TopLevel = false;
+            frmHome.Dock = frmJobMarket.Dock = frmResourceMarket.Dock = frmSearch.Dock = frmSearchCompany.Dock = DockStyle.Fill;
 
             panMain.Controls.Add(frmHome);
             panMain.Controls.Add(frmJobMarket);
             panMain.Controls.Add(frmResourceMarket);
             panMain.Controls.Add(frmSearch);
+            panMain.Controls.Add(frmSearchCompany);
 
             foreach (Control control in panMain.Controls)
             {
@@ -104,21 +110,6 @@ namespace Simul.Views
             SetCurrentSubForm(frmHome);
         }
 
-        private void btnSearchPerson_Click(object sender, EventArgs e)
-        {
-            SetCurrentSubForm(frmSearch);
-        }
-
-        private void btnResourceMarket_Click(object sender, EventArgs e)
-        {
-            SetCurrentSubForm(frmResourceMarket);
-        }
-
-        private void btnJobMarket_Click(object sender, EventArgs e)
-        {
-            SetCurrentSubForm(frmJobMarket);
-        }
-
         private void btnNextDay_Click(object sender, EventArgs e)
         {
             gameController.ForwardDays(personController.persons);
@@ -129,6 +120,26 @@ namespace Simul.Views
         private void tsmOptions_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void tsmSearchPerson_Click(object sender, EventArgs e)
+        {
+            SetCurrentSubForm(frmSearch);
+        }
+
+        private void tsmSearchCompany_Click(object sender, EventArgs e)
+        {
+            SetCurrentSubForm(frmSearchCompany);
+        }
+
+        private void tsmResourceMarket_Click(object sender, EventArgs e)
+        {
+            SetCurrentSubForm(frmResourceMarket);
+        }
+
+        private void tsmJobMarket_Click(object sender, EventArgs e)
+        {
+            SetCurrentSubForm(frmJobMarket);
         }
     }
 }

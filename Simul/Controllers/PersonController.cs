@@ -20,10 +20,5 @@ namespace Simul.Controllers
             persons.Add(new Person("Noèmie", 10, new Skillset(), new Inventory(), 100, 5));
             persons.Add(new Person("David", 10, new Skillset(), new Inventory(), 100, 5));
         }
-
-        public Person GetPersonByName(string name)
-        {
-            return persons.First(x => x.name == name);
-        }
     }
 }

@@ -118,6 +118,12 @@
     <Compile Include="Views\SubForms\frmSearch.Designer.cs">
       <DependentUpon>frmSearch.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\SubForms\frmSearchCompany.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SubForms\frmSearchCompany.Designer.cs">
+      <DependentUpon>frmSearchCompany.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\SubForms\ISubForm.cs" />
     <EmbeddedResource Include="Views\frmCreate.resx">
       <DependentUpon>frmCreate.cs</DependentUpon>
@@ -149,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SubForms\frmSearch.resx">
       <DependentUpon>frmSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SubForms\frmSearchCompany.resx">
+      <DependentUpon>frmSearchCompany.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

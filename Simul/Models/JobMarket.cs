@@ -16,32 +16,5 @@ namespace Simul.Models
             this.name = name;
             this.offers = offers;
         }
-
-        public void AddOffer(JobOffer offer)
-        {
-            if (name != offer.market.name)
-            {
-                throw new Exception("The market is not the good one for the offer");
-            }
-
-            offers.Add(offer);
-        }
-
-        public void DeleteOffer(JobOffer offer)
-        {
-            if (name != offer.market.name)
-            {
-                throw new Exception("The market is not the good one for the offer");
-            }
-
-            JobOffer foundOffer = offers.Find(x => x == offer);
-
-            if (foundOffer == null)
-            {
-                throw new Exception("The market does not own the offer");
-            }
-
-            offers.Remove(foundOffer);
-        }
     }
 }

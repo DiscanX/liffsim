@@ -29,17 +29,20 @@
         private void InitializeComponent()
         {
             this.btnHome = new System.Windows.Forms.Button();
-            this.btnSearchPerson = new System.Windows.Forms.Button();
             this.txtEnergy = new System.Windows.Forms.TextBox();
             this.btnNextDay = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tsmSimulation = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmOptions = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnResourceMarket = new System.Windows.Forms.Button();
             this.panMain = new System.Windows.Forms.Panel();
-            this.btnJobMarket = new System.Windows.Forms.Button();
             this.txtCurrentDay = new System.Windows.Forms.TextBox();
             this.txtMoney = new System.Windows.Forms.TextBox();
+            this.tsmSearch = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSearchPerson = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSearchCompany = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmMarkets = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmResourceMarket = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmJobMarket = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,16 +55,6 @@
             this.btnHome.Text = "Home";
             this.btnHome.UseVisualStyleBackColor = true;
             this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
-            // 
-            // btnSearchPerson
-            // 
-            this.btnSearchPerson.Location = new System.Drawing.Point(96, 27);
-            this.btnSearchPerson.Name = "btnSearchPerson";
-            this.btnSearchPerson.Size = new System.Drawing.Size(75, 23);
-            this.btnSearchPerson.TabIndex = 2;
-            this.btnSearchPerson.Text = "Search";
-            this.btnSearchPerson.UseVisualStyleBackColor = true;
-            this.btnSearchPerson.Click += new System.EventHandler(this.btnSearchPerson_Click);
             // 
             // txtEnergy
             // 
@@ -90,7 +83,9 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmSimulation});
+            this.tsmSimulation,
+            this.tsmSearch,
+            this.tsmMarkets});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(995, 24);
@@ -108,19 +103,9 @@
             // tsmOptions
             // 
             this.tsmOptions.Name = "tsmOptions";
-            this.tsmOptions.Size = new System.Drawing.Size(116, 22);
+            this.tsmOptions.Size = new System.Drawing.Size(152, 22);
             this.tsmOptions.Text = "Options";
             this.tsmOptions.Click += new System.EventHandler(this.tsmOptions_Click);
-            // 
-            // btnResourceMarket
-            // 
-            this.btnResourceMarket.Location = new System.Drawing.Point(177, 27);
-            this.btnResourceMarket.Name = "btnResourceMarket";
-            this.btnResourceMarket.Size = new System.Drawing.Size(114, 23);
-            this.btnResourceMarket.TabIndex = 12;
-            this.btnResourceMarket.Text = "Resource market";
-            this.btnResourceMarket.UseVisualStyleBackColor = true;
-            this.btnResourceMarket.Click += new System.EventHandler(this.btnResourceMarket_Click);
             // 
             // panMain
             // 
@@ -129,16 +114,6 @@
             this.panMain.Name = "panMain";
             this.panMain.Size = new System.Drawing.Size(974, 534);
             this.panMain.TabIndex = 13;
-            // 
-            // btnJobMarket
-            // 
-            this.btnJobMarket.Location = new System.Drawing.Point(297, 27);
-            this.btnJobMarket.Name = "btnJobMarket";
-            this.btnJobMarket.Size = new System.Drawing.Size(114, 23);
-            this.btnJobMarket.TabIndex = 14;
-            this.btnJobMarket.Text = "Job market";
-            this.btnJobMarket.UseVisualStyleBackColor = true;
-            this.btnJobMarket.Click += new System.EventHandler(this.btnJobMarket_Click);
             // 
             // txtCurrentDay
             // 
@@ -168,6 +143,52 @@
             this.txtMoney.Text = "---";
             this.txtMoney.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // tsmSearch
+            // 
+            this.tsmSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmSearchPerson,
+            this.tsmSearchCompany});
+            this.tsmSearch.Name = "tsmSearch";
+            this.tsmSearch.Size = new System.Drawing.Size(54, 20);
+            this.tsmSearch.Text = "Search";
+            // 
+            // tsmSearchPerson
+            // 
+            this.tsmSearchPerson.Name = "tsmSearchPerson";
+            this.tsmSearchPerson.Size = new System.Drawing.Size(152, 22);
+            this.tsmSearchPerson.Text = "Person";
+            this.tsmSearchPerson.Click += new System.EventHandler(this.tsmSearchPerson_Click);
+            // 
+            // tsmSearchCompany
+            // 
+            this.tsmSearchCompany.Name = "tsmSearchCompany";
+            this.tsmSearchCompany.Size = new System.Drawing.Size(152, 22);
+            this.tsmSearchCompany.Text = "Company";
+            this.tsmSearchCompany.Click += new System.EventHandler(this.tsmSearchCompany_Click);
+            // 
+            // tsmMarkets
+            // 
+            this.tsmMarkets.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmResourceMarket,
+            this.tsmJobMarket});
+            this.tsmMarkets.Name = "tsmMarkets";
+            this.tsmMarkets.Size = new System.Drawing.Size(61, 20);
+            this.tsmMarkets.Text = "Markets";
+            // 
+            // tsmResourceMarket
+            // 
+            this.tsmResourceMarket.Name = "tsmResourceMarket";
+            this.tsmResourceMarket.Size = new System.Drawing.Size(162, 22);
+            this.tsmResourceMarket.Text = "Resource Market";
+            this.tsmResourceMarket.Click += new System.EventHandler(this.tsmResourceMarket_Click);
+            // 
+            // tsmJobMarket
+            // 
+            this.tsmJobMarket.Name = "tsmJobMarket";
+            this.tsmJobMarket.Size = new System.Drawing.Size(162, 22);
+            this.tsmJobMarket.Text = "Job Market";
+            this.tsmJobMarket.Click += new System.EventHandler(this.tsmJobMarket_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -175,11 +196,8 @@
             this.ClientSize = new System.Drawing.Size(995, 602);
             this.Controls.Add(this.txtMoney);
             this.Controls.Add(this.txtCurrentDay);
-            this.Controls.Add(this.btnJobMarket);
-            this.Controls.Add(this.btnResourceMarket);
             this.Controls.Add(this.btnNextDay);
             this.Controls.Add(this.txtEnergy);
-            this.Controls.Add(this.btnSearchPerson);
             this.Controls.Add(this.btnHome);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.panMain);
@@ -198,17 +216,20 @@
 
         #endregion
         private System.Windows.Forms.Button btnHome;
-        private System.Windows.Forms.Button btnSearchPerson;
         private System.Windows.Forms.TextBox txtEnergy;
         private System.Windows.Forms.Button btnNextDay;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tsmSimulation;
         private System.Windows.Forms.ToolStripMenuItem tsmOptions;
-        private System.Windows.Forms.Button btnResourceMarket;
         private System.Windows.Forms.Panel panMain;
-        private System.Windows.Forms.Button btnJobMarket;
         private System.Windows.Forms.TextBox txtCurrentDay;
         private System.Windows.Forms.TextBox txtMoney;
+        private System.Windows.Forms.ToolStripMenuItem tsmSearch;
+        private System.Windows.Forms.ToolStripMenuItem tsmSearchPerson;
+        private System.Windows.Forms.ToolStripMenuItem tsmSearchCompany;
+        private System.Windows.Forms.ToolStripMenuItem tsmMarkets;
+        private System.Windows.Forms.ToolStripMenuItem tsmResourceMarket;
+        private System.Windows.Forms.ToolStripMenuItem tsmJobMarket;
     }
 }
 

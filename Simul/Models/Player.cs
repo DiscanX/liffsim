@@ -26,7 +26,7 @@ namespace Simul.Models
             this.isHumanControlled = isHumanControlled;
         }
 
-        public void Buy(ResourceOffer offer, int quantity)
+        public void Buy(ResourceMarket resourceMarket, ResourceOffer offer, int quantity)
         {
             decimal totalPrice = quantity * offer.unitPrice;
 
@@ -45,7 +45,7 @@ namespace Simul.Models
 
             if(quantity == offer.quantity)
             {
-                offer.market.DeleteOffer(offer);
+                resourceMarket.offers.Remove(offer);
             }
             else
             {
@@ -55,7 +55,7 @@ namespace Simul.Models
             inventory.stocks[offer.resource] += quantity;
         }
 
-        public void Sell(ResourceOffer offer)
+        public void Sell(ResourceMarket resourceMarket, ResourceOffer offer)
         {
             if(offer.owner != this)
             {
@@ -73,17 +73,17 @@ namespace Simul.Models
             }
 
             inventory.stocks[offer.resource] -= offer.quantity;
-            offer.market.AddOffer(offer);
+            resourceMarket.offers.Add(offer);
         }
 
-        public void RemoveOffer(ResourceOffer offer)
+        public void RemoveOffer(ResourceMarket resourceMarket, ResourceOffer offer)
         {
             if (offer.owner != this)
             {
                 throw new Exception("The player can only remove offers he owns");
             }
 
-            offer.market.DeleteOffer(offer);
+            resourceMarket.offers.Remove(offer);
             inventory.stocks[offer.resource] += offer.quantity;
         }
 
