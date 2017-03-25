@@ -22,11 +22,11 @@ namespace Simul.Views.SubForms
         GameController gameController;
         ResourceMarket selectedResourceMarket;
 
-        public frmResourceMarket(frmPrincipal frmPrincipal, GameController gameController, ResourceMarketController resourceMarketController)
+        public frmResourceMarket(frmPrincipal frmPrincipal)
         {
             this.frmPrincipal = frmPrincipal;
-            this.resourceMarketController = resourceMarketController;
-            this.gameController = gameController;
+            this.resourceMarketController = ResourceMarketController.Instance;
+            this.gameController = GameController.Instance;
 
             InitializeComponent();
 
@@ -34,7 +34,7 @@ namespace Simul.Views.SubForms
             olvResources.ButtonClick += DlvResources_Buy;
             olvResources.FormatRow += OlvResources_FormatRow;
 
-            olvResourceImg.ImageGetter = delegate (object rowObject) { return ((ResourceOffer)rowObject).resource.name; };
+            olvResourceImg.ImageGetter = delegate (object rowObject) { return ((ResourceOffer)rowObject).resource.name.ToString(); };
             olvBuy.AspectGetter = delegate (object rowObject) { return "Buy"; };
         }
 

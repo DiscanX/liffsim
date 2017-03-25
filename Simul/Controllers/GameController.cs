@@ -10,12 +10,19 @@ namespace Simul.Controllers
 {
     public class GameController
     {
-        public Person controlledPerson { get; set; }
-        public int currentDay { get; set; }
+        static GameController() { }
+        private static GameController instance = new GameController();
+        public static GameController Instance { get { return instance; } }
 
-        public GameController(Person controlledPerson)
+        public Person controlledPerson { get; set; }
+        public List<IBot> bots { get; set; }
+        public int currentDay { get; set; }
+        public Random random { get; set; }
+
+        private GameController()
         {
-            this.controlledPerson = controlledPerson;
+            this.bots = new List<IBot>();
+            this.random = new Random();
             this.currentDay = 1;
         }
 
@@ -30,6 +37,12 @@ namespace Simul.Controllers
                     person.alreadyWorked = false;
                 }
                 currentDay++;
+
+                IEnumerable<IBot> shuffledBots = bots.OrderBy(x => random.Next());
+                foreach(IBot bot in shuffledBots)
+                {
+                    bot.LiveDay();
+                }
             }
         }
     }

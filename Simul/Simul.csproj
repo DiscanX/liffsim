@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\SimpleBot.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\JobMarketController.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Helpers\ContentReader.cs" />
     <Compile Include="Models\Calculator.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\IBot.cs" />
     <Compile Include="Models\Resource\PrimaryResource.cs" />
     <Compile Include="Models\Resource\SecondaryResource.cs" />
     <Compile Include="Models\Resource\TertiaryResource.cs" />

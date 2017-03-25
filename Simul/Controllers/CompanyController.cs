@@ -10,9 +10,13 @@ namespace Simul.Controllers
 {
     public class CompanyController
     {
+        static CompanyController() { }
+        private static CompanyController instance = new CompanyController();
+        public static CompanyController Instance { get { return instance; } }
+
         public List<Company> companies { get; set; }
 
-        public CompanyController()
+        private CompanyController()
         {
             companies = new List<Company>();
             //Where ReadResources()[0] is wheat (see resources.xml)

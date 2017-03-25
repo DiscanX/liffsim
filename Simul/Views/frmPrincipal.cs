@@ -36,17 +36,19 @@ namespace Simul.Views
         {
             InitializeComponent();
 
-            personController = new PersonController();
-            companyController = new CompanyController();
-            gameController = new GameController(personController.persons.First(x => x.name == "Keven"));
-            resourceMarketController = new ResourceMarketController();
-            jobMarketController = new JobMarketController();
+            personController = PersonController.Instance;
+            companyController = CompanyController.Instance;
+            resourceMarketController = ResourceMarketController.Instance;
+            jobMarketController = JobMarketController.Instance;
 
-            frmHome = new frmHome(this, gameController);
-            frmJobMarket = new frmJobMarket(this, gameController, jobMarketController);
-            frmResourceMarket = new frmResourceMarket(this, gameController, resourceMarketController);
-            frmSearch = new frmSearch(gameController, personController);
-            frmSearchCompany = new frmSearchCompany(gameController, companyController);
+            gameController = GameController.Instance;
+            gameController.controlledPerson = personController.persons.First(x => x.name == "Keven");
+
+            frmHome = new frmHome(this);
+            frmJobMarket = new frmJobMarket(this);
+            frmResourceMarket = new frmResourceMarket(this);
+            frmSearch = new frmSearch();
+            frmSearchCompany = new frmSearchCompany();
 
             resourceMarketController.markets[0].offers.Add(new ResourceOffer(personController.persons[1], personController.persons[1].inventory.stocks.First().Key, 50, 1));
             resourceMarketController.markets[0].offers.Add(new ResourceOffer(personController.persons[2], personController.persons[2].inventory.stocks.Last().Key, 27, 110.50m));

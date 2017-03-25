@@ -1,4 +1,5 @@
 ﻿using Simul.Controllers;
+using Simul.Helpers;
 using Simul.Models;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,18 @@ namespace Simul.Views.SubForms
         GameController gameController;
         CompanyController companyController;
 
-        public frmSearchCompany(GameController gameController, CompanyController companyController)
+        public frmSearchCompany()
         {
-            this.gameController = gameController;
-            this.companyController = companyController;
+            this.gameController = GameController.Instance;
+            this.companyController = CompanyController.Instance;
 
             InitializeComponent();
+
+            olvInventory.SmallImageList = ContentReader.GetResourcesImages();
+            olvResourceImg.ImageGetter = delegate (object rowObject) { return ((KeyValuePair<Resource, int>)rowObject).Key.name.ToString(); };
+
+            olvInventory.Sort(olvQuantity, SortOrder.Ascending);
+            dlvEmployees.Sort(olvSkill, SortOrder.Descending);
         }
 
         public void UpdateDisplay()
@@ -47,7 +54,14 @@ namespace Simul.Views.SubForms
         private void DisplayCompany()
         {
             Company company = companyController.companies.First(x => x.name == lstCompanies.SelectedItem.ToString());
+            picResource.Image = ContentReader.GetResourcesImages().Images[company.producedResource.name.ToString()];
+
             txtName.Text = company.name;
+            txtMoney.Text = string.Format("{0:C}", company.Money);
+            txtProgress.Text = string.Format("{0:P2}", company.progress);
+
+            dlvEmployees.SetObjects(company.employees);
+            olvInventory.SetObjects(company.inventory.stocks);
         }
     }
 }

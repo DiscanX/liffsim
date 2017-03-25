@@ -9,9 +9,13 @@ namespace Simul.Controllers
 {
     public class ResourceMarketController
     {
+        static ResourceMarketController() { }
+        private static ResourceMarketController instance = new ResourceMarketController();
+        public static ResourceMarketController Instance { get { return instance; } }
+
         public List<ResourceMarket> markets { get; set; }
 
-        public ResourceMarketController()
+        private ResourceMarketController()
         {
             markets = new List<ResourceMarket>();
             markets.Add(new ResourceMarket("Main resource market", new List<ResourceOffer>()));

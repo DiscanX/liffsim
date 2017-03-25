@@ -21,11 +21,11 @@ namespace Simul.Views.SubForms
         GameController gameController;
         JobMarket selectedJobMarket;
 
-        public frmJobMarket(frmPrincipal frmPrincipal, GameController gameController, JobMarketController jobMarketController)
+        public frmJobMarket(frmPrincipal frmPrincipal)
         {
             this.frmPrincipal = frmPrincipal;
-            this.gameController = gameController;
-            this.jobMarketController = jobMarketController;
+            this.gameController = GameController.Instance;
+            this.jobMarketController = JobMarketController.Instance;
 
             InitializeComponent();
 
@@ -33,7 +33,7 @@ namespace Simul.Views.SubForms
             olvJobs.ButtonClick += DlvJobs_Apply;
             olvJobs.FormatRow += DlvJobs_FormatRow;
 
-            olvResourceImg.ImageGetter = delegate (object rowObject) { return ((JobOffer)rowObject).employer.producedResource.name; };
+            olvResourceImg.ImageGetter = delegate (object rowObject) { return ((JobOffer)rowObject).employer.producedResource.name.ToString(); };
             olvApply.AspectGetter = delegate (object rowObject) { return "Apply"; };
         }
 

@@ -9,9 +9,13 @@ namespace Simul.Controllers
 {
     public class JobMarketController
     {
+        static JobMarketController() { }
+        private static JobMarketController instance = new JobMarketController();
+        public static JobMarketController Instance { get { return instance; } }
+
         public List<JobMarket> markets { get; set; }
 
-        public JobMarketController()
+        private JobMarketController()
         {
             markets = new List<JobMarket>();
             markets.Add(new JobMarket("Main job market", new List<JobOffer>()));

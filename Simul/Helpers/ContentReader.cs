@@ -10,6 +10,21 @@ using System.Drawing;
 
 namespace Simul.Helpers
 {
+    public enum eResourceName
+    {
+        wheat,
+        iron,
+        bread,
+        weapon
+    }
+
+    public enum eResourceType
+    {
+        primary,
+        secondary,
+        tertiary
+    }
+
     public static class ContentReader
     {
         private static List<Resource> resources = new List<Resource>();
@@ -24,8 +39,12 @@ namespace Simul.Helpers
 
                 foreach (XElement resource in xmlDoc.Elements("resources").Nodes())
                 {
-                    string name = resource.Element("name").Value;
-                    string type = resource.Element("type").Value;
+                    eResourceName name;
+                    Enum.TryParse(resource.Element("name").Value, out name);
+
+                    eResourceType type;
+                    Enum.TryParse(resource.Element("type").Value, out type);
+
                     Skill improvedSkill = new Skill(resource.Element("improvedSkill").Value);
                     int productionCost = int.Parse(resource.Element("productionCost").Value);
 
@@ -33,7 +52,7 @@ namespace Simul.Helpers
                     Dictionary<Resource, int> requirements = new Dictionary<Resource, int>();
                     foreach(XElement requirement in resource.Elements("requirements").Nodes())
                     {
-                        Resource requiredResource = resources.First(x => x.name == requirement.Element("name").Value);
+                        Resource requiredResource = resources.First(x => x.name.ToString() == requirement.Element("name").Value);
                         int requiredQuantity = int.Parse(requirement.Element("quantity").Value);
                         requirements.Add(requiredResource, requiredQuantity);
                     }
@@ -41,13 +60,13 @@ namespace Simul.Helpers
                     Resource createdResource;
                     switch(type)
                     {
-                        case "Primary":
+                        case eResourceType.primary:
                             createdResource = new PrimaryResource(name, improvedSkill, productionCost);
                             break;
-                        case "Secondary":
+                        case eResourceType.secondary:
                             createdResource = new SecondaryResource(name, improvedSkill, productionCost, requirements);
                             break;
-                        case "Tertiary":
+                        case eResourceType.tertiary:
                             createdResource = new TertiaryResource(name, improvedSkill, productionCost, requirements);
                             break;
                         default:
@@ -84,10 +103,10 @@ namespace Simul.Helpers
             if(resourcesImages == null)
             {
                 resourcesImages = new ImageList();
-                resourcesImages.Images.Add("wheat", Resources.wheat);
-                resourcesImages.Images.Add("iron", Resources.iron);
-                resourcesImages.Images.Add("bread", Resources.bread);
-                resourcesImages.Images.Add("weapon", Resources.weapon);
+                resourcesImages.Images.Add(eResourceName.wheat.ToString(), Resources.wheat);
+                resourcesImages.Images.Add(eResourceName.iron.ToString(), Resources.iron);
+                resourcesImages.Images.Add(eResourceName.bread.ToString(), Resources.bread);
+                resourcesImages.Images.Add(eResourceName.weapon.ToString(), Resources.weapon);
                 resourcesImages.ImageSize = new Size(50, 50);
                 resourcesImages.ColorDepth = ColorDepth.Depth24Bit;
             }

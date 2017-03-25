@@ -2,37 +2,37 @@
 <!-- For valid reading, primary type resources needs to be put before 2nd and 3rd level resources -->
 <resources>
   <resource>
-    <name>Wheat</name>
-    <type>Primary</type>
-    <improvedSkill>Farming</improvedSkill>
+    <name>wheat</name>
+    <type>primary</type>
+    <improvedSkill>farming</improvedSkill>
     <productionCost>10</productionCost>
   </resource>
   <resource>
-    <name>Iron</name>
-    <type>Primary</type>
-    <improvedSkill>Mining</improvedSkill>
+    <name>iron</name>
+    <type>primary</type>
+    <improvedSkill>mining</improvedSkill>
     <productionCost>15</productionCost>
   </resource>
   <resource>
-    <name>Bread</name>
-    <type>Tertiary</type>
-    <improvedSkill>Cooking</improvedSkill>
+    <name>bread</name>
+    <type>tertiary</type>
+    <improvedSkill>cooking</improvedSkill>
     <productionCost>50</productionCost>
     <requirements>
       <requirement>
-        <name>Wheat</name>
+        <name>wheat</name>
         <quantity>10</quantity>
       </requirement>
     </requirements>
   </resource>
   <resource>
-    <name>Weapon</name>
-    <type>Tertiary</type>
-    <improvedSkill>Manufacturing</improvedSkill>
+    <name>weapon</name>
+    <type>tertiary</type>
+    <improvedSkill>manufacturing</improvedSkill>
     <productionCost>100</productionCost>
     <requirements>
       <requirement>
-        <name>Iron</name>
+        <name>iron</name>
         <quantity>20</quantity>
       </requirement>
     </requirements>

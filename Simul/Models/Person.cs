@@ -44,6 +44,16 @@ namespace Simul.Models
             }
         }
 
+        public float GetCurrentUsedSkillLevel()
+        {
+            if (employer == null)
+            {
+                throw new Exception("No current used skill, as there is no current employer");
+            }
+
+            return skillset.skills.First(x => x.Key == employer.producedResource.improvedSkill).Value;
+        }
+
         public void Work()
         {
             if (alreadyWorked)

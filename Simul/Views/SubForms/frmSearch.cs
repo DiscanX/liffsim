@@ -18,15 +18,15 @@ namespace Simul.Views.SubForms
         GameController gameController;
         PersonController personController;
 
-        public frmSearch(GameController gameController, PersonController personController)
+        public frmSearch()
         {
-            this.gameController = gameController;
-            this.personController = personController;
+            this.gameController = GameController.Instance;
+            this.personController = PersonController.Instance;
 
             InitializeComponent();
 
             olvInventory.SmallImageList = ContentReader.GetResourcesImages();
-            olvResourceImg.ImageGetter = delegate (object rowObject) { return ((KeyValuePair<Resource, int>)rowObject).Key.name; };
+            olvResourceImg.ImageGetter = delegate (object rowObject) { return ((KeyValuePair<Resource, int>)rowObject).Key.name.ToString(); };
         }
 
         public void UpdateDisplay()

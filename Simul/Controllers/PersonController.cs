@@ -11,9 +11,13 @@ namespace Simul.Controllers
 {
     public class PersonController
     {
+        static PersonController() { }
+        private static PersonController instance = new PersonController();
+        public static PersonController Instance { get { return instance; } }
+
         public List<Person> persons { get; set; }
 
-        public PersonController()
+        private PersonController()
         {
             persons = new List<Person>();
             persons.Add(new Person("Keven", 10, new Skillset(), new Inventory(), 100, 5, true));

@@ -16,10 +16,10 @@ namespace Simul.Views.SubForms
         frmPrincipal frmPrincipal;
         GameController gameController;
 
-        public frmHome(frmPrincipal frmPrincipal, GameController gameController)
+        public frmHome(frmPrincipal frmPrincipal)
         {
             this.frmPrincipal = frmPrincipal;
-            this.gameController = gameController;
+            this.gameController = GameController.Instance;
 
             InitializeComponent();
         }
