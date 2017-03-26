@@ -14,6 +14,7 @@ namespace Simul.Models
         public Skillset skillset { get; set; }
         public bool alreadyWorked { get; set; }
         public bool alreadyTrained { get; set; }
+        public int jobStartDay { get; set; }
         private int energy;
         public int Energy
         {
@@ -54,6 +55,16 @@ namespace Simul.Models
             return skillset.skills.First(x => x.Key == employer.producedResource.improvedSkill).Value;
         }
 
+        public void TakeJob(JobMarket jobMarket, JobOffer jobOffer, int currentDay)
+        {
+            jobMarket.offers.Remove(jobOffer);
+            jobOffer.employer.employees.Add(this);
+
+            employer = jobOffer.employer;
+            salary = jobOffer.salary;
+            jobStartDay = currentDay;
+        }
+
         public void Work()
         {
             if (alreadyWorked)
@@ -63,8 +74,27 @@ namespace Simul.Models
 
             employer.Produce(this, salary);
             IncrementSkill(employer.producedResource.improvedSkill);
-            Energy -= 10;
+            Energy -= Constants.ENERGY_LOST_WORKING;
             alreadyWorked = true;
+        }
+
+        public void Resign(int currentDay)
+        {
+            if(employer == null)
+            {
+                throw new Exception("Can't resign, this person has no employer");
+            }
+
+            if(jobStartDay + 1 <= currentDay)
+            {
+                throw new Exception("Can't resign the same day or the day after a person got a job");
+            }
+
+            employer.employees.Remove(this);
+
+            employer = null;
+            salary = 0;
+            jobStartDay = 0;
         }
 
         public void Train()
@@ -75,7 +105,7 @@ namespace Simul.Models
             }
 
             IncrementStrength();
-            Energy -= 5;
+            Energy -= Constants.ENERGY_LOST_TRAINING;
             alreadyTrained = true;
         }
 

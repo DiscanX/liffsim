@@ -15,13 +15,13 @@ namespace Simul.Controllers
         public static GameController Instance { get { return instance; } }
 
         public Person controlledPerson { get; set; }
-        public List<IBot> bots { get; set; }
+        public List<Bot> bots { get; set; }
         public int currentDay { get; set; }
         public Random random { get; set; }
 
         private GameController()
         {
-            this.bots = new List<IBot>();
+            this.bots = new List<Bot>();
             this.random = new Random();
             this.currentDay = 1;
         }
@@ -32,14 +32,14 @@ namespace Simul.Controllers
             {
                 foreach (Person person in persons)
                 {
-                    person.Energy += 5;
+                    person.Energy += Constants.ENERGY_GAINED_AFTER_DAY;
                     person.alreadyTrained = false;
                     person.alreadyWorked = false;
                 }
                 currentDay++;
 
-                IEnumerable<IBot> shuffledBots = bots.OrderBy(x => random.Next());
-                foreach(IBot bot in shuffledBots)
+                IEnumerable<Bot> shuffledBots = bots.OrderBy(x => random.Next());
+                foreach(Bot bot in shuffledBots)
                 {
                     bot.LiveDay();
                 }

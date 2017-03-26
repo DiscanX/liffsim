@@ -20,9 +20,6 @@ namespace Simul.Controllers
         private PersonController()
         {
             persons = new List<Person>();
-            persons.Add(new Person("Keven", 10, new Skillset(), new Inventory(), 100, 5, true));
-            persons.Add(new Person("Noèmie", 10, new Skillset(), new Inventory(), 100, 5));
-            persons.Add(new Person("David", 10, new Skillset(), new Inventory(), 100, 5));
         }
     }
 }

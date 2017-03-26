@@ -18,7 +18,6 @@ namespace Simul.Controllers
         private JobMarketController()
         {
             markets = new List<JobMarket>();
-            markets.Add(new JobMarket("Main job market", new List<JobOffer>()));
         }
     }
 }

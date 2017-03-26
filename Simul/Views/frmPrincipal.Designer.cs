@@ -34,15 +34,16 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tsmSimulation = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmOptions = new System.Windows.Forms.ToolStripMenuItem();
-            this.panMain = new System.Windows.Forms.Panel();
-            this.txtCurrentDay = new System.Windows.Forms.TextBox();
-            this.txtMoney = new System.Windows.Forms.TextBox();
             this.tsmSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSearchPerson = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSearchCompany = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmMarkets = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmResourceMarket = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmJobMarket = new System.Windows.Forms.ToolStripMenuItem();
+            this.panMain = new System.Windows.Forms.Panel();
+            this.txtCurrentDay = new System.Windows.Forms.TextBox();
+            this.txtMoney = new System.Windows.Forms.TextBox();
+            this.btnBots = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,9 +104,55 @@
             // tsmOptions
             // 
             this.tsmOptions.Name = "tsmOptions";
-            this.tsmOptions.Size = new System.Drawing.Size(152, 22);
+            this.tsmOptions.Size = new System.Drawing.Size(116, 22);
             this.tsmOptions.Text = "Options";
             this.tsmOptions.Click += new System.EventHandler(this.tsmOptions_Click);
+            // 
+            // tsmSearch
+            // 
+            this.tsmSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmSearchPerson,
+            this.tsmSearchCompany});
+            this.tsmSearch.Name = "tsmSearch";
+            this.tsmSearch.Size = new System.Drawing.Size(54, 20);
+            this.tsmSearch.Text = "Search";
+            // 
+            // tsmSearchPerson
+            // 
+            this.tsmSearchPerson.Name = "tsmSearchPerson";
+            this.tsmSearchPerson.Size = new System.Drawing.Size(126, 22);
+            this.tsmSearchPerson.Text = "Person";
+            this.tsmSearchPerson.Click += new System.EventHandler(this.tsmSearchPerson_Click);
+            // 
+            // tsmSearchCompany
+            // 
+            this.tsmSearchCompany.Name = "tsmSearchCompany";
+            this.tsmSearchCompany.Size = new System.Drawing.Size(126, 22);
+            this.tsmSearchCompany.Text = "Company";
+            this.tsmSearchCompany.Click += new System.EventHandler(this.tsmSearchCompany_Click);
+            // 
+            // tsmMarkets
+            // 
+            this.tsmMarkets.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmResourceMarket,
+            this.tsmJobMarket});
+            this.tsmMarkets.Name = "tsmMarkets";
+            this.tsmMarkets.Size = new System.Drawing.Size(61, 20);
+            this.tsmMarkets.Text = "Markets";
+            // 
+            // tsmResourceMarket
+            // 
+            this.tsmResourceMarket.Name = "tsmResourceMarket";
+            this.tsmResourceMarket.Size = new System.Drawing.Size(162, 22);
+            this.tsmResourceMarket.Text = "Resource Market";
+            this.tsmResourceMarket.Click += new System.EventHandler(this.tsmResourceMarket_Click);
+            // 
+            // tsmJobMarket
+            // 
+            this.tsmJobMarket.Name = "tsmJobMarket";
+            this.tsmJobMarket.Size = new System.Drawing.Size(162, 22);
+            this.tsmJobMarket.Text = "Job Market";
+            this.tsmJobMarket.Click += new System.EventHandler(this.tsmJobMarket_Click);
             // 
             // panMain
             // 
@@ -143,57 +190,22 @@
             this.txtMoney.Text = "---";
             this.txtMoney.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // tsmSearch
+            // btnBots
             // 
-            this.tsmSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmSearchPerson,
-            this.tsmSearchCompany});
-            this.tsmSearch.Name = "tsmSearch";
-            this.tsmSearch.Size = new System.Drawing.Size(54, 20);
-            this.tsmSearch.Text = "Search";
-            // 
-            // tsmSearchPerson
-            // 
-            this.tsmSearchPerson.Name = "tsmSearchPerson";
-            this.tsmSearchPerson.Size = new System.Drawing.Size(152, 22);
-            this.tsmSearchPerson.Text = "Person";
-            this.tsmSearchPerson.Click += new System.EventHandler(this.tsmSearchPerson_Click);
-            // 
-            // tsmSearchCompany
-            // 
-            this.tsmSearchCompany.Name = "tsmSearchCompany";
-            this.tsmSearchCompany.Size = new System.Drawing.Size(152, 22);
-            this.tsmSearchCompany.Text = "Company";
-            this.tsmSearchCompany.Click += new System.EventHandler(this.tsmSearchCompany_Click);
-            // 
-            // tsmMarkets
-            // 
-            this.tsmMarkets.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmResourceMarket,
-            this.tsmJobMarket});
-            this.tsmMarkets.Name = "tsmMarkets";
-            this.tsmMarkets.Size = new System.Drawing.Size(61, 20);
-            this.tsmMarkets.Text = "Markets";
-            // 
-            // tsmResourceMarket
-            // 
-            this.tsmResourceMarket.Name = "tsmResourceMarket";
-            this.tsmResourceMarket.Size = new System.Drawing.Size(162, 22);
-            this.tsmResourceMarket.Text = "Resource Market";
-            this.tsmResourceMarket.Click += new System.EventHandler(this.tsmResourceMarket_Click);
-            // 
-            // tsmJobMarket
-            // 
-            this.tsmJobMarket.Name = "tsmJobMarket";
-            this.tsmJobMarket.Size = new System.Drawing.Size(162, 22);
-            this.tsmJobMarket.Text = "Job Market";
-            this.tsmJobMarket.Click += new System.EventHandler(this.tsmJobMarket_Click);
+            this.btnBots.Location = new System.Drawing.Point(96, 27);
+            this.btnBots.Name = "btnBots";
+            this.btnBots.Size = new System.Drawing.Size(75, 23);
+            this.btnBots.TabIndex = 17;
+            this.btnBots.Text = "Bots";
+            this.btnBots.UseVisualStyleBackColor = true;
+            this.btnBots.Click += new System.EventHandler(this.btnBots_Click);
             // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(995, 602);
+            this.Controls.Add(this.btnBots);
             this.Controls.Add(this.txtMoney);
             this.Controls.Add(this.txtCurrentDay);
             this.Controls.Add(this.btnNextDay);
@@ -230,6 +242,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmMarkets;
         private System.Windows.Forms.ToolStripMenuItem tsmResourceMarket;
         private System.Windows.Forms.ToolStripMenuItem tsmJobMarket;
+        private System.Windows.Forms.Button btnBots;
     }
 }
 

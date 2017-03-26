@@ -29,6 +29,7 @@ namespace Simul.Views
         frmResourceMarket frmResourceMarket;
         frmSearch frmSearch;
         frmSearchCompany frmSearchCompany;
+        frmBots frmBots;
 
         Form currentSubForm;
 
@@ -40,25 +41,44 @@ namespace Simul.Views
             companyController = CompanyController.Instance;
             resourceMarketController = ResourceMarketController.Instance;
             jobMarketController = JobMarketController.Instance;
-
             gameController = GameController.Instance;
-            gameController.controlledPerson = personController.persons.First(x => x.name == "Keven");
 
             frmHome = new frmHome(this);
             frmJobMarket = new frmJobMarket(this);
             frmResourceMarket = new frmResourceMarket(this);
             frmSearch = new frmSearch();
             frmSearchCompany = new frmSearchCompany();
+            frmBots = new frmBots();
 
+            personController.persons.Add(new Person("Keven", 10, new Skillset(), new Inventory(), 100, 5, true));
+            personController.persons.Add(new Person("Noèmie", 10, new Skillset(), new Inventory(), 100, 5));
+            personController.persons.Add(new Person("John", 10, new Skillset(), new Inventory(), 100, 5));
+            personController.persons.Add(new Person("Peter", 10, new Skillset(), new Inventory(), 100, 5));
+            personController.persons.Add(new Person("Chris", 10, new Skillset(), new Inventory(), 100, 5));
+
+            companyController.companies.Add(new Company("Sample Company", ContentReader.GetResources()[(int)eResourceName.wheat], 100, new Inventory()));
+            companyController.companies.Add(new Company("World Company", ContentReader.GetResources()[(int)eResourceName.iron], 10000, new Inventory()));
+            companyController.companies[0].employees.Add(personController.persons[0]);
+
+            resourceMarketController.markets.Add(new ResourceMarket("Main resource market", new List<ResourceOffer>()));
+            resourceMarketController.markets.Add(new ResourceMarket("Secondary resource market", new List<ResourceOffer>()));
             resourceMarketController.markets[0].offers.Add(new ResourceOffer(personController.persons[1], personController.persons[1].inventory.stocks.First().Key, 50, 1));
             resourceMarketController.markets[0].offers.Add(new ResourceOffer(personController.persons[2], personController.persons[2].inventory.stocks.Last().Key, 27, 110.50m));
 
-            gameController.controlledPerson.employer = companyController.companies[0];
-            gameController.controlledPerson.salary = 5.50m;
-            companyController.companies[0].employees.Add(gameController.controlledPerson);
-
+            jobMarketController.markets.Add(new JobMarket("Main job market", new List<JobOffer>()));
             jobMarketController.markets[0].offers.Add(new JobOffer(companyController.companies[0], 5m));
             jobMarketController.markets[0].offers.Add(new JobOffer(companyController.companies[1], 7m));
+
+            gameController.controlledPerson = personController.persons.First(x => x.name == "Keven");
+            gameController.controlledPerson.employer = companyController.companies[0];
+            gameController.controlledPerson.salary = 5.50m;
+
+            Random rnd = new Random();
+            for(int i = 0; i < 4; i++)
+            {
+                int interestInEconomy = rnd.Next(0, 101);
+                gameController.bots.Add(new SimplePersonBot(personController.persons[i + 1], rnd.Next(1, 101), interestInEconomy, 100 - interestInEconomy, rnd));
+            }
 
             SetupMainPanels();
 
@@ -68,18 +88,20 @@ namespace Simul.Views
 
         private void SetupMainPanels()
         {
-            frmHome.TopLevel = frmJobMarket.TopLevel = frmResourceMarket.TopLevel = frmSearch.TopLevel = frmSearchCompany.TopLevel = false;
-            frmHome.Dock = frmJobMarket.Dock = frmResourceMarket.Dock = frmSearch.Dock = frmSearchCompany.Dock = DockStyle.Fill;
+            List<ISubForm> subforms = new List<ISubForm>();
+            subforms.Add(frmHome);
+            subforms.Add(frmJobMarket);
+            subforms.Add(frmResourceMarket);
+            subforms.Add(frmSearch);
+            subforms.Add(frmSearchCompany);
+            subforms.Add(frmBots);
 
-            panMain.Controls.Add(frmHome);
-            panMain.Controls.Add(frmJobMarket);
-            panMain.Controls.Add(frmResourceMarket);
-            panMain.Controls.Add(frmSearch);
-            panMain.Controls.Add(frmSearchCompany);
-
-            foreach (Control control in panMain.Controls)
+            foreach (Form subForm in subforms)
             {
-                control.Visible = false;
+                subForm.TopLevel = false;
+                subForm.Dock = DockStyle.Fill;
+                subForm.Visible = false;
+                panMain.Controls.Add(subForm);
             }
         }
 
@@ -142,6 +164,11 @@ namespace Simul.Views
         private void tsmJobMarket_Click(object sender, EventArgs e)
         {
             SetCurrentSubForm(frmJobMarket);
+        }
+
+        private void btnBots_Click(object sender, EventArgs e)
+        {
+            SetCurrentSubForm(frmBots);
         }
     }
 }
