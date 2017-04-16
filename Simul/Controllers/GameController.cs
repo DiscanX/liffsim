@@ -35,6 +35,12 @@ namespace Simul.Controllers
                     person.Energy += Constants.ENERGY_GAINED_AFTER_DAY;
                     person.alreadyTrained = false;
                     person.alreadyWorked = false;
+
+                    //Can't resign the same day or the day after a person got a job
+                    if(person.employer != null && !person.canResign && person.jobStartDay > currentDay)
+                    {
+                        person.canResign = true;
+                    }
                 }
                 currentDay++;
 

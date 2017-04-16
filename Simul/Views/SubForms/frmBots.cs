@@ -28,8 +28,20 @@ namespace Simul.Views.SubForms
             lstBots.Items.Clear();
             foreach (Bot bot in gameController.bots)
             {
-                lstBots.Items.Add(bot.myself.name + " (" + bot.BotTypeName + ")");
+                lstBots.Items.Add(bot.getBotName() + " (" + bot.getBotTypeName() + ")");
             }
+        }
+
+        private void lstBots_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DisplayBot();
+        }
+
+        private void DisplayBot()
+        {
+            Bot bot = gameController.bots.First(x => x.getBotName() + " (" + x.getBotTypeName() + ")" == lstBots.SelectedItem.ToString());
+
+            olvParameters.SetObjects(bot.parameters);
         }
     }
 }

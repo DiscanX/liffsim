@@ -12,14 +12,43 @@ namespace Simul.Models
         public float progress { get; set; }
         public List<Person> employees { get; set; }
 
-        public Company(string name, Resource producedResource, decimal money, Inventory inventory, bool isHumanControlled = false) : base(name, money, inventory, isHumanControlled)
+        public Company(string name, Country country, Resource producedResource, decimal money, Inventory inventory, bool isHumanControlled = false) : base(name, country, money, inventory, isHumanControlled)
         {
             this.producedResource = producedResource;
             employees = new List<Person>();
         }
 
-        public void Produce(Person employee, decimal salary)
+        private eWorkResult CanWork(Person employee)
         {
+            Dictionary<Resource, int> requirements = producedResource.GetRequirements();
+            if (requirements == null)
+            {
+                return eWorkResult.Success;
+            }
+
+            foreach (KeyValuePair<Resource, int> requirement in requirements)
+            {
+                float nbrProducedUnits = Calculator.CalculateProductionProgress(this, employee) / producedResource.productionCost;
+                int nbrResourcesRequired = (int)Math.Ceiling(nbrProducedUnits * requirement.Value);
+                int stockAfterProduction = inventory.stocks[requirement.Key] - nbrResourcesRequired;
+
+                if (stockAfterProduction < 0)
+                {
+                    return eWorkResult.FailureStocksTooLow;
+                }
+            }
+
+            return eWorkResult.Success;
+        }
+
+        public eWorkResult Produce(Person employee, decimal salary)
+        {
+            eWorkResult workResult = CanWork(employee);
+            if (workResult != eWorkResult.Success)
+            {
+                return workResult;
+            }
+
             float nbrProducedUnits = Calculator.CalculateProductionProgress(this, employee) / producedResource.productionCost;
 
             Dictionary<Resource, int> requirements = producedResource.GetRequirements();
@@ -30,37 +59,34 @@ namespace Simul.Models
                     int nbrResourcesRequired = (int)Math.Ceiling(nbrProducedUnits * requirement.Value);
                     int stockAfterProduction = inventory.stocks[requirement.Key] - nbrResourcesRequired;
 
-                    if (stockAfterProduction < 0)
-                    {
-                        throw new Exception("Can't produce resource : one of the required resource stock would go below 0");
-                    }
-
                     inventory.stocks[requirement.Key] = stockAfterProduction;
                 }
             }
 
             progress += nbrProducedUnits;
 
-            if(progress >= 1)
+            if (progress >= 1)
             {
                 inventory.stocks[producedResource] += (int)progress;
                 progress %= 1;
             }
 
-            PayEmployee(employee, salary);
+            workResult = PayEmployee(employee, salary);
+            return workResult;
         }
-        
-        private void PayEmployee(Person employee, decimal salary)
+
+        private eWorkResult PayEmployee(Person employee, decimal salary)
         {
             decimal moneyAfterPay = Money - salary;
 
-            if(moneyAfterPay < 0)
+            if (moneyAfterPay < 0)
             {
-                throw new Exception("The company doesn't have enough money to pay the employee");
+                return eWorkResult.FailureNotEnoughMoney;
             }
 
             Money = moneyAfterPay;
             employee.Money += salary;
+            return eWorkResult.Success;
         }
     }
 }

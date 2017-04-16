@@ -86,7 +86,7 @@ namespace Simul.Views.SubForms
             {
                 cboResourceMarkets.Items.Add(resourceMarket.name);
             }
-            cboResourceMarkets.SelectedIndex = 0;
+            cboResourceMarkets.Text = resourceMarketController.markets.First(x => x.country == gameController.controlledPerson.country).name;
         }
 
         private void cboResourceMarkets_SelectedIndexChanged(object sender, EventArgs e)

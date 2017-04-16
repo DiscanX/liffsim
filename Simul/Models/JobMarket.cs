@@ -9,11 +9,13 @@ namespace Simul.Models
     public class JobMarket
     {
         public string name { get; set; }
+        public Country country { get; set; }
         public List<JobOffer> offers { get; set; }
 
-        public JobMarket(string name, List<JobOffer> offers)
+        public JobMarket(string name, Country country, List<JobOffer> offers)
         {
             this.name = name;
+            this.country = country;
             this.offers = offers;
         }
     }

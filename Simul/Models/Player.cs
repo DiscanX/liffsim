@@ -9,6 +9,7 @@ namespace Simul.Models
     public abstract class Player
     {
         public string name { get; set; }
+        public Country country { get; set; }
         public Inventory inventory { get; set; }
         public bool isHumanControlled { get; set; }
         private decimal money;
@@ -18,9 +19,10 @@ namespace Simul.Models
             set { if (money < 0) { throw new Exception("Money can't go below zero"); } else { money = value; } }
         }
 
-        public Player(string name, decimal money, Inventory inventory, bool isHumanControlled = false)
+        public Player(string name, Country country, decimal money, Inventory inventory, bool isHumanControlled = false)
         {
             this.name = name;
+            this.country = country;
             this.Money = money;
             this.inventory = inventory;
             this.isHumanControlled = isHumanControlled;

@@ -50,6 +50,7 @@ namespace Simul.Views.SubForms
             Person person = personController.persons.First(x => x.name == lstPersons.SelectedItem.ToString());
             txtName.Text = person.name;
             txtMoney.Text = string.Format("{0:C}", person.Money);
+            txtCountry.Text = person.country.name;
             txtStrengthPanSearch.Text = person.strength.ToString();
 
             dlvSkills.SetObjects(person.skillset.skills);

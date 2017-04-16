@@ -19,6 +19,7 @@ namespace Simul.Views
     public partial class frmPrincipal : Form
     {
         GameController gameController;
+        CountryController countryController;
         PersonController personController;
         CompanyController companyController;
         ResourceMarketController resourceMarketController;
@@ -37,6 +38,7 @@ namespace Simul.Views
         {
             InitializeComponent();
 
+            countryController = CountryController.Instance;
             personController = PersonController.Instance;
             companyController = CompanyController.Instance;
             resourceMarketController = ResourceMarketController.Instance;
@@ -50,35 +52,64 @@ namespace Simul.Views
             frmSearchCompany = new frmSearchCompany();
             frmBots = new frmBots();
 
-            personController.persons.Add(new Person("Keven", 10, new Skillset(), new Inventory(), 100, 5, true));
-            personController.persons.Add(new Person("Noèmie", 10, new Skillset(), new Inventory(), 100, 5));
-            personController.persons.Add(new Person("John", 10, new Skillset(), new Inventory(), 100, 5));
-            personController.persons.Add(new Person("Peter", 10, new Skillset(), new Inventory(), 100, 5));
-            personController.persons.Add(new Person("Chris", 10, new Skillset(), new Inventory(), 100, 5));
+            countryController.countries.Add(new Country("Alpha"));
+            countryController.countries.Add(new Country("Beta"));
+            countryController.countries.Add(new Country("Gamma"));
+            countryController.countries.Add(new Country("Delta"));
+            countryController.countries.Add(new Country("Epsilon"));
 
-            companyController.companies.Add(new Company("Sample Company", ContentReader.GetResources()[(int)eResourceName.wheat], 100, new Inventory()));
-            companyController.companies.Add(new Company("World Company", ContentReader.GetResources()[(int)eResourceName.iron], 10000, new Inventory()));
-            companyController.companies[0].employees.Add(personController.persons[0]);
+            Random rnd = new Random();
 
-            resourceMarketController.markets.Add(new ResourceMarket("Main resource market", new List<ResourceOffer>()));
-            resourceMarketController.markets.Add(new ResourceMarket("Secondary resource market", new List<ResourceOffer>()));
-            resourceMarketController.markets[0].offers.Add(new ResourceOffer(personController.persons[1], personController.persons[1].inventory.stocks.First().Key, 50, 1));
-            resourceMarketController.markets[0].offers.Add(new ResourceOffer(personController.persons[2], personController.persons[2].inventory.stocks.Last().Key, 27, 110.50m));
+            personController.persons.Add(new Person("Keven", countryController.countries.Last(), 10, new Skillset(), new Inventory(), Constants.MAX_ENERGY, Constants.BASE_STRENGTH));
+            for(int i = 0; i < 50; i++)
+            {
+                string name = "Person " + (i + 1);
+                Country country = countryController.countries.ElementAt(rnd.Next(0, countryController.countries.Count));
+                Person person = new Person(name, country, 10, new Skillset(), new Inventory(), Constants.MAX_ENERGY, Constants.BASE_STRENGTH);
 
-            jobMarketController.markets.Add(new JobMarket("Main job market", new List<JobOffer>()));
-            jobMarketController.markets[0].offers.Add(new JobOffer(companyController.companies[0], 5m));
-            jobMarketController.markets[0].offers.Add(new JobOffer(companyController.companies[1], 7m));
+                int passion = rnd.Next(1, 101);
+                int interestInEconomy = rnd.Next(0, 101);
+                int interestInMilitary = 100 - interestInEconomy;
+                SimplePersonBot SPBot = new SimplePersonBot(person, passion, interestInEconomy, interestInMilitary, rnd);
+
+                personController.persons.Add(person);
+                gameController.bots.Add(SPBot);
+            }
+
+            for(int i = 0; i < 10; i++)
+            {
+                string name = "Company " + (i + 1);
+                Country country = countryController.countries.ElementAt(rnd.Next(0, countryController.countries.Count));
+                Resource producedResource = ContentReader.GetResources().ElementAt(rnd.Next(0, ContentReader.GetResources().Count));
+                Company company = new Company(name, country, producedResource, 1000, new Inventory());
+
+                int passion = rnd.Next(1, 101);
+                int greediness = rnd.Next(0, 101);
+                int stability = rnd.Next(0, 101);
+                SimpleCompanyBot SCBot = new SimpleCompanyBot(company, passion, greediness, stability, rnd);
+
+                companyController.companies.Add(company);
+                gameController.bots.Add(SCBot);
+            }
+
+            for(int i = 0; i < 5; i++)
+            {
+                resourceMarketController.markets.Add(new ResourceMarket(countryController.countries[i].name + " Resource Market", countryController.countries[i], new List<ResourceOffer>()));
+                resourceMarketController.markets[0].offers.Add(new ResourceOffer(personController.persons[i], personController.persons[i].inventory.stocks.First().Key, 50, 1));
+                resourceMarketController.markets[0].offers.Add(new ResourceOffer(personController.persons[i + 1], personController.persons[i + 1].inventory.stocks.Last().Key, 27, 110.50m));
+
+                jobMarketController.markets.Add(new JobMarket(countryController.countries[i].name + " Job Market", countryController.countries[i], new List<JobOffer>()));
+
+                jobMarketController.markets[i].offers.Add(new JobOffer(companyController.companies[i], 5m));
+                jobMarketController.markets[i].offers.Add(new JobOffer(companyController.companies[i], 4m));
+                jobMarketController.markets[i].offers.Add(new JobOffer(companyController.companies[i], 3m));
+                jobMarketController.markets[i].offers.Add(new JobOffer(companyController.companies[i], 3m));
+                jobMarketController.markets[i].offers.Add(new JobOffer(companyController.companies[i], 3m));
+            }
 
             gameController.controlledPerson = personController.persons.First(x => x.name == "Keven");
             gameController.controlledPerson.employer = companyController.companies[0];
             gameController.controlledPerson.salary = 5.50m;
-
-            Random rnd = new Random();
-            for(int i = 0; i < 4; i++)
-            {
-                int interestInEconomy = rnd.Next(0, 101);
-                gameController.bots.Add(new SimplePersonBot(personController.persons[i + 1], rnd.Next(1, 101), interestInEconomy, 100 - interestInEconomy, rnd));
-            }
 
             SetupMainPanels();
 

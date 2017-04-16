@@ -43,6 +43,8 @@
             this.picResource = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtProgress = new System.Windows.Forms.TextBox();
+            this.txtCountry = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dlvEmployees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.olvInventory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picResource)).BeginInit();
@@ -199,7 +201,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(554, 68);
+            this.label1.Location = new System.Drawing.Point(312, 68);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(179, 20);
             this.label1.TabIndex = 25;
@@ -210,18 +212,42 @@
             this.txtProgress.BackColor = System.Drawing.SystemColors.Control;
             this.txtProgress.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProgress.Location = new System.Drawing.Point(558, 91);
+            this.txtProgress.Location = new System.Drawing.Point(316, 91);
             this.txtProgress.Name = "txtProgress";
             this.txtProgress.ReadOnly = true;
             this.txtProgress.Size = new System.Drawing.Size(100, 19);
             this.txtProgress.TabIndex = 26;
             this.txtProgress.Text = "---";
             // 
+            // txtCountry
+            // 
+            this.txtCountry.BackColor = System.Drawing.SystemColors.Control;
+            this.txtCountry.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCountry.Location = new System.Drawing.Point(558, 91);
+            this.txtCountry.Name = "txtCountry";
+            this.txtCountry.ReadOnly = true;
+            this.txtCountry.Size = new System.Drawing.Size(100, 19);
+            this.txtCountry.TabIndex = 28;
+            this.txtCountry.Text = "---";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(554, 68);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 20);
+            this.label2.TabIndex = 27;
+            this.label2.Text = "Country ";
+            // 
             // frmSearchCompany
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 534);
+            this.Controls.Add(this.txtCountry);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.txtProgress);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.picResource);
@@ -261,5 +287,7 @@
         private System.Windows.Forms.PictureBox picResource;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtProgress;
+        private System.Windows.Forms.TextBox txtCountry;
+        private System.Windows.Forms.Label label2;
     }
 }

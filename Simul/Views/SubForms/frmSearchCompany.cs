@@ -59,6 +59,7 @@ namespace Simul.Views.SubForms
             txtName.Text = company.name;
             txtMoney.Text = string.Format("{0:C}", company.Money);
             txtProgress.Text = string.Format("{0:P2}", company.progress);
+            txtCountry.Text = company.country.name;
 
             dlvEmployees.SetObjects(company.employees);
             olvInventory.SetObjects(company.inventory.stocks);

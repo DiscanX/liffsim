@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace Simul.Models
 {
+    public enum eWorkResult
+    {
+        Success,
+        FailureStocksTooLow,
+        FailureNotEnoughMoney
+    }
+
     public class Person : Player
     {
         public float strength { get; set; }
@@ -14,6 +21,7 @@ namespace Simul.Models
         public Skillset skillset { get; set; }
         public bool alreadyWorked { get; set; }
         public bool alreadyTrained { get; set; }
+        public bool canResign { get; set; }
         public int jobStartDay { get; set; }
         private int energy;
         public int Energy
@@ -26,7 +34,7 @@ namespace Simul.Models
             }
         }
 
-        public Person(string name, decimal money, Skillset skillset,  Inventory inventory, int energy, float strength, bool isHumanControlled = false) : base(name, money, inventory, isHumanControlled)
+        public Person(string name, Country country, decimal money, Skillset skillset,  Inventory inventory, int energy, float strength, bool isHumanControlled = false) : base(name, country, money, inventory, isHumanControlled)
         {
             this.skillset = skillset;
             this.strength = strength;
@@ -63,19 +71,29 @@ namespace Simul.Models
             employer = jobOffer.employer;
             salary = jobOffer.salary;
             jobStartDay = currentDay;
+            canResign = false;
         }
 
-        public void Work()
+        public eWorkResult Work()
         {
             if (alreadyWorked)
             {
                 throw new Exception("This person already worked");
             }
 
-            employer.Produce(this, salary);
-            IncrementSkill(employer.producedResource.improvedSkill);
-            Energy -= Constants.ENERGY_LOST_WORKING;
-            alreadyWorked = true;
+            eWorkResult workResult = employer.Produce(this, salary);
+            if (workResult == eWorkResult.Success)
+            {
+                IncrementSkill(employer.producedResource.improvedSkill);
+                Energy -= Constants.ENERGY_LOST_WORKING;
+                alreadyWorked = true;
+            }
+            else
+            {
+                canResign = true;
+            }
+
+            return workResult;
         }
 
         public void Resign(int currentDay)
@@ -85,9 +103,9 @@ namespace Simul.Models
                 throw new Exception("Can't resign, this person has no employer");
             }
 
-            if(jobStartDay + 1 <= currentDay)
+            if(!canResign)
             {
-                throw new Exception("Can't resign the same day or the day after a person got a job");
+                throw new Exception("This person can't resign (as the value of the attribute canResign is false)");
             }
 
             employer.employees.Remove(this);

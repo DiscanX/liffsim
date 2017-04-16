@@ -8,11 +8,9 @@ namespace Simul.Models
 {
     public abstract class Bot
     {
-        internal static string botTypeName;
-
-        public string BotTypeName { get { return botTypeName; } }
-        public Person myself { get; set; }
-        public Random random { get; set; }
+        public Dictionary<string, int> parameters { get; set; }
+        abstract public string getBotTypeName();
+        abstract public string getBotName();
 
         abstract public void LiveDay();
     }

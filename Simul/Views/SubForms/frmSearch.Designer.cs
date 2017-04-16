@@ -42,6 +42,8 @@
             this.olvInventory = new BrightIdeasSoftware.ObjectListView();
             this.olvResourceImg = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvQuantity = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.txtCountry = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dlvSkills)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.olvInventory)).BeginInit();
             this.SuspendLayout();
@@ -205,11 +207,35 @@
             this.olvQuantity.Text = "Quantity";
             this.olvQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // txtCountry
+            // 
+            this.txtCountry.BackColor = System.Drawing.SystemColors.Control;
+            this.txtCountry.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCountry.Location = new System.Drawing.Point(498, 69);
+            this.txtCountry.Name = "txtCountry";
+            this.txtCountry.ReadOnly = true;
+            this.txtCountry.Size = new System.Drawing.Size(100, 19);
+            this.txtCountry.TabIndex = 24;
+            this.txtCountry.Text = "---";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(416, 69);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(76, 20);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "Country : ";
+            // 
             // frmSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 534);
+            this.Controls.Add(this.txtCountry);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.olvInventory);
             this.Controls.Add(this.txtStrengthPanSearch);
             this.Controls.Add(this.label1);
@@ -246,5 +272,7 @@
         private BrightIdeasSoftware.ObjectListView olvInventory;
         private BrightIdeasSoftware.OLVColumn olvResourceImg;
         private BrightIdeasSoftware.OLVColumn olvQuantity;
+        private System.Windows.Forms.TextBox txtCountry;
+        private System.Windows.Forms.Label label2;
     }
 }
