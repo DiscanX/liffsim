@@ -13,7 +13,7 @@ namespace Simul.Models
         FailureNotEnoughMoney
     }
 
-    public class Person : Player
+    public class Person : Player, IPerson
     {
         public float strength { get; set; }
         public Company employer { get; set; }
@@ -29,7 +29,7 @@ namespace Simul.Models
             get { return energy; }
             set
             {
-                if (value < 0) { throw new Exception("Energy can't go below zero"); }
+                if (value < Constants.MIN_ENERGY) { throw new Exception("Energy can't go below zero"); }
                 energy = value > Constants.MAX_ENERGY ? Constants.MAX_ENERGY : value;
             }
         }

@@ -23,16 +23,15 @@ namespace Simul.Models
         private ResourceMarketController resourceMarketController;
         private JobMarketController jobMarketController;
         private Random random;
-        private Dictionary<Resource, int> yesterdaysStocks;
 
         public override string getBotTypeName()
         {
             return Constants.SIMPLE_COMPANY_BOT_NAME;
         }
 
-        public override string getBotName()
+        public override IPlayer getControlledPlayer()
         {
-            return myself.name;
+            return myself;
         }
 
         public SimpleCompanyBot(Company myself, int passion, int greediness, int stability, Random random)
@@ -64,8 +63,6 @@ namespace Simul.Models
             {
 
             }
-
-            yesterdaysStocks = new Dictionary<Resource, int>(myself.inventory.stocks);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Simul.Views.SubForms
         public void UpdateDisplay()
         {
             lstPersons.Items.Clear();
-            foreach (Person person in personController.persons)
+            foreach (IPerson person in personController.persons)
             {
                 lstPersons.Items.Add(person.name);
             }
@@ -47,7 +47,7 @@ namespace Simul.Views.SubForms
 
         private void DisplayPerson()
         {
-            Person person = personController.persons.First(x => x.name == lstPersons.SelectedItem.ToString());
+            IPerson person = personController.persons.First(x => x.name == lstPersons.SelectedItem.ToString());
             txtName.Text = person.name;
             txtMoney.Text = string.Format("{0:C}", person.Money);
             txtCountry.Text = person.country.name;

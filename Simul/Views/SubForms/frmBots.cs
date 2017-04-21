@@ -1,5 +1,6 @@
 ﻿using Simul.Controllers;
 using Simul.Models;
+using Simul.Models.Decorators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,7 +29,7 @@ namespace Simul.Views.SubForms
             lstBots.Items.Clear();
             foreach (Bot bot in gameController.bots)
             {
-                lstBots.Items.Add(bot.getBotName() + " (" + bot.getBotTypeName() + ")");
+                lstBots.Items.Add(bot.getControlledPlayer().name + " (" + bot.getBotTypeName() + ")");
             }
         }
 
@@ -39,9 +40,20 @@ namespace Simul.Views.SubForms
 
         private void DisplayBot()
         {
-            Bot bot = gameController.bots.First(x => x.getBotName() + " (" + x.getBotTypeName() + ")" == lstBots.SelectedItem.ToString());
+            lstActionHistory.Items.Clear();
+            Bot bot = gameController.bots.First(x => x.getControlledPlayer().name + " (" + x.getBotTypeName() + ")" == lstBots.SelectedItem.ToString());
 
             olvParameters.SetObjects(bot.parameters);
+
+            if(bot.getControlledPlayer().GetType() == typeof(PersonDecorator))
+            {
+                PersonDecorator personDecorator = (PersonDecorator)bot.getControlledPlayer();
+
+                foreach(Tuple<int, string> action in personDecorator.actionHistory)
+                {
+                    lstActionHistory.Items.Add("Day " + action.Item1 + " : " + action.Item2);
+                }
+            }
         }
     }
 }

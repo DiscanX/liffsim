@@ -6,9 +6,6 @@ namespace SimulTests
     [TestClass]
     public class JobMarketControllerTests
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
+
     }
 }

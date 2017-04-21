@@ -6,9 +6,6 @@ namespace SimulTests
     [TestClass]
     public class ResourceMarketControllerTests
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
+
     }
 }

@@ -6,9 +6,6 @@ namespace SimulTests
     [TestClass]
     public class HomeControllerTests
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
+
     }
 }

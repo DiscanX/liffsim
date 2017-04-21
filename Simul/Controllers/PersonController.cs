@@ -15,11 +15,11 @@ namespace Simul.Controllers
         private static PersonController instance = new PersonController();
         public static PersonController Instance { get { return instance; } }
 
-        public List<Person> persons { get; set; }
+        public List<IPerson> persons { get; set; }
 
         private PersonController()
         {
-            persons = new List<Person>();
+            persons = new List<IPerson>();
         }
     }
 }

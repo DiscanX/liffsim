@@ -63,6 +63,10 @@
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Bots\Bot.cs" />
     <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\Decorators\PersonDecorator.cs" />
+    <Compile Include="Models\Interfaces\ICompany.cs" />
+    <Compile Include="Models\Interfaces\IPerson.cs" />
+    <Compile Include="Models\Interfaces\IPlayer.cs" />
     <Compile Include="Models\Resource\PrimaryResource.cs" />
     <Compile Include="Models\Resource\SecondaryResource.cs" />
     <Compile Include="Models\Resource\TertiaryResource.cs" />

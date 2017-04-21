@@ -8,12 +8,12 @@ namespace Simul.Models
 {
     public class ResourceOffer
     {
-        public Player owner { get; set; }
+        public IPlayer owner { get; set; }
         public Resource resource { get; set; }
         public int quantity { get; set; }
         public decimal unitPrice { get; set; }
 
-        public ResourceOffer(Player owner, Resource resource, int quantity, decimal unitPrice)
+        public ResourceOffer(IPlayer owner, Resource resource, int quantity, decimal unitPrice)
         {
             this.owner = owner;
             this.resource = resource;

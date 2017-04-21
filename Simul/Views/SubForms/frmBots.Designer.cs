@@ -33,6 +33,8 @@
             this.olvParamName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvParamValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lstActionHistory = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.olvParameters)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,7 +64,7 @@
             this.olvParameters.GridLines = true;
             this.olvParameters.Location = new System.Drawing.Point(205, 40);
             this.olvParameters.Name = "olvParameters";
-            this.olvParameters.Size = new System.Drawing.Size(462, 477);
+            this.olvParameters.Size = new System.Drawing.Size(337, 477);
             this.olvParameters.TabIndex = 15;
             this.olvParameters.UseCompatibleStateImageBehavior = false;
             this.olvParameters.View = System.Windows.Forms.View.Details;
@@ -97,11 +99,31 @@
             this.label1.TabIndex = 21;
             this.label1.Text = "Bot parameters";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(547, 17);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(104, 20);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Action history";
+            // 
+            // lstActionHistory
+            // 
+            this.lstActionHistory.FormattingEnabled = true;
+            this.lstActionHistory.Location = new System.Drawing.Point(551, 40);
+            this.lstActionHistory.Name = "lstActionHistory";
+            this.lstActionHistory.Size = new System.Drawing.Size(411, 472);
+            this.lstActionHistory.TabIndex = 23;
+            // 
             // frmBots
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 534);
+            this.Controls.Add(this.lstActionHistory);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.olvParameters);
             this.Controls.Add(this.lstBots);
@@ -121,5 +143,7 @@
         private BrightIdeasSoftware.OLVColumn olvParamName;
         private BrightIdeasSoftware.OLVColumn olvParamValue;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ListBox lstActionHistory;
     }
 }

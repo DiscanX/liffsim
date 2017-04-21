@@ -10,7 +10,7 @@ namespace Simul.Models
     {
         public Dictionary<string, int> parameters { get; set; }
         abstract public string getBotTypeName();
-        abstract public string getBotName();
+        abstract public IPlayer getControlledPlayer();
 
         abstract public void LiveDay();
     }

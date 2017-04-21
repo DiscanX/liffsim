@@ -16,7 +16,7 @@ namespace Simul.Models
 
     public class SimplePersonBot : Bot
     {
-        private Person myself;
+        private IPerson myself;
         private GameController gameController;
         private PersonController personController;
         private CompanyController companyController;
@@ -29,12 +29,12 @@ namespace Simul.Models
             return Constants.SIMPLE_PERSON_BOT_NAME;
         }
 
-        public override string getBotName()
+        public override IPlayer getControlledPlayer()
         {
-            return myself.name;
+            return myself;
         }
 
-        public SimplePersonBot(Person myself, int passion, int interestInEconomy, int interestInMilitary, Random random)
+        public SimplePersonBot(IPerson myself, int passion, int interestInEconomy, int interestInMilitary, Random random)
         {
             this.myself = myself;
             this.myself.isHumanControlled = false;

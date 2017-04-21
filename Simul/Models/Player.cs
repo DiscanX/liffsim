@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Simul.Models
 {
-    public abstract class Player
+    public abstract class Player : IPlayer
     {
         public string name { get; set; }
         public Country country { get; set; }
@@ -89,7 +89,7 @@ namespace Simul.Models
             inventory.stocks[offer.resource] += offer.quantity;
         }
 
-        public void GiveTo(Player receiver, Resource ressource, int quantite)
+        public void GiveTo(Player receiver, Resource resource, int quantity)
         {
 
         }

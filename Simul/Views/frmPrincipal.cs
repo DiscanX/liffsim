@@ -2,6 +2,7 @@
 using Simul.Controllers;
 using Simul.Helpers;
 using Simul.Models;
+using Simul.Models.Decorators;
 using Simul.Properties;
 using Simul.Views.SubForms;
 using System;
@@ -60,12 +61,13 @@ namespace Simul.Views
 
             Random rnd = new Random();
 
-            personController.persons.Add(new Person("Keven", countryController.countries.Last(), 10, new Skillset(), new Inventory(), Constants.MAX_ENERGY, Constants.BASE_STRENGTH));
+            personController.persons.Add(new Person("Keven", countryController.countries.Last(), Constants.BASE_MONEY, new Skillset(), new Inventory(), Constants.BASE_ENERGY, Constants.BASE_STRENGTH));
             for(int i = 0; i < 50; i++)
             {
                 string name = "Person " + (i + 1);
                 Country country = countryController.countries.ElementAt(rnd.Next(0, countryController.countries.Count));
-                Person person = new Person(name, country, 10, new Skillset(), new Inventory(), Constants.MAX_ENERGY, Constants.BASE_STRENGTH);
+                Person decoratedPerson = new Person(name, country, Constants.BASE_MONEY, new Skillset(), new Inventory(), Constants.BASE_ENERGY, Constants.BASE_STRENGTH);
+                IPerson person = new PersonDecorator(decoratedPerson);
 
                 int passion = rnd.Next(1, 101);
                 int interestInEconomy = rnd.Next(0, 101);

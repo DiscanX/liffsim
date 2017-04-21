@@ -60,7 +60,7 @@ namespace Simul.Models
             return strength;
         }
 
-        public static float CalculateProductionProgress(Company company, Person employee)
+        public static float CalculateProductionProgress(Company company, IPerson employee)
         {
             KeyValuePair<Skill, float> skill = employee.skillset.skills.First(x => x.Key == company.producedResource.improvedSkill);
             return skill.Value;

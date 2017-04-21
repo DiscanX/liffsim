@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Simul.Models
 {
-    public class Company : Player
+    public class Company : Player, ICompany
     {
         public Resource producedResource { get; set; }
         public float progress { get; set; }
