@@ -57,17 +57,19 @@ namespace Simul.Helpers
                         requirements.Add(requiredResource, requiredQuantity);
                     }
 
+                    bool edible = resource.Element("edible") != null;
+
                     Resource createdResource;
                     switch(type)
                     {
                         case eResourceType.primary:
-                            createdResource = new PrimaryResource(name, improvedSkill, productionCost);
+                            createdResource = new PrimaryResource(name, improvedSkill, productionCost, edible);
                             break;
                         case eResourceType.secondary:
-                            createdResource = new SecondaryResource(name, improvedSkill, productionCost, requirements);
+                            createdResource = new SecondaryResource(name, improvedSkill, productionCost, requirements, edible);
                             break;
                         case eResourceType.tertiary:
-                            createdResource = new TertiaryResource(name, improvedSkill, productionCost, requirements);
+                            createdResource = new TertiaryResource(name, improvedSkill, productionCost, requirements, edible);
                             break;
                         default:
                             throw new InvalidEnumArgumentException();

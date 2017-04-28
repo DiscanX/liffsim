@@ -11,7 +11,7 @@ namespace Simul.Models
     {
         public Dictionary<Resource, int> requirements { get; set; }
 
-        public SecondaryResource(eResourceName name, Skill improvedSkill, int productionCost, Dictionary<Resource, int> requirements) : base(name, improvedSkill, productionCost)
+        public SecondaryResource(eResourceName name, Skill improvedSkill, int productionCost, Dictionary<Resource, int> requirements, bool edible) : base(name, improvedSkill, productionCost, edible)
         {
             this.requirements = requirements;
         }

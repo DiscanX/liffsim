@@ -1,5 +1,6 @@
 ﻿using Simul.Controllers;
 using Simul.Models;
+using Simul.Models.Bots;
 using Simul.Models.Decorators;
 using System;
 using System.Collections.Generic;

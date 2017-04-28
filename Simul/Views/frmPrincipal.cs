@@ -2,6 +2,7 @@
 using Simul.Controllers;
 using Simul.Helpers;
 using Simul.Models;
+using Simul.Models.Bots;
 using Simul.Models.Decorators;
 using Simul.Properties;
 using Simul.Views.SubForms;
@@ -72,7 +73,7 @@ namespace Simul.Views
                 int passion = rnd.Next(1, 101);
                 int interestInEconomy = rnd.Next(0, 101);
                 int interestInMilitary = 100 - interestInEconomy;
-                SimplePersonBot SPBot = new SimplePersonBot(person, passion, interestInEconomy, interestInMilitary, rnd);
+                SimplePersonBot SPBot = new SimplePersonBot(person, PersonalityTraits.GenerateRandomPersonalityTraits(rnd), 100, interestInEconomy, interestInMilitary, rnd);
 
                 personController.persons.Add(person);
                 gameController.bots.Add(SPBot);

@@ -9,7 +9,7 @@ namespace Simul.Models
 {
     public class PrimaryResource : Resource
     {
-        public PrimaryResource(eResourceName name, Skill improvedSkill, int productionCost) : base(name, improvedSkill, productionCost)
+        public PrimaryResource(eResourceName name, Skill improvedSkill, int productionCost, bool edible) : base(name, improvedSkill, productionCost, edible)
         {
 
         }

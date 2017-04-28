@@ -8,6 +8,7 @@
         public const int ENERGY_LOST_WORKING = 10;
         public const int ENERGY_LOST_TRAINING = 5;
         public const int ENERGY_GAINED_AFTER_DAY = 5;
+        public const int ENERGY_GAINED_AFTER_EATING = 20;
 
         public const int BASE_STRENGTH = 5;
 

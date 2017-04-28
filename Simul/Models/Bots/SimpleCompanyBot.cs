@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simul.Models
+namespace Simul.Models.Bots
 {
     public enum eSCBotParameters
     {

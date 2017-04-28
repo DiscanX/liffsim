@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simul.Models
+namespace Simul.Models.Bots
 {
     public enum eSPBotParameters
     {
@@ -17,11 +17,14 @@ namespace Simul.Models
     public class SimplePersonBot : Bot
     {
         private IPerson myself;
+        private List<ePersonalityTrait> personalityTraits;
+
         private GameController gameController;
         private PersonController personController;
         private CompanyController companyController;
         private ResourceMarketController resourceMarketController;
         private JobMarketController jobMarketController;
+
         private Random random;
 
         public override string getBotTypeName()
@@ -34,10 +37,11 @@ namespace Simul.Models
             return myself;
         }
 
-        public SimplePersonBot(IPerson myself, int passion, int interestInEconomy, int interestInMilitary, Random random)
+        public SimplePersonBot(IPerson myself, List<ePersonalityTrait> personalityTraits, int passion, int interestInEconomy, int interestInMilitary, Random random)
         {
             this.myself = myself;
             this.myself.isHumanControlled = false;
+            this.personalityTraits = personalityTraits;
 
             this.parameters = new Dictionary<string, int>();
             parameters.Add(eSPBotParameters.passion.ToString(), passion);
@@ -61,6 +65,29 @@ namespace Simul.Models
 
             if (passion > 0 && random.Next(1, 101) <= passion)
             {
+                //Eat
+                if(myself.Energy + Constants.ENERGY_GAINED_AFTER_EATING <= Constants.MAX_ENERGY)
+                {
+                    var edibleResources = myself.inventory.stocks.Where(x => x.Key.edible && x.Value > 0);
+                    int quantityToEat = Math.Min((Constants.MAX_ENERGY - myself.Energy) / Constants.ENERGY_GAINED_AFTER_EATING, edibleResources.Count());
+
+                    for(int i = 0; i < edibleResources.Count(); i++)
+                    {
+                        var edibleResource = edibleResources.ElementAt(i);
+
+                        if (edibleResource.Value >= quantityToEat)
+                        {
+                            myself.Eat(edibleResource.Key, quantityToEat);
+                            break;
+                        }
+                        else
+                        {
+                            myself.Eat(edibleResource.Key, edibleResource.Value);
+                            quantityToEat -= edibleResource.Value;
+                        }
+                    }
+                }
+
                 //Find a job if none
                 if(myself.employer == null)
                 {
@@ -86,6 +113,15 @@ namespace Simul.Models
                 }
 
                 //Buy & Sell
+
+                //Food
+                if(myself.Energy < Constants.MAX_ENERGY / 2)
+                {
+
+                }
+
+
+                //Weapons
             }
         }
 

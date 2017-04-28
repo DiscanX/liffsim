@@ -127,6 +127,24 @@ namespace Simul.Models
             alreadyTrained = true;
         }
 
+        public void Eat(Resource resource, int quantity = 1)
+        {
+            int quantityAfterEating = inventory.stocks[resource] - quantity;
+
+            if(!resource.edible)
+            {
+                throw new Exception("This resource can't be eaten");
+            }
+
+            if(quantityAfterEating < 0)
+            {
+                throw new Exception("Quantity can't go below zero");
+            }
+
+            Energy += Constants.ENERGY_GAINED_AFTER_EATING * quantity;
+            inventory.stocks[resource] = quantityAfterEating;
+        }
+
         private void IncrementStrength()
         {
             strength = Calculator.CalculateStrengthIncrement(strength);

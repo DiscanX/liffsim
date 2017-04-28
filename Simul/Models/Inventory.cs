@@ -17,7 +17,7 @@ namespace Simul.Models
 
             foreach(Resource resource in ContentReader.GetResources())
             {
-                stocks.Add(resource, 0);
+                stocks.Add(resource, 5);
             }
         }
 

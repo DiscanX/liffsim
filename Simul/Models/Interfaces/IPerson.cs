@@ -18,5 +18,6 @@
         void TakeJob(JobMarket jobMarket, JobOffer jobOffer, int currentDay);
         void Train();
         eWorkResult Work();
+        void Eat(Resource resource, int quantity);
     }
 }

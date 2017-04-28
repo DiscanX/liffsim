@@ -12,12 +12,14 @@ namespace Simul.Models
         public eResourceName name { get; set; }
         public Skill improvedSkill { get; set; }
         public int productionCost { get; set; }
+        public bool edible { get; set; }
 
-        internal Resource(eResourceName name, Skill improvedSkill, int productionCost)
+        internal Resource(eResourceName name, Skill improvedSkill, int productionCost, bool edible)
         {
             this.name = name;
             this.improvedSkill = improvedSkill;
             this.productionCost = productionCost;
+            this.edible = edible;
         }
 
         public virtual Dictionary<Resource, int> GetRequirements()

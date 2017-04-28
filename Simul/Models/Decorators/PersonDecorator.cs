@@ -16,7 +16,9 @@ namespace Simul.Models.Decorators
         private const string ACTION_DESCRIPTION_SELL = "Put for sale {0} {1} to the market {2}";
         private const string ACTION_DESCRIPTION_TAKEJOB = "Took job of {0} with a salary of {1} from the market {2}";
         private const string ACTION_DESCRIPTION_TRAIN = "Trained";
+        private const string ACTION_DESCRIPTION_CANT_WORK = "Tried to work but can't : {0}";
         private const string ACTION_DESCRIPTION_WORK = "Worked";
+        private const string ACTION_DESCRIPTION_EAT = "Ate {0} {1} for {2} energy";
 
         public List<Tuple<int, string>> actionHistory { get; set; }
         protected Person decoratedPerson;
@@ -71,8 +73,25 @@ namespace Simul.Models.Decorators
 
         public eWorkResult Work()
         {
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, ACTION_DESCRIPTION_WORK));
-            return decoratedPerson.Work();
+            eWorkResult workResult = decoratedPerson.Work();
+
+            if(workResult != eWorkResult.Success)
+            {
+                actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(ACTION_DESCRIPTION_CANT_WORK, workResult.ToString())));
+            }
+            else
+            {
+                actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, ACTION_DESCRIPTION_WORK));
+            }
+            
+            return workResult;
+        }
+
+        public void Eat(Resource resource, int quantity)
+        {
+            decoratedPerson.Eat(resource, quantity);
+            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(ACTION_DESCRIPTION_EAT, quantity, resource.name, quantity * Constants.ENERGY_GAINED_AFTER_EATING)));
+
         }
 
         public float strength
