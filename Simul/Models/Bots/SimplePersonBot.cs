@@ -66,27 +66,7 @@ namespace Simul.Models.Bots
             if (passion > 0 && random.Next(1, 101) <= passion)
             {
                 //Eat
-                if(myself.Energy + Constants.ENERGY_GAINED_AFTER_EATING <= Constants.MAX_ENERGY)
-                {
-                    var edibleResources = myself.inventory.stocks.Where(x => x.Key.edible && x.Value > 0);
-                    int quantityToEat = Math.Min((Constants.MAX_ENERGY - myself.Energy) / Constants.ENERGY_GAINED_AFTER_EATING, edibleResources.Count());
-
-                    for(int i = 0; i < edibleResources.Count(); i++)
-                    {
-                        var edibleResource = edibleResources.ElementAt(i);
-
-                        if (edibleResource.Value >= quantityToEat)
-                        {
-                            myself.Eat(edibleResource.Key, quantityToEat);
-                            break;
-                        }
-                        else
-                        {
-                            myself.Eat(edibleResource.Key, edibleResource.Value);
-                            quantityToEat -= edibleResource.Value;
-                        }
-                    }
-                }
+                myself.EatUntilFull();
 
                 //Find a job if none
                 if(myself.employer == null)
@@ -115,8 +95,23 @@ namespace Simul.Models.Bots
                 //Buy & Sell
 
                 //Food
-                if(myself.Energy < Constants.MAX_ENERGY / 2)
+                if (myself.Energy < Constants.MAX_ENERGY / 2)
                 {
+                    ResourceMarket countryResourceMarket = resourceMarketController.GetMarketOfCountry(myself.country.name);
+
+                    int quantityWanted = random.Next(1, 4);
+                    var foodToBuy = resourceMarketController.GetBestOffersOfMarket(countryResourceMarket, Helpers.eResourceName.bread, quantityWanted);
+
+                    int maximumBuyable = myself.CalculateMaximumBuyable(foodToBuy);
+
+                    //Only buy food when able to buy the maximum
+                    if(maximumBuyable == quantityWanted)
+                    {
+                        foreach(var food in foodToBuy)
+                        {
+                            myself.Buy(countryResourceMarket, food.Item1, food.Item2);
+                        }
+                    }
 
                 }
 
@@ -130,7 +125,7 @@ namespace Simul.Models.Bots
             JobOffer bestOffer = new JobOffer(null, Decimal.MinValue);
             JobMarket bestJobMarketOfOffer = null;
 
-            foreach (JobMarket market in jobMarketController.markets)
+            foreach (JobMarket market in jobMarketController.markets.Where(x => x.country == myself.country))
             {
                 JobOffer bestOfferOfThisMarket = market.offers.OrderByDescending(x => x.salary).FirstOrDefault();
                 if (bestOfferOfThisMarket != null && bestOfferOfThisMarket.salary > bestOffer.salary)

@@ -32,7 +32,7 @@ namespace Simul.Models.Decorators
         public void Buy(ResourceMarket resourceMarket, ResourceOffer offer, int quantity)
         {
             decoratedPerson.Buy(resourceMarket, offer, quantity);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(ACTION_DESCRIPTION_BUY, offer.quantity, offer.resource.name, resourceMarket.name)));
+            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(ACTION_DESCRIPTION_BUY, quantity, offer.resource.name, resourceMarket.name)));
         }
 
         public void GiveTo(Player receiver, Resource resource, int quantity)
@@ -186,6 +186,31 @@ namespace Simul.Models.Decorators
         public float GetCurrentUsedSkillLevel()
         {
             return decoratedPerson.GetCurrentUsedSkillLevel();
+        }
+
+        public string DisplayCurrentEmployer()
+        {
+            return decoratedPerson.DisplayCurrentEmployer();
+        }
+
+        public bool CanWork()
+        {
+            return decoratedPerson.CanWork();
+        }
+
+        public bool CanTrain()
+        {
+            return decoratedPerson.CanTrain();
+        }
+
+        public int CalculateMaximumBuyable(List<Tuple<ResourceOffer, int>> offers)
+        {
+            return decoratedPerson.CalculateMaximumBuyable(offers);
+        }
+
+        public void EatUntilFull()
+        {
+            decoratedPerson.EatUntilFull();
         }
     }
 }

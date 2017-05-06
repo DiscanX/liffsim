@@ -19,5 +19,10 @@ namespace Simul.Controllers
         {
             markets = new List<JobMarket>();
         }
+
+        public JobMarket GetMarketOfCountry(string countryName)
+        {
+            return markets.First(x => x.country.name == countryName);
+        }
     }
 }

@@ -42,6 +42,11 @@ namespace Simul.Models
                 throw new Exception("The quantity requested is greater than the quantity offered");
             }
 
+            if(country != resourceMarket.country)
+            {
+                throw new Exception("Can't buy from another's country market");
+            }
+
             offer.owner.Money += totalPrice;
             Money -= totalPrice;
 
@@ -92,6 +97,32 @@ namespace Simul.Models
         public void GiveTo(Player receiver, Resource resource, int quantity)
         {
 
+        }
+
+        public int CalculateMaximumBuyable(List<Tuple<ResourceOffer, int>> offers)
+        {
+            int maximumBuyable = 0;
+            decimal moneyToSpend = money;
+
+            for(int i = 0; i < offers.Count(); i++)
+            {
+                if(offers[i].Item2 > offers[i].Item1.quantity)
+                {
+                    throw new Exception("Can't buy more than what the quantity of the offer is");
+                }
+
+                if(offers[i].Item1.unitPrice * offers[i].Item2 > moneyToSpend)
+                {
+                    maximumBuyable += (int)Math.Floor(moneyToSpend / offers[i].Item1.unitPrice);
+                    break;
+                }
+                else
+                {
+                    maximumBuyable += offers[i].Item2;
+                }
+            }
+
+            return maximumBuyable;
         }
     }
 }

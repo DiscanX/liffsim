@@ -28,11 +28,10 @@ namespace Simul.Views.SubForms
         {
             txtStrength.Text = gameController.controlledPerson.strength.ToString();
             txtProductivity.Text = gameController.controlledPerson.DisplayProductivity();
+            txtCurrentEmployer.Text = gameController.controlledPerson.DisplayCurrentEmployer();
 
-            btnWork.Enabled = (gameController.controlledPerson.employer != null && !gameController.controlledPerson.alreadyWorked);
-            txtCurrentEmployer.Text = gameController.controlledPerson.employer == null ? "Nowhere" : gameController.controlledPerson.employer.name;
-
-            btnTrain.Enabled = (!gameController.controlledPerson.alreadyTrained);
+            btnWork.Enabled = gameController.controlledPerson.CanWork();
+            btnTrain.Enabled = gameController.controlledPerson.CanTrain();
         }
 
         private void btnTrain_Click(object sender, EventArgs e)

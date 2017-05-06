@@ -65,6 +65,11 @@ namespace Simul.Models
 
         public void TakeJob(JobMarket jobMarket, JobOffer jobOffer, int currentDay)
         {
+            if(country != jobMarket.country)
+            {
+                throw new Exception("Can't take job from another country");
+            }
+
             jobMarket.offers.Remove(jobOffer);
             jobOffer.employer.employees.Add(this);
 
@@ -108,6 +113,11 @@ namespace Simul.Models
                 throw new Exception("This person can't resign (as the value of the attribute canResign is false)");
             }
 
+            if(country != employer.country)
+            {
+                throw new Exception("Can't work for another country");
+            }
+
             employer.employees.Remove(this);
 
             employer = null;
@@ -145,6 +155,31 @@ namespace Simul.Models
             inventory.stocks[resource] = quantityAfterEating;
         }
 
+        public void EatUntilFull()
+        {
+            if (energy + Constants.ENERGY_GAINED_AFTER_EATING <= Constants.MAX_ENERGY)
+            {
+                var edibleResources = inventory.stocks.Where(x => x.Key.edible && x.Value > 0);
+                int quantityToEat = Math.Min((Constants.MAX_ENERGY - energy) / Constants.ENERGY_GAINED_AFTER_EATING, edibleResources.Count());
+
+                for (int i = 0; i < edibleResources.Count(); i++)
+                {
+                    var edibleResource = edibleResources.ElementAt(i);
+
+                    if (edibleResource.Value >= quantityToEat)
+                    {
+                        Eat(edibleResource.Key, quantityToEat);
+                        break;
+                    }
+                    else
+                    {
+                        Eat(edibleResource.Key, edibleResource.Value);
+                        quantityToEat -= edibleResource.Value;
+                    }
+                }
+            }
+        }
+
         private void IncrementStrength()
         {
             strength = Calculator.CalculateStrengthIncrement(strength);
@@ -153,6 +188,21 @@ namespace Simul.Models
         private void IncrementSkill(Skill skill)
         {
             skillset.skills[skill] = Calculator.CalculateSkillIncrement(skillset.skills[skill]);
+        }
+
+        public string DisplayCurrentEmployer()
+        {
+            return employer == null ? "None" : employer.name;
+        }
+
+        public bool CanWork()
+        {
+            return employer != null && energy - Constants.ENERGY_LOST_WORKING >= 0 && !alreadyWorked;
+        }
+
+        public bool CanTrain()
+        {
+            return energy - Constants.ENERGY_LOST_TRAINING >= 0 && !alreadyTrained;
         }
     }
 }

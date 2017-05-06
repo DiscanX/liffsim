@@ -5,8 +5,8 @@
         public const int MIN_ENERGY = 0;
         public const int MAX_ENERGY = 100;
         public const int BASE_ENERGY = 100;
-        public const int ENERGY_LOST_WORKING = 10;
-        public const int ENERGY_LOST_TRAINING = 5;
+        public const int ENERGY_LOST_WORKING = 20;
+        public const int ENERGY_LOST_TRAINING = 20;
         public const int ENERGY_GAINED_AFTER_DAY = 5;
         public const int ENERGY_GAINED_AFTER_EATING = 20;
 

@@ -13,11 +13,16 @@
         float strength { get; set; }
 
         string DisplayProductivity();
+        string DisplayCurrentEmployer();
+
         float GetCurrentUsedSkillLevel();
         void Resign(int currentDay);
         void TakeJob(JobMarket jobMarket, JobOffer jobOffer, int currentDay);
         void Train();
         eWorkResult Work();
         void Eat(Resource resource, int quantity);
+        void EatUntilFull();
+        bool CanWork();
+        bool CanTrain();
     }
 }

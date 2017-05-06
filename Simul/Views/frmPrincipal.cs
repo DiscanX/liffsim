@@ -54,6 +54,7 @@ namespace Simul.Views
             frmSearchCompany = new frmSearchCompany();
             frmBots = new frmBots();
 
+            //Temporary Country Creator
             countryController.countries.Add(new Country("Alpha"));
             countryController.countries.Add(new Country("Beta"));
             countryController.countries.Add(new Country("Gamma"));
@@ -62,6 +63,7 @@ namespace Simul.Views
 
             Random rnd = new Random();
 
+            //Temporary Person Creator
             personController.persons.Add(new Person("Keven", countryController.countries.Last(), Constants.BASE_MONEY, new Skillset(), new Inventory(), Constants.BASE_ENERGY, Constants.BASE_STRENGTH));
             for(int i = 0; i < 50; i++)
             {
@@ -79,7 +81,8 @@ namespace Simul.Views
                 gameController.bots.Add(SPBot);
             }
 
-            for(int i = 0; i < 10; i++)
+            //Temporary Company Creator
+            for (int i = 0; i < 10; i++)
             {
                 string name = "Company " + (i + 1);
                 Country country = countryController.countries.ElementAt(rnd.Next(0, countryController.countries.Count));
@@ -95,21 +98,34 @@ namespace Simul.Views
                 gameController.bots.Add(SCBot);
             }
 
-            for(int i = 0; i < 5; i++)
+            //Temporary Markets Creator
+            for (int i = 0; i < 5; i++)
             {
                 resourceMarketController.markets.Add(new ResourceMarket(countryController.countries[i].name + " Resource Market", countryController.countries[i], new List<ResourceOffer>()));
-                resourceMarketController.markets[0].offers.Add(new ResourceOffer(personController.persons[i], personController.persons[i].inventory.stocks.First().Key, 50, 1));
-                resourceMarketController.markets[0].offers.Add(new ResourceOffer(personController.persons[i + 1], personController.persons[i + 1].inventory.stocks.Last().Key, 27, 110.50m));
-
                 jobMarketController.markets.Add(new JobMarket(countryController.countries[i].name + " Job Market", countryController.countries[i], new List<JobOffer>()));
-
-                jobMarketController.markets[i].offers.Add(new JobOffer(companyController.companies[i], 5m));
-                jobMarketController.markets[i].offers.Add(new JobOffer(companyController.companies[i], 4m));
-                jobMarketController.markets[i].offers.Add(new JobOffer(companyController.companies[i], 3m));
-                jobMarketController.markets[i].offers.Add(new JobOffer(companyController.companies[i], 3m));
-                jobMarketController.markets[i].offers.Add(new JobOffer(companyController.companies[i], 3m));
             }
 
+            //Temporary Resources Creator
+            foreach (ResourceMarket market in resourceMarketController.markets)
+            {
+                foreach (Resource resource in ContentReader.GetResources())
+                {
+                    market.offers.Add(new ResourceOffer(personController.persons[1], resource, 1000, 1.25m));
+                }
+            }
+
+            foreach (JobMarket market in jobMarketController.markets)
+            {
+                foreach (Company company in companyController.companies)
+                {
+                    if(company.country.name == market.country.name)
+                    {
+                        market.offers.Add(new JobOffer(company, 1m));
+                    }
+                }
+            }
+
+            //Temporary ControlledPersonne Setter
             gameController.controlledPerson = personController.persons.First(x => x.name == "Keven");
             gameController.controlledPerson.employer = companyController.companies[0];
             gameController.controlledPerson.salary = 5.50m;

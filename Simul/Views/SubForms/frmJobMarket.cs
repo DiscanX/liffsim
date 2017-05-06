@@ -60,7 +60,7 @@ namespace Simul.Views.SubForms
             {
                 cboJobMarkets.Items.Add(jobMarket.name);
             }
-            cboJobMarkets.Text = jobMarketController.markets.First(x => x.country == gameController.controlledPerson.country).name;
+            cboJobMarkets.Text = jobMarketController.GetMarketOfCountry(gameController.controlledPerson.country.name).name;
         }
 
         private void cboJobMarkets_SelectedIndexChanged(object sender, EventArgs e)
