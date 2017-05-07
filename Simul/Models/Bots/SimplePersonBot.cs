@@ -112,7 +112,6 @@ namespace Simul.Models.Bots
                             myself.Buy(countryResourceMarket, food.Item1, food.Item2);
                         }
                     }
-
                 }
 
 

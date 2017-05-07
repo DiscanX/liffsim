@@ -85,14 +85,21 @@ namespace Simul.Views
             for (int i = 0; i < 10; i++)
             {
                 string name = "Company " + (i + 1);
-                Country country = countryController.countries.ElementAt(rnd.Next(0, countryController.countries.Count));
-                Resource producedResource = ContentReader.GetResources().ElementAt(rnd.Next(0, ContentReader.GetResources().Count));
-                Company company = new Company(name, country, producedResource, 1000, new Inventory());
+                Country country = countryController.countries.ElementAt(i % 5);
+
+                Resource producedResource;
+                if (i % 2 == 0)
+                    producedResource = ContentReader.GetResources().Where(x => x.name == eResourceName.wheat).First();
+                else
+                    producedResource = ContentReader.GetResources().Where(x => x.name == eResourceName.bread).First();
+
+                Company decoratedCompany = new Company(name, country, producedResource, 1000, new Inventory());
+                ICompany company = new CompanyDecorator(decoratedCompany);
 
                 int passion = rnd.Next(1, 101);
                 int greediness = rnd.Next(0, 101);
                 int stability = rnd.Next(0, 101);
-                SimpleCompanyBot SCBot = new SimpleCompanyBot(company, passion, greediness, stability, rnd);
+                SimpleCompanyBot SCBot = new SimpleCompanyBot(company, 100, greediness, stability, rnd);
 
                 companyController.companies.Add(company);
                 gameController.bots.Add(SCBot);
@@ -106,21 +113,24 @@ namespace Simul.Views
             }
 
             //Temporary Resources Creator
-            foreach (ResourceMarket market in resourceMarketController.markets)
-            {
-                foreach (Resource resource in ContentReader.GetResources())
-                {
-                    market.offers.Add(new ResourceOffer(personController.persons[1], resource, 1000, 1.25m));
-                }
-            }
+            //foreach (ResourceMarket market in resourceMarketController.markets)
+            //{
+            //    foreach (Resource resource in ContentReader.GetResources())
+            //    {
+            //        market.offers.Add(new ResourceOffer(personController.persons[1], resource, 1000, 1.25m));
+            //    }
+            //}
 
             foreach (JobMarket market in jobMarketController.markets)
             {
-                foreach (Company company in companyController.companies)
+                foreach (ICompany company in companyController.companies)
                 {
                     if(company.country.name == market.country.name)
                     {
-                        market.offers.Add(new JobOffer(company, 1m));
+                        for(int i = 0; i < 10; i++)
+                        {
+                            market.offers.Add(new JobOffer(company, 1m));
+                        }
                     }
                 }
             }
@@ -165,11 +175,6 @@ namespace Simul.Views
             currentSubForm = subForm;
             currentSubForm.Visible = true;
             ((ISubForm)currentSubForm).UpdateDisplay();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         public void ReloadMenu()

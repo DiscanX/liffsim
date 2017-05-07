@@ -35,7 +35,7 @@ namespace Simul.Views.SubForms
         public void UpdateDisplay()
         {
             lstCompanies.Items.Clear();
-            foreach(Company company in companyController.companies)
+            foreach(ICompany company in companyController.companies)
             {
                 lstCompanies.Items.Add(company.name);
             }
@@ -53,7 +53,7 @@ namespace Simul.Views.SubForms
 
         private void DisplayCompany()
         {
-            Company company = companyController.companies.First(x => x.name == lstCompanies.SelectedItem.ToString());
+            ICompany company = companyController.companies.First(x => x.name == lstCompanies.SelectedItem.ToString());
             picResource.Image = ContentReader.GetResourcesImages().Images[company.producedResource.name.ToString()];
 
             txtName.Text = company.name;

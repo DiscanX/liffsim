@@ -14,11 +14,11 @@ namespace Simul.Controllers
         private static CompanyController instance = new CompanyController();
         public static CompanyController Instance { get { return instance; } }
 
-        public List<Company> companies { get; set; }
+        public List<ICompany> companies { get; set; }
 
         private CompanyController()
         {
-            companies = new List<Company>();
+            companies = new List<ICompany>();
         }
     }
 }

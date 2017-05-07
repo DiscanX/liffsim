@@ -16,7 +16,7 @@ namespace Simul.Models
     public class Person : Player, IPerson
     {
         public float strength { get; set; }
-        public Company employer { get; set; }
+        public ICompany employer { get; set; }
         public decimal salary { get; set; }
         public Skillset skillset { get; set; }
         public bool alreadyWorked { get; set; }

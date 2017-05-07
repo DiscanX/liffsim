@@ -64,7 +64,7 @@ namespace Simul.Models
 
         public void Sell(ResourceMarket resourceMarket, ResourceOffer offer)
         {
-            if(offer.owner != this)
+            if(offer.owner.name != name)
             {
                 throw new Exception("The player can only sell offers he owns");
             }
@@ -74,13 +74,22 @@ namespace Simul.Models
                 throw new Exception("The resource is not owned by the player");
             }
             
-            if(!inventory.stocks.Any(x => x.Key == offer.resource && x.Value > offer.quantity))
+            if(inventory.stocks.Any(x => x.Key == offer.resource && offer.quantity > x.Value))
             {
                 throw new Exception("The offer contains too much of this resource");
             }
 
             inventory.stocks[offer.resource] -= offer.quantity;
-            resourceMarket.offers.Add(offer);
+
+            ResourceOffer alreadyExistingOffer = resourceMarket.offers.FirstOrDefault(x => x.owner.name == name && x.resource == offer.resource && x.unitPrice == offer.unitPrice);
+            if (alreadyExistingOffer != null)
+            {
+                alreadyExistingOffer.quantity += offer.quantity;
+            }
+            else
+            {
+                resourceMarket.offers.Add(offer);
+            }
         }
 
         public void RemoveOffer(ResourceMarket resourceMarket, ResourceOffer offer)

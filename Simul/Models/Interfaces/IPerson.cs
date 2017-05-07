@@ -5,7 +5,7 @@
         bool alreadyTrained { get; set; }
         bool alreadyWorked { get; set; }
         bool canResign { get; set; }
-        Company employer { get; set; }
+        ICompany employer { get; set; }
         int Energy { get; set; }
         int jobStartDay { get; set; }
         decimal salary { get; set; }

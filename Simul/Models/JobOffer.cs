@@ -8,10 +8,10 @@ namespace Simul.Models
 {
     public class JobOffer
     {
-        public Company employer { get; set; }
+        public ICompany employer { get; set; }
         public decimal salary { get; set; }
 
-        public JobOffer(Company employer, decimal salary)
+        public JobOffer(ICompany employer, decimal salary)
         {
             this.employer = employer;
             this.salary = salary;

@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace Simul.Models.Decorators
 {
-    public class PersonDecorator : IPerson
+    public class PersonDecorator : IPerson, IDecorator
     {
-        private const string ACTION_DESCRIPTION_BUY = "Bought {0} {1} from the market {2}";
-        private const string ACTION_DESCRIPTION_GIVETO = "Gave {0} {1} to the player {2}";
-        private const string ACTION_DESCRIPTION_REMOVEOFFER = "Removed offer of {0} {1} from the market {2}";
         private const string ACTION_DESCRIPTION_RESIGN = "Resigned from {0}";
-        private const string ACTION_DESCRIPTION_SELL = "Put for sale {0} {1} to the market {2}";
         private const string ACTION_DESCRIPTION_TAKEJOB = "Took job of {0} with a salary of {1} from the market {2}";
         private const string ACTION_DESCRIPTION_TRAIN = "Trained";
         private const string ACTION_DESCRIPTION_CANT_WORK = "Tried to work but can't : {0}";
@@ -32,19 +28,19 @@ namespace Simul.Models.Decorators
         public void Buy(ResourceMarket resourceMarket, ResourceOffer offer, int quantity)
         {
             decoratedPerson.Buy(resourceMarket, offer, quantity);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(ACTION_DESCRIPTION_BUY, quantity, offer.resource.name, resourceMarket.name)));
+            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(Constants.ACTION_DESCRIPTION_BUY, quantity, offer.resource.name, resourceMarket.name)));
         }
 
         public void GiveTo(Player receiver, Resource resource, int quantity)
         {
             decoratedPerson.GiveTo(receiver, resource, quantity);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(ACTION_DESCRIPTION_GIVETO, quantity, resource.name, receiver.name)));
+            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(Constants.ACTION_DESCRIPTION_GIVETO, quantity, resource.name, receiver.name)));
         }
 
         public void RemoveOffer(ResourceMarket resourceMarket, ResourceOffer offer)
         {
             decoratedPerson.RemoveOffer(resourceMarket, offer);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(ACTION_DESCRIPTION_REMOVEOFFER, offer.quantity, offer.resource.name, resourceMarket.name)));
+            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(Constants.ACTION_DESCRIPTION_REMOVEOFFER, offer.quantity, offer.resource.name, resourceMarket.name)));
         }
 
         public void Resign(int currentDay)
@@ -56,7 +52,7 @@ namespace Simul.Models.Decorators
         public void Sell(ResourceMarket resourceMarket, ResourceOffer offer)
         {
             decoratedPerson.Sell(resourceMarket, offer);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(ACTION_DESCRIPTION_SELL, offer.quantity, offer.resource.name, resourceMarket.name)));
+            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(Constants.ACTION_DESCRIPTION_SELL, offer.quantity, offer.resource.name, resourceMarket.name)));
         }
 
         public void TakeJob(JobMarket jobMarket, JobOffer jobOffer, int currentDay)
@@ -100,7 +96,7 @@ namespace Simul.Models.Decorators
             set { decoratedPerson.strength = value; }
         }
 
-        public Company employer
+        public ICompany employer
         {
             get { return decoratedPerson.employer; }
             set { decoratedPerson.employer = value; }

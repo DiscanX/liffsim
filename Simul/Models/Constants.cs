@@ -16,5 +16,11 @@
 
         public const string SIMPLE_COMPANY_BOT_NAME = "SC Bot";
         public const string SIMPLE_PERSON_BOT_NAME = "SP Bot";
+
+        //Decorators
+        public const string ACTION_DESCRIPTION_BUY = "Bought {0} {1} from the market {2}";
+        public const string ACTION_DESCRIPTION_GIVETO = "Gave {0} {1} to the player {2}";
+        public const string ACTION_DESCRIPTION_REMOVEOFFER = "Removed offer of {0} {1} from the market {2}";
+        public const string ACTION_DESCRIPTION_SELL = "Put for sale {0} {1} to the market {2}";
     }
 }

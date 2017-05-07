@@ -1,7 +1,13 @@
-﻿namespace Simul.Models
+﻿using System.Collections.Generic;
+
+namespace Simul.Models
 {
     public interface ICompany : IPlayer
     {
-        eWorkResult Produce(Person employee, decimal salary);
+        List<IPerson> employees { get; set; }
+        Resource producedResource { get; set; }
+        float progress { get; set; }
+
+        eWorkResult Produce(IPerson employee, decimal salary);
     }
 }

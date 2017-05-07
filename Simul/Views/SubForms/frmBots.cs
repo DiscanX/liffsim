@@ -46,11 +46,10 @@ namespace Simul.Views.SubForms
 
             olvParameters.SetObjects(bot.parameters);
 
-            if(bot.getControlledPlayer().GetType() == typeof(PersonDecorator))
+            IDecorator decorator = bot.getControlledPlayer() as IDecorator;
+            if(decorator != null)
             {
-                PersonDecorator personDecorator = (PersonDecorator)bot.getControlledPlayer();
-
-                foreach(Tuple<int, string> action in personDecorator.actionHistory)
+                foreach(Tuple<int, string> action in decorator.actionHistory)
                 {
                     lstActionHistory.Items.Add("Day " + action.Item1 + " : " + action.Item2);
                 }

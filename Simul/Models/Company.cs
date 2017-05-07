@@ -10,15 +10,15 @@ namespace Simul.Models
     {
         public Resource producedResource { get; set; }
         public float progress { get; set; }
-        public List<Person> employees { get; set; }
+        public List<IPerson> employees { get; set; }
 
         public Company(string name, Country country, Resource producedResource, decimal money, Inventory inventory, bool isHumanControlled = false) : base(name, country, money, inventory, isHumanControlled)
         {
             this.producedResource = producedResource;
-            employees = new List<Person>();
+            employees = new List<IPerson>();
         }
 
-        private eWorkResult CanWork(Person employee)
+        private eWorkResult CanWork(IPerson employee)
         {
             Dictionary<Resource, int> requirements = producedResource.GetRequirements();
             if (requirements == null)
@@ -41,7 +41,7 @@ namespace Simul.Models
             return eWorkResult.Success;
         }
 
-        public eWorkResult Produce(Person employee, decimal salary)
+        public eWorkResult Produce(IPerson employee, decimal salary)
         {
             eWorkResult workResult = CanWork(employee);
             if (workResult != eWorkResult.Success)
@@ -75,7 +75,7 @@ namespace Simul.Models
             return workResult;
         }
 
-        private eWorkResult PayEmployee(Person employee, decimal salary)
+        private eWorkResult PayEmployee(IPerson employee, decimal salary)
         {
             decimal moneyAfterPay = Money - salary;
 
