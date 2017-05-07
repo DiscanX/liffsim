@@ -65,6 +65,11 @@ namespace Simul.Models
 
         public void TakeJob(JobMarket jobMarket, JobOffer jobOffer, int currentDay)
         {
+            if(employer != null)
+            {
+                throw new Exception("Already has an employer. Needs to resign first");
+            }
+
             if(country != jobMarket.country)
             {
                 throw new Exception("Can't take job from another country");
@@ -123,6 +128,7 @@ namespace Simul.Models
             employer = null;
             salary = 0;
             jobStartDay = 0;
+            canResign = false;
         }
 
         public void Train()

@@ -127,7 +127,7 @@ namespace Simul.Views
                 {
                     if(company.country.name == market.country.name)
                     {
-                        for(int i = 0; i < 10; i++)
+                        for(int i = 0; i < 2; i++)
                         {
                             market.offers.Add(new JobOffer(company, 1m));
                         }
@@ -137,8 +137,6 @@ namespace Simul.Views
 
             //Temporary ControlledPersonne Setter
             gameController.controlledPerson = personController.persons.First(x => x.name == "Keven");
-            gameController.controlledPerson.employer = companyController.companies[0];
-            gameController.controlledPerson.salary = 5.50m;
 
             SetupMainPanels();
 

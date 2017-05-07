@@ -44,6 +44,10 @@ namespace Simul.Views.SubForms
             {
                 lstCompanies.SelectedIndex = lstCompanies.FindStringExact(gameController.controlledPerson.employer.name);
             }
+            else
+            {
+                lstCompanies.SelectedIndex = 0;
+            }
         }
 
         private void lstCompanies_SelectedIndexChanged(object sender, EventArgs e)

@@ -31,6 +31,7 @@ namespace Simul.Views.SubForms
             txtCurrentEmployer.Text = gameController.controlledPerson.DisplayCurrentEmployer();
 
             btnWork.Enabled = gameController.controlledPerson.CanWork();
+            btnResign.Enabled = gameController.controlledPerson.canResign;
             btnTrain.Enabled = gameController.controlledPerson.CanTrain();
         }
 
@@ -45,6 +46,12 @@ namespace Simul.Views.SubForms
         {
             gameController.controlledPerson.Work();
             frmPrincipal.ReloadMenu();
+            UpdateDisplay();
+        }
+
+        private void btnResign_Click(object sender, EventArgs e)
+        {
+            gameController.controlledPerson.Resign(gameController.currentDay);
             UpdateDisplay();
         }
     }

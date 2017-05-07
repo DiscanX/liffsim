@@ -31,7 +31,6 @@ namespace Simul.Views.SubForms
 
             olvJobs.SmallImageList = ContentReader.GetResourcesImages();
             olvJobs.ButtonClick += DlvJobs_Apply;
-            olvJobs.FormatRow += DlvJobs_FormatRow;
 
             olvResourceImg.ImageGetter = delegate (object rowObject) { return ((JobOffer)rowObject).employer.producedResource.name.ToString(); };
             olvApply.AspectGetter = delegate (object rowObject) { return "Apply"; };
@@ -39,18 +38,18 @@ namespace Simul.Views.SubForms
 
         private void DlvJobs_Apply(object sender, CellClickEventArgs e)
         {
-            
-        }
-
-        private void DlvJobs_FormatRow(object sender, FormatRowEventArgs e)
-        {
             JobOffer jobOffer = (JobOffer)e.Model;
-            FormatRow(jobOffer);
-        }
 
-        private void FormatRow(JobOffer jobOffer)
-        {
+            gameController.controlledPerson.TakeJob(selectedJobMarket, jobOffer, gameController.currentDay);
 
+            if (selectedJobMarket.offers.Exists(x => x == e.Model))
+            {
+                olvJobs.RefreshObject(e.Model);
+            }
+            else
+            {
+                olvJobs.RemoveObject(e.Model);
+            }
         }
 
         public void UpdateDisplay()
@@ -67,12 +66,6 @@ namespace Simul.Views.SubForms
         {
             selectedJobMarket = jobMarketController.markets.First(x => x.name == cboJobMarkets.SelectedItem.ToString());
             olvJobs.SetObjects(selectedJobMarket.offers);
-
-            //As the event "FormatRow" is not triggered before a mouse hover
-            foreach (JobOffer jobOffer in olvJobs.Objects)
-            {
-                FormatRow(jobOffer);
-            }
         }
     }
 }

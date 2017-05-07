@@ -99,10 +99,13 @@ namespace Simul.Models.Bots
 
 
                 //Add job offers
-                var jobMarketOfCountry = jobMarketController.GetMarketOfCountry(myself.country.name);
-                while (jobMarketOfCountry.offers.Count(x => x.employer.name == myself.name) < 3)
+                if(myself.producedResource.edible)
                 {
-                    jobMarketOfCountry.offers.Add(new JobOffer(myself, 1));
+                    var jobMarketOfCountry = jobMarketController.GetMarketOfCountry(myself.country.name);
+                    while (jobMarketOfCountry.offers.Count(x => x.employer.name == myself.name) < 3)
+                    {
+                        jobMarketOfCountry.offers.Add(new JobOffer(myself, 1));
+                    }
                 }
             }
         }

@@ -36,6 +36,7 @@
             this.btnWork = new System.Windows.Forms.Button();
             this.txtCurrentEmployer = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnResign = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtProductivity
@@ -124,11 +125,22 @@
             this.label1.TabIndex = 20;
             this.label1.Text = "Working at : ";
             // 
+            // btnResign
+            // 
+            this.btnResign.Location = new System.Drawing.Point(395, 460);
+            this.btnResign.Name = "btnResign";
+            this.btnResign.Size = new System.Drawing.Size(75, 23);
+            this.btnResign.TabIndex = 21;
+            this.btnResign.Text = "Resign";
+            this.btnResign.UseVisualStyleBackColor = true;
+            this.btnResign.Click += new System.EventHandler(this.btnResign_Click);
+            // 
             // frmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 534);
+            this.Controls.Add(this.btnResign);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtCurrentEmployer);
             this.Controls.Add(this.txtProductivity);
@@ -155,5 +167,6 @@
         private System.Windows.Forms.Button btnWork;
         private System.Windows.Forms.TextBox txtCurrentEmployer;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnResign;
     }
 }
