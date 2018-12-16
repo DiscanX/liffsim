@@ -1,25 +1,21 @@
-﻿using System;
+﻿using Simul.Helpers;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Simul.Helpers;
 
 namespace Simul.Models
 {
     public abstract class Resource
     {
-        public eResourceName name { get; set; }
-        public Skill improvedSkill { get; set; }
-        public int productionCost { get; set; }
-        public bool edible { get; set; }
+        public eResourceName Name { get; set; }
+        public Skill ImprovedSkill { get; set; }
+        public int ProductionCost { get; set; }
+        public bool Edible { get; set; }
 
         internal Resource(eResourceName name, Skill improvedSkill, int productionCost, bool edible)
         {
-            this.name = name;
-            this.improvedSkill = improvedSkill;
-            this.productionCost = productionCost;
-            this.edible = edible;
+            Name = name;
+            ImprovedSkill = improvedSkill;
+            ProductionCost = productionCost;
+            Edible = edible;
         }
 
         public virtual Dictionary<Resource, int> GetRequirements()

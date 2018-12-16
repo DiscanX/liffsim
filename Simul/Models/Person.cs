@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simul.Models
 {
@@ -15,92 +12,99 @@ namespace Simul.Models
 
     public class Person : Player, IPerson
     {
-        public float strength { get; set; }
-        public ICompany employer { get; set; }
-        public decimal salary { get; set; }
-        public Skillset skillset { get; set; }
-        public bool alreadyWorked { get; set; }
-        public bool alreadyTrained { get; set; }
-        public bool canResign { get; set; }
-        public int jobStartDay { get; set; }
-        private int energy;
+        public float Strength { get; set; }
+        public ICompany Employer { get; set; }
+        public decimal Salary { get; set; }
+        public Skillset Skillset { get; set; }
+        public bool AlreadyWorked { get; set; }
+        public bool AlreadyTrained { get; set; }
+        public bool CanResign { get; set; }
+        public int JobStartDay { get; set; }
+
+        private int _energy;
+
         public int Energy
         {
-            get { return energy; }
+            get { return _energy; }
             set
             {
                 if (value < Constants.MIN_ENERGY) { throw new Exception("Energy can't go below zero"); }
-                energy = value > Constants.MAX_ENERGY ? Constants.MAX_ENERGY : value;
+                _energy = value > Constants.MAX_ENERGY ? Constants.MAX_ENERGY : value;
             }
         }
 
-        public Person(string name, Country country, decimal money, Skillset skillset,  Inventory inventory, int energy, float strength, bool isHumanControlled = false) : base(name, country, money, inventory, isHumanControlled)
+        public Person(string name,
+            Country country,
+            decimal money,
+            Skillset skillset,
+            Inventory inventory,
+            int energy,
+            float strength,
+            bool isHumanControlled = false) : base(name, country, money, inventory, isHumanControlled)
         {
-            this.skillset = skillset;
-            this.strength = strength;
+            Skillset = skillset;
+            Strength = strength;
             Energy = energy;
         }
 
         public string DisplayProductivity()
         {
-            if (employer != null)
+            if (Employer != null)
             {
-                return skillset.skills.First(x => x.Key == employer.producedResource.improvedSkill).Value.ToString();
+                return Skillset.Skills.First(x => x.Key == Employer.ProducedResource.ImprovedSkill).Value.ToString();
             }
-            else
-            {
-                return skillset.skills.OrderByDescending(x => x.Value).First().Value.ToString();
-            }
+
+            return Skillset.Skills.OrderByDescending(x => x.Value).First().Value.ToString();
         }
 
         public float GetCurrentUsedSkillLevel()
         {
-            if (employer == null)
+            if (Employer == null)
             {
                 throw new Exception("No current used skill, as there is no current employer");
             }
 
-            return skillset.skills.First(x => x.Key == employer.producedResource.improvedSkill).Value;
+            return Skillset.Skills.First(x => x.Key == Employer.ProducedResource.ImprovedSkill).Value;
         }
 
         public void TakeJob(JobMarket jobMarket, JobOffer jobOffer, int currentDay)
         {
-            if(employer != null)
+            if (Employer != null)
             {
                 throw new Exception("Already has an employer. Needs to resign first");
             }
 
-            if(country != jobMarket.country)
+            if (Country != jobMarket.Country)
             {
                 throw new Exception("Can't take job from another country");
             }
 
-            jobMarket.offers.Remove(jobOffer);
-            jobOffer.employer.employees.Add(this);
+            jobMarket.Offers.Remove(jobOffer);
+            jobOffer.Employer.Employees.Add(this);
 
-            employer = jobOffer.employer;
-            salary = jobOffer.salary;
-            jobStartDay = currentDay;
-            canResign = false;
+            Employer = jobOffer.Employer;
+            Salary = jobOffer.Salary;
+            JobStartDay = currentDay;
+            CanResign = false;
         }
 
         public eWorkResult Work()
         {
-            if (alreadyWorked)
+            if (AlreadyWorked)
             {
                 throw new Exception("This person already worked");
             }
 
-            eWorkResult workResult = employer.Produce(this, salary);
+            var workResult = Employer.Produce(this, Salary);
             if (workResult == eWorkResult.Success)
             {
-                IncrementSkill(employer.producedResource.improvedSkill);
+                IncrementSkill(Employer.ProducedResource.ImprovedSkill);
                 Energy -= Constants.ENERGY_LOST_WORKING;
-                alreadyWorked = true;
+                AlreadyWorked = true;
             }
             else
             {
-                canResign = true;
+                CanResign = true;
             }
 
             return workResult;
@@ -108,65 +112,65 @@ namespace Simul.Models
 
         public void Resign(int currentDay)
         {
-            if(employer == null)
+            if (Employer == null)
             {
                 throw new Exception("Can't resign, this person has no employer");
             }
 
-            if(!canResign)
+            if (!CanResign)
             {
                 throw new Exception("This person can't resign (as the value of the attribute canResign is false)");
             }
 
-            if(country != employer.country)
+            if (Country != Employer.Country)
             {
                 throw new Exception("Can't work for another country");
             }
 
-            employer.employees.Remove(this);
+            Employer.Employees.Remove(this);
 
-            employer = null;
-            salary = 0;
-            jobStartDay = 0;
-            canResign = false;
+            Employer = null;
+            Salary = 0;
+            JobStartDay = 0;
+            CanResign = false;
         }
 
         public void Train()
         {
-            if(alreadyTrained)
+            if (AlreadyTrained)
             {
                 throw new Exception("This person already trained");
             }
 
             IncrementStrength();
             Energy -= Constants.ENERGY_LOST_TRAINING;
-            alreadyTrained = true;
+            AlreadyTrained = true;
         }
 
         public void Eat(Resource resource, int quantity = 1)
         {
-            int quantityAfterEating = inventory.stocks[resource] - quantity;
+            var quantityAfterEating = Inventory.Stocks[resource] - quantity;
 
-            if(!resource.edible)
+            if (!resource.Edible)
             {
                 throw new Exception("This resource can't be eaten");
             }
 
-            if(quantityAfterEating < 0)
+            if (quantityAfterEating < 0)
             {
                 throw new Exception("Quantity can't go below zero");
             }
 
             Energy += Constants.ENERGY_GAINED_AFTER_EATING * quantity;
-            inventory.stocks[resource] = quantityAfterEating;
+            Inventory.Stocks[resource] = quantityAfterEating;
         }
 
         public void EatUntilFull()
         {
-            if (energy + Constants.ENERGY_GAINED_AFTER_EATING <= Constants.MAX_ENERGY)
+            if (_energy + Constants.ENERGY_GAINED_AFTER_EATING <= Constants.MAX_ENERGY)
             {
-                var edibleResources = inventory.stocks.Where(x => x.Key.edible && x.Value > 0);
-                int quantityToEat = Math.Min((Constants.MAX_ENERGY - energy) / Constants.ENERGY_GAINED_AFTER_EATING, edibleResources.Count());
+                var edibleResources = Inventory.Stocks.Where(x => x.Key.Edible && x.Value > 0);
+                var quantityToEat = Math.Min((Constants.MAX_ENERGY - _energy) / Constants.ENERGY_GAINED_AFTER_EATING, edibleResources.Count());
 
                 for (int i = 0; i < edibleResources.Count(); i++)
                 {
@@ -188,27 +192,27 @@ namespace Simul.Models
 
         private void IncrementStrength()
         {
-            strength = Calculator.CalculateStrengthIncrement(strength);
+            Strength = Calculator.CalculateStrengthIncrement(Strength);
         }
 
         private void IncrementSkill(Skill skill)
         {
-            skillset.skills[skill] = Calculator.CalculateSkillIncrement(skillset.skills[skill]);
+            Skillset.Skills[skill] = Calculator.CalculateSkillIncrement(Skillset.Skills[skill]);
         }
 
         public string DisplayCurrentEmployer()
         {
-            return employer == null ? "None" : employer.name;
+            return Employer == null ? "None" : Employer.Name;
         }
 
         public bool CanWork()
         {
-            return employer != null && energy - Constants.ENERGY_LOST_WORKING >= 0 && !alreadyWorked;
+            return Employer != null && _energy - Constants.ENERGY_LOST_WORKING >= 0 && !AlreadyWorked;
         }
 
         public bool CanTrain()
         {
-            return energy - Constants.ENERGY_LOST_TRAINING >= 0 && !alreadyTrained;
+            return _energy - Constants.ENERGY_LOST_TRAINING >= 0 && !AlreadyTrained;
         }
     }
 }

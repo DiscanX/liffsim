@@ -1,57 +1,50 @@
 ﻿using Simul.Controllers;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Simul.Views.SubForms
 {
-    public partial class frmHome : Form, ISubForm
+    public partial class FrmHome : Form, ISubForm
     {
-        frmPrincipal frmPrincipal;
-        GameController gameController;
+        FrmPrincipal _frmPrincipal;
+        GameController _gameController;
 
-        public frmHome(frmPrincipal frmPrincipal)
+        public FrmHome(FrmPrincipal frmPrincipal)
         {
-            this.frmPrincipal = frmPrincipal;
-            this.gameController = GameController.Instance;
+            _frmPrincipal = frmPrincipal;
+            _gameController = GameController.Instance;
 
             InitializeComponent();
         }
 
         public void UpdateDisplay()
         {
-            txtStrength.Text = gameController.controlledPerson.strength.ToString();
-            txtProductivity.Text = gameController.controlledPerson.DisplayProductivity();
-            txtCurrentEmployer.Text = gameController.controlledPerson.DisplayCurrentEmployer();
+            txtStrength.Text = _gameController.ControlledPerson.Strength.ToString();
+            txtProductivity.Text = _gameController.ControlledPerson.DisplayProductivity();
+            txtCurrentEmployer.Text = _gameController.ControlledPerson.DisplayCurrentEmployer();
 
-            btnWork.Enabled = gameController.controlledPerson.CanWork();
-            btnResign.Enabled = gameController.controlledPerson.canResign;
-            btnTrain.Enabled = gameController.controlledPerson.CanTrain();
+            btnWork.Enabled = _gameController.ControlledPerson.CanWork();
+            btnResign.Enabled = _gameController.ControlledPerson.CanResign;
+            btnTrain.Enabled = _gameController.ControlledPerson.CanTrain();
         }
 
         private void btnTrain_Click(object sender, EventArgs e)
         {
-            gameController.controlledPerson.Train();
-            frmPrincipal.ReloadMenu();
+            _gameController.ControlledPerson.Train();
+            _frmPrincipal.ReloadMenu();
             UpdateDisplay();
         }
 
         private void btnWork_Click(object sender, EventArgs e)
         {
-            gameController.controlledPerson.Work();
-            frmPrincipal.ReloadMenu();
+            _gameController.ControlledPerson.Work();
+            _frmPrincipal.ReloadMenu();
             UpdateDisplay();
         }
 
         private void btnResign_Click(object sender, EventArgs e)
         {
-            gameController.controlledPerson.Resign(gameController.currentDay);
+            _gameController.ControlledPerson.Resign(_gameController.CurrentDay);
             UpdateDisplay();
         }
     }

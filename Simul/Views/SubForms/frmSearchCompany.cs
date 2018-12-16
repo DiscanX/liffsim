@@ -3,30 +3,25 @@ using Simul.Helpers;
 using Simul.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Simul.Views.SubForms
 {
-    public partial class frmSearchCompany : Form, ISubForm
+    public partial class FrmSearchCompany : Form, ISubForm
     {
-        GameController gameController;
-        CompanyController companyController;
+        GameController _gameController;
+        CompanyController _companyController;
 
-        public frmSearchCompany()
+        public FrmSearchCompany()
         {
-            this.gameController = GameController.Instance;
-            this.companyController = CompanyController.Instance;
+            _gameController = GameController.Instance;
+            _companyController = CompanyController.Instance;
 
             InitializeComponent();
 
             olvInventory.SmallImageList = ContentReader.GetResourcesImages();
-            olvResourceImg.ImageGetter = delegate (object rowObject) { return ((KeyValuePair<Resource, int>)rowObject).Key.name.ToString(); };
+            olvResourceImg.ImageGetter = x => ((KeyValuePair<Resource, int>)x).Key.Name.ToString();
 
             olvInventory.Sort(olvQuantity, SortOrder.Ascending);
             dlvEmployees.Sort(olvSkill, SortOrder.Descending);
@@ -35,14 +30,14 @@ namespace Simul.Views.SubForms
         public void UpdateDisplay()
         {
             lstCompanies.Items.Clear();
-            foreach(ICompany company in companyController.companies)
+            foreach (ICompany company in _companyController.Companies)
             {
-                lstCompanies.Items.Add(company.name);
+                lstCompanies.Items.Add(company.Name);
             }
 
-            if(gameController.controlledPerson.employer != null)
+            if (_gameController.ControlledPerson.Employer != null)
             {
-                lstCompanies.SelectedIndex = lstCompanies.FindStringExact(gameController.controlledPerson.employer.name);
+                lstCompanies.SelectedIndex = lstCompanies.FindStringExact(_gameController.ControlledPerson.Employer.Name);
             }
             else
             {
@@ -57,16 +52,16 @@ namespace Simul.Views.SubForms
 
         private void DisplayCompany()
         {
-            ICompany company = companyController.companies.First(x => x.name == lstCompanies.SelectedItem.ToString());
-            picResource.Image = ContentReader.GetResourcesImages().Images[company.producedResource.name.ToString()];
+            var company = _companyController.Companies.First(x => x.Name == lstCompanies.SelectedItem.ToString());
+            picResource.Image = ContentReader.GetResourcesImages().Images[company.ProducedResource.Name.ToString()];
 
-            txtName.Text = company.name;
+            txtName.Text = company.Name;
             txtMoney.Text = string.Format("{0:C}", company.Money);
-            txtProgress.Text = string.Format("{0:P2}", company.progress);
-            txtCountry.Text = company.country.name;
+            txtProgress.Text = string.Format("{0:P2}", company.Progress);
+            txtCountry.Text = company.Country.Name;
 
-            dlvEmployees.SetObjects(company.employees);
-            olvInventory.SetObjects(company.inventory.stocks);
+            dlvEmployees.SetObjects(company.Employees);
+            olvInventory.SetObjects(company.Inventory.Stocks);
         }
     }
 }

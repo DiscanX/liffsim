@@ -1,6 +1,6 @@
 ﻿namespace Simul.Views.SubForms
 {
-    partial class frmSearchCompany
+    partial class FrmSearchCompany
     {
         /// <summary>
         /// Required designer variable.
@@ -135,7 +135,7 @@
             // 
             // olvName
             // 
-            this.olvName.AspectName = "name";
+            this.olvName.AspectName = "Name";
             this.olvName.FillsFreeSpace = true;
             this.olvName.Groupable = false;
             this.olvName.Sortable = false;

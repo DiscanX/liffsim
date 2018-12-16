@@ -1,28 +1,24 @@
 ﻿using Simul.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simul.Controllers
 {
     public class JobMarketController
     {
         static JobMarketController() { }
-        private static JobMarketController instance = new JobMarketController();
-        public static JobMarketController Instance { get { return instance; } }
+        public static JobMarketController Instance { get; } = new JobMarketController();
 
-        public List<JobMarket> markets { get; set; }
+        public List<JobMarket> Markets { get; set; }
 
         private JobMarketController()
         {
-            markets = new List<JobMarket>();
+            Markets = new List<JobMarket>();
         }
 
         public JobMarket GetMarketOfCountry(string countryName)
         {
-            return markets.First(x => x.country.name == countryName);
+            return Markets.First(x => x.Country.Name == countryName);
         }
     }
 }

@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Simul.Models
+﻿namespace Simul.Models
 {
     public class ResourceOffer
     {
-        public IPlayer owner { get; set; }
-        public Resource resource { get; set; }
-        public int quantity { get; set; }
-        public decimal unitPrice { get; set; }
+        public IPlayer Owner { get; set; }
+        public Resource Resource { get; set; }
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
 
         public ResourceOffer(IPlayer owner, Resource resource, int quantity, decimal unitPrice)
         {
-            this.owner = owner;
-            this.resource = resource;
-            this.quantity = quantity;
-            this.unitPrice = unitPrice;
+            Owner = owner;
+            Resource = resource;
+            Quantity = quantity;
+            UnitPrice = unitPrice;
         }
     }
 }

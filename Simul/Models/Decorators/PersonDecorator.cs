@@ -1,9 +1,6 @@
 ﻿using Simul.Controllers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simul.Models.Decorators
 {
@@ -16,126 +13,126 @@ namespace Simul.Models.Decorators
         private const string ACTION_DESCRIPTION_WORK = "Worked";
         private const string ACTION_DESCRIPTION_EAT = "Ate {0} {1} for {2} energy";
 
-        public List<Tuple<int, string>> actionHistory { get; set; }
+        public List<Tuple<int, string>> ActionHistory { get; set; }
         protected Person decoratedPerson;
 
         public PersonDecorator(Person decoratedPerson)
         {
-            actionHistory = new List<Tuple<int, string>>();
+            ActionHistory = new List<Tuple<int, string>>();
             this.decoratedPerson = decoratedPerson;
         }
 
         public void Buy(ResourceMarket resourceMarket, ResourceOffer offer, int quantity)
         {
             decoratedPerson.Buy(resourceMarket, offer, quantity);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(Constants.ACTION_DESCRIPTION_BUY, quantity, offer.resource.name, resourceMarket.name)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_BUY, quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
         public void GiveTo(Player receiver, Resource resource, int quantity)
         {
             decoratedPerson.GiveTo(receiver, resource, quantity);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(Constants.ACTION_DESCRIPTION_GIVETO, quantity, resource.name, receiver.name)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_GIVETO, quantity, resource.Name, receiver.Name)));
         }
 
         public void RemoveOffer(ResourceMarket resourceMarket, ResourceOffer offer)
         {
             decoratedPerson.RemoveOffer(resourceMarket, offer);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(Constants.ACTION_DESCRIPTION_REMOVEOFFER, offer.quantity, offer.resource.name, resourceMarket.name)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_REMOVEOFFER, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
         public void Resign(int currentDay)
         {
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(ACTION_DESCRIPTION_RESIGN, decoratedPerson.employer.name)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(ACTION_DESCRIPTION_RESIGN, decoratedPerson.Employer.Name)));
             decoratedPerson.Resign(currentDay);
         }
 
         public void Sell(ResourceMarket resourceMarket, ResourceOffer offer)
         {
             decoratedPerson.Sell(resourceMarket, offer);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(Constants.ACTION_DESCRIPTION_SELL, offer.quantity, offer.resource.name, resourceMarket.name)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_SELL, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
         public void TakeJob(JobMarket jobMarket, JobOffer jobOffer, int currentDay)
         {
             decoratedPerson.TakeJob(jobMarket, jobOffer, currentDay);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(ACTION_DESCRIPTION_TAKEJOB, jobOffer.employer.name, jobOffer.salary, jobMarket.name)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(ACTION_DESCRIPTION_TAKEJOB, jobOffer.Employer.Name, jobOffer.Salary, jobMarket.Name)));
         }
 
         public void Train()
         {
             decoratedPerson.Train();
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, ACTION_DESCRIPTION_TRAIN));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, ACTION_DESCRIPTION_TRAIN));
         }
 
         public eWorkResult Work()
         {
-            eWorkResult workResult = decoratedPerson.Work();
+            var workResult = decoratedPerson.Work();
 
-            if(workResult != eWorkResult.Success)
+            if (workResult != eWorkResult.Success)
             {
-                actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(ACTION_DESCRIPTION_CANT_WORK, workResult.ToString())));
+                ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(ACTION_DESCRIPTION_CANT_WORK, workResult.ToString())));
             }
             else
             {
-                actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, ACTION_DESCRIPTION_WORK));
+                ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, ACTION_DESCRIPTION_WORK));
             }
-            
+
             return workResult;
         }
 
         public void Eat(Resource resource, int quantity)
         {
             decoratedPerson.Eat(resource, quantity);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(ACTION_DESCRIPTION_EAT, quantity, resource.name, quantity * Constants.ENERGY_GAINED_AFTER_EATING)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(ACTION_DESCRIPTION_EAT, quantity, resource.Name, quantity * Constants.ENERGY_GAINED_AFTER_EATING)));
 
         }
 
-        public float strength
+        public float Strength
         {
-            get { return decoratedPerson.strength; }
-            set { decoratedPerson.strength = value; }
+            get { return decoratedPerson.Strength; }
+            set { decoratedPerson.Strength = value; }
         }
 
-        public ICompany employer
+        public ICompany Employer
         {
-            get { return decoratedPerson.employer; }
-            set { decoratedPerson.employer = value; }
+            get { return decoratedPerson.Employer; }
+            set { decoratedPerson.Employer = value; }
         }
 
-        public decimal salary
+        public decimal Salary
         {
-            get { return decoratedPerson.salary; }
-            set { decoratedPerson.salary = value; }
+            get { return decoratedPerson.Salary; }
+            set { decoratedPerson.Salary = value; }
         }
 
-        public Skillset skillset
+        public Skillset Skillset
         {
-            get { return decoratedPerson.skillset; }
-            set { decoratedPerson.skillset = value; }
+            get { return decoratedPerson.Skillset; }
+            set { decoratedPerson.Skillset = value; }
         }
 
-        public bool alreadyWorked
+        public bool AlreadyWorked
         {
-            get { return decoratedPerson.alreadyWorked; }
-            set { decoratedPerson.alreadyWorked = value; }
+            get { return decoratedPerson.AlreadyWorked; }
+            set { decoratedPerson.AlreadyWorked = value; }
         }
 
-        public bool alreadyTrained
+        public bool AlreadyTrained
         {
-            get { return decoratedPerson.alreadyTrained; }
-            set { decoratedPerson.alreadyTrained = value; }
+            get { return decoratedPerson.AlreadyTrained; }
+            set { decoratedPerson.AlreadyTrained = value; }
         }
 
-        public bool canResign
+        public bool CanResign
         {
-            get { return decoratedPerson.canResign; }
-            set { decoratedPerson.canResign = value; }
+            get { return decoratedPerson.CanResign; }
+            set { decoratedPerson.CanResign = value; }
         }
 
-        public int jobStartDay
+        public int JobStartDay
         {
-            get { return decoratedPerson.jobStartDay; }
-            set { decoratedPerson.jobStartDay = value; }
+            get { return decoratedPerson.JobStartDay; }
+            set { decoratedPerson.JobStartDay = value; }
         }
 
         public int Energy
@@ -144,22 +141,22 @@ namespace Simul.Models.Decorators
             set { decoratedPerson.Energy = value; }
         }
 
-        public Country country
+        public Country Country
         {
-            get { return decoratedPerson.country; }
-            set { decoratedPerson.country = value; }
+            get { return decoratedPerson.Country; }
+            set { decoratedPerson.Country = value; }
         }
 
-        public Inventory inventory
+        public Inventory Inventory
         {
-            get { return decoratedPerson.inventory; }
-            set { decoratedPerson.inventory = value; }
+            get { return decoratedPerson.Inventory; }
+            set { decoratedPerson.Inventory = value; }
         }
 
-        public bool isHumanControlled
+        public bool IsHumanControlled
         {
-            get { return decoratedPerson.isHumanControlled; }
-            set { decoratedPerson.isHumanControlled = value; }
+            get { return decoratedPerson.IsHumanControlled; }
+            set { decoratedPerson.IsHumanControlled = value; }
         }
 
         public decimal Money
@@ -168,10 +165,10 @@ namespace Simul.Models.Decorators
             set { decoratedPerson.Money = value; }
         }
 
-        public string name
+        public string Name
         {
-            get { return decoratedPerson.name; }
-            set { decoratedPerson.name = value; }
+            get { return decoratedPerson.Name; }
+            set { decoratedPerson.Name = value; }
         }
 
         public string DisplayProductivity()

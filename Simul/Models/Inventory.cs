@@ -1,29 +1,25 @@
 ﻿using Simul.Helpers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simul.Models
 {
     public class Inventory
     {
-        public Dictionary<Resource, int> stocks { get; set; }
+        public Dictionary<Resource, int> Stocks { get; set; }
 
         public Inventory()
         {
-            stocks = new Dictionary<Resource, int>();
+            Stocks = new Dictionary<Resource, int>();
 
-            foreach(Resource resource in ContentReader.GetResources())
+            foreach (Resource resource in ContentReader.GetResources())
             {
-                stocks.Add(resource, 5);
+                Stocks.Add(resource, 5);
             }
         }
 
         public Inventory(Dictionary<Resource, int> stocks)
         {
-            this.stocks = stocks;
+            Stocks = stocks;
         }
     }
 }

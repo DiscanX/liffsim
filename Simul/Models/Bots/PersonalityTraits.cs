@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simul.Models.Bots
 {
@@ -16,7 +13,7 @@ namespace Simul.Models.Bots
 
     public static class PersonalityTraits
     {
-        private static Dictionary<ePersonalityTrait, int> personalityTraitsChances = new Dictionary<ePersonalityTrait, int>
+        private static Dictionary<ePersonalityTrait, int> _personalityTraitsChances = new Dictionary<ePersonalityTrait, int>
         {
             {ePersonalityTrait.stacker, 5},
             {ePersonalityTrait.greedy, 5},
@@ -28,11 +25,11 @@ namespace Simul.Models.Bots
         {
             var personalityTraits = new List<ePersonalityTrait>();
 
-            foreach(var personalityTrait in personalityTraitsChances)
+            foreach (var personalityTrait in _personalityTraitsChances)
             {
-                int personTraitChance = rnd.Next(1, 101);
+                var personTraitChance = rnd.Next(1, 101);
 
-                if(personalityTrait.Value >= personTraitChance)
+                if (personalityTrait.Value >= personTraitChance)
                 {
                     personalityTraits.Add(personalityTrait.Key);
                 }

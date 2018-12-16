@@ -1,6 +1,6 @@
 ﻿namespace Simul.Views.SubForms
 {
-    partial class frmResourceMarket
+    partial class FrmResourceMarket
     {
         /// <summary>
         /// Required designer variable.
@@ -84,7 +84,7 @@
             // 
             // olvSeller
             // 
-            this.olvSeller.AspectName = "owner.name";
+            this.olvSeller.AspectName = "Owner.Name";
             this.olvSeller.FillsFreeSpace = true;
             this.olvSeller.Groupable = false;
             this.olvSeller.IsEditable = false;
@@ -93,7 +93,7 @@
             // 
             // olvQuantity
             // 
-            this.olvQuantity.AspectName = "quantity";
+            this.olvQuantity.AspectName = "Quantity";
             this.olvQuantity.FillsFreeSpace = true;
             this.olvQuantity.Groupable = false;
             this.olvQuantity.IsEditable = false;
@@ -102,7 +102,7 @@
             // 
             // olvPricePerUnit
             // 
-            this.olvPricePerUnit.AspectName = "unitPrice";
+            this.olvPricePerUnit.AspectName = "UnitPrice";
             this.olvPricePerUnit.AspectToStringFormat = "{0:C}";
             this.olvPricePerUnit.FillsFreeSpace = true;
             this.olvPricePerUnit.Groupable = false;

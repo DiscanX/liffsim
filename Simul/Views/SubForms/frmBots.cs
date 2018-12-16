@@ -1,36 +1,27 @@
 ﻿using Simul.Controllers;
 using Simul.Models;
-using Simul.Models.Bots;
-using Simul.Models.Decorators;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Simul.Views.SubForms
 {
-    public partial class frmBots : Form, ISubForm
+    public partial class FrmBots : Form, ISubForm
     {
-        GameController gameController;
+        GameController _gameController;
 
-        public frmBots()
+        public FrmBots()
         {
-            this.gameController = GameController.Instance;
-
+            _gameController = GameController.Instance;
             InitializeComponent();
         }
 
         public void UpdateDisplay()
         {
             lstBots.Items.Clear();
-            foreach (Bot bot in gameController.bots)
+            foreach (var bot in _gameController.Bots)
             {
-                lstBots.Items.Add(bot.getControlledPlayer().name + " (" + bot.getBotTypeName() + ")");
+                lstBots.Items.Add(bot.GetControlledPlayer().Name + " (" + bot.GetBotTypeName() + ")");
             }
         }
 
@@ -42,14 +33,14 @@ namespace Simul.Views.SubForms
         private void DisplayBot()
         {
             lstActionHistory.Items.Clear();
-            Bot bot = gameController.bots.First(x => x.getControlledPlayer().name + " (" + x.getBotTypeName() + ")" == lstBots.SelectedItem.ToString());
+            var bot = _gameController.Bots.First(x => x.GetControlledPlayer().Name + " (" + x.GetBotTypeName() + ")" == lstBots.SelectedItem.ToString());
 
-            olvParameters.SetObjects(bot.parameters);
+            olvParameters.SetObjects(bot.Parameters);
 
-            IDecorator decorator = bot.getControlledPlayer() as IDecorator;
-            if(decorator != null)
+            var decorator = bot.GetControlledPlayer() as IDecorator;
+            if (decorator != null)
             {
-                foreach(Tuple<int, string> action in decorator.actionHistory)
+                foreach (Tuple<int, string> action in decorator.ActionHistory)
                 {
                     lstActionHistory.Items.Add("Day " + action.Item1 + " : " + action.Item2);
                 }

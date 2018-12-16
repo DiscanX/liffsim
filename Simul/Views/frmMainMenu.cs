@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Simul.Views
 {
-    public partial class frmMainMenu : Form
+    public partial class FrmMainMenu : Form
     {
-        public frmMainMenu()
+        public FrmMainMenu()
         {
             InitializeComponent();
         }

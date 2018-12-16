@@ -3,46 +3,40 @@ using Simul.Controllers;
 using Simul.Helpers;
 using Simul.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Simul.Views.SubForms
 {
-    public partial class frmJobMarket : Form, ISubForm
+    public partial class FrmJobMarket : Form, ISubForm
     {
-        frmPrincipal frmPrincipal;
-        JobMarketController jobMarketController;
-        GameController gameController;
-        JobMarket selectedJobMarket;
+        FrmPrincipal _frmPrincipal;
+        JobMarketController _jobMarketController;
+        GameController _gameController;
+        JobMarket _selectedJobMarket;
 
-        public frmJobMarket(frmPrincipal frmPrincipal)
+        public FrmJobMarket(FrmPrincipal frmPrincipal)
         {
-            this.frmPrincipal = frmPrincipal;
-            this.gameController = GameController.Instance;
-            this.jobMarketController = JobMarketController.Instance;
+            _frmPrincipal = frmPrincipal;
+            _gameController = GameController.Instance;
+            _jobMarketController = JobMarketController.Instance;
 
             InitializeComponent();
 
             olvJobs.SmallImageList = ContentReader.GetResourcesImages();
             olvJobs.ButtonClick += DlvJobs_Apply;
 
-            olvResourceImg.ImageGetter = delegate (object rowObject) { return ((JobOffer)rowObject).employer.producedResource.name.ToString(); };
-            olvApply.AspectGetter = delegate (object rowObject) { return "Apply"; };
+            olvResourceImg.ImageGetter = x => ((JobOffer)x).Employer.ProducedResource.Name.ToString();
+            olvApply.AspectGetter = x => "Apply";
         }
 
         private void DlvJobs_Apply(object sender, CellClickEventArgs e)
         {
-            JobOffer jobOffer = (JobOffer)e.Model;
+            var jobOffer = (JobOffer)e.Model;
 
-            gameController.controlledPerson.TakeJob(selectedJobMarket, jobOffer, gameController.currentDay);
+            _gameController.ControlledPerson.TakeJob(_selectedJobMarket, jobOffer, _gameController.CurrentDay);
 
-            if (selectedJobMarket.offers.Exists(x => x == e.Model))
+            if (_selectedJobMarket.Offers.Exists(x => x == e.Model))
             {
                 olvJobs.RefreshObject(e.Model);
             }
@@ -55,17 +49,17 @@ namespace Simul.Views.SubForms
         public void UpdateDisplay()
         {
             cboJobMarkets.Items.Clear();
-            foreach(JobMarket jobMarket in jobMarketController.markets)
+            foreach (JobMarket jobMarket in _jobMarketController.Markets)
             {
-                cboJobMarkets.Items.Add(jobMarket.name);
+                cboJobMarkets.Items.Add(jobMarket.Name);
             }
-            cboJobMarkets.Text = jobMarketController.GetMarketOfCountry(gameController.controlledPerson.country.name).name;
+            cboJobMarkets.Text = _jobMarketController.GetMarketOfCountry(_gameController.ControlledPerson.Country.Name).Name;
         }
 
         private void cboJobMarkets_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectedJobMarket = jobMarketController.markets.First(x => x.name == cboJobMarkets.SelectedItem.ToString());
-            olvJobs.SetObjects(selectedJobMarket.offers);
+            _selectedJobMarket = _jobMarketController.Markets.First(x => x.Name == cboJobMarkets.SelectedItem.ToString());
+            olvJobs.SetObjects(_selectedJobMarket.Offers);
         }
     }
 }

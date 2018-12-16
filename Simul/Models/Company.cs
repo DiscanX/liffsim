@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simul.Models
 {
     public class Company : Player, ICompany
     {
-        public Resource producedResource { get; set; }
-        public float progress { get; set; }
-        public List<IPerson> employees { get; set; }
+        public Resource ProducedResource { get; set; }
+        public float Progress { get; set; }
+        public List<IPerson> Employees { get; set; }
 
         public Company(string name, Country country, Resource producedResource, decimal money, Inventory inventory, bool isHumanControlled = false) : base(name, country, money, inventory, isHumanControlled)
         {
-            this.producedResource = producedResource;
-            employees = new List<IPerson>();
+            this.ProducedResource = producedResource;
+            Employees = new List<IPerson>();
         }
 
         private eWorkResult CanWork(IPerson employee)
         {
-            Dictionary<Resource, int> requirements = producedResource.GetRequirements();
+            var requirements = ProducedResource.GetRequirements();
             if (requirements == null)
             {
                 return eWorkResult.Success;
@@ -28,9 +25,9 @@ namespace Simul.Models
 
             foreach (KeyValuePair<Resource, int> requirement in requirements)
             {
-                float nbrProducedUnits = Calculator.CalculateProductionProgress(this, employee) / producedResource.productionCost;
-                int nbrResourcesRequired = (int)Math.Ceiling(nbrProducedUnits * requirement.Value);
-                int stockAfterProduction = inventory.stocks[requirement.Key] - nbrResourcesRequired;
+                var nbrProducedUnits = Calculator.CalculateProductionProgress(this, employee) / ProducedResource.ProductionCost;
+                var nbrResourcesRequired = (int)Math.Ceiling(nbrProducedUnits * requirement.Value);
+                var stockAfterProduction = Inventory.Stocks[requirement.Key] - nbrResourcesRequired;
 
                 if (stockAfterProduction < 0)
                 {
@@ -43,32 +40,30 @@ namespace Simul.Models
 
         public eWorkResult Produce(IPerson employee, decimal salary)
         {
-            eWorkResult workResult = CanWork(employee);
+            var workResult = CanWork(employee);
             if (workResult != eWorkResult.Success)
             {
                 return workResult;
             }
 
-            float nbrProducedUnits = Calculator.CalculateProductionProgress(this, employee) / producedResource.productionCost;
+            var nbrProducedUnits = Calculator.CalculateProductionProgress(this, employee) / ProducedResource.ProductionCost;
 
-            Dictionary<Resource, int> requirements = producedResource.GetRequirements();
+            var requirements = ProducedResource.GetRequirements();
             if (requirements != null)
             {
                 foreach (KeyValuePair<Resource, int> requirement in requirements)
                 {
-                    int nbrResourcesRequired = (int)Math.Ceiling(nbrProducedUnits * requirement.Value);
-                    int stockAfterProduction = inventory.stocks[requirement.Key] - nbrResourcesRequired;
-
-                    inventory.stocks[requirement.Key] = stockAfterProduction;
+                    var nbrResourcesRequired = (int)Math.Ceiling(nbrProducedUnits * requirement.Value);
+                    Inventory.Stocks[requirement.Key] -= nbrResourcesRequired;
                 }
             }
 
-            progress += nbrProducedUnits;
+            Progress += nbrProducedUnits;
 
-            if (progress >= 1)
+            if (Progress >= 1)
             {
-                inventory.stocks[producedResource] += (int)progress;
-                progress %= 1;
+                Inventory.Stocks[ProducedResource] += (int)Progress;
+                Progress %= 1;
             }
 
             workResult = PayEmployee(employee, salary);
@@ -77,7 +72,7 @@ namespace Simul.Models
 
         private eWorkResult PayEmployee(IPerson employee, decimal salary)
         {
-            decimal moneyAfterPay = Money - salary;
+            var moneyAfterPay = Money - salary;
 
             if (moneyAfterPay < 0)
             {

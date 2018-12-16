@@ -73,28 +73,28 @@
     <Compile Include="Models\Resource\PrimaryResource.cs" />
     <Compile Include="Models\Resource\SecondaryResource.cs" />
     <Compile Include="Models\Resource\TertiaryResource.cs" />
-    <Compile Include="Views\frmCreate.cs">
+    <Compile Include="Views\FrmCreate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmCreate.Designer.cs">
-      <DependentUpon>frmCreate.cs</DependentUpon>
+    <Compile Include="Views\FrmCreate.Designer.cs">
+      <DependentUpon>FrmCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmMainMenu.cs">
+    <Compile Include="Views\FrmMainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmMainMenu.Designer.cs">
-      <DependentUpon>frmMainMenu.cs</DependentUpon>
+    <Compile Include="Views\FrmMainMenu.Designer.cs">
+      <DependentUpon>FrmMainMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Models\JobMarket.cs" />
     <Compile Include="Models\JobOffer.cs" />
     <Compile Include="Models\Skill.cs" />
-    <Compile Include="Views\frmPrincipal.cs">
+    <Compile Include="Views\FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmPrincipal.Designer.cs">
-      <DependentUpon>frmPrincipal.cs</DependentUpon>
+    <Compile Include="Views\FrmPrincipal.Designer.cs">
+      <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\Player.cs" />
@@ -106,51 +106,51 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Resource\Resource.cs" />
     <Compile Include="Models\Skillset.cs" />
-    <Compile Include="Views\SubForms\frmBots.cs">
+    <Compile Include="Views\SubForms\FrmBots.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SubForms\frmBots.Designer.cs">
-      <DependentUpon>frmBots.cs</DependentUpon>
+    <Compile Include="Views\SubForms\FrmBots.Designer.cs">
+      <DependentUpon>FrmBots.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\SubForms\frmHome.cs">
+    <Compile Include="Views\SubForms\FrmHome.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SubForms\frmHome.Designer.cs">
-      <DependentUpon>frmHome.cs</DependentUpon>
+    <Compile Include="Views\SubForms\FrmHome.Designer.cs">
+      <DependentUpon>FrmHome.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\SubForms\frmJobMarket.cs">
+    <Compile Include="Views\SubForms\FrmJobMarket.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SubForms\frmJobMarket.Designer.cs">
-      <DependentUpon>frmJobMarket.cs</DependentUpon>
+    <Compile Include="Views\SubForms\FrmJobMarket.Designer.cs">
+      <DependentUpon>FrmJobMarket.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\SubForms\frmResourceMarket.cs">
+    <Compile Include="Views\SubForms\FrmResourceMarket.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SubForms\frmResourceMarket.Designer.cs">
-      <DependentUpon>frmResourceMarket.cs</DependentUpon>
+    <Compile Include="Views\SubForms\FrmResourceMarket.Designer.cs">
+      <DependentUpon>FrmResourceMarket.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\SubForms\frmSearch.cs">
+    <Compile Include="Views\SubForms\FrmSearch.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SubForms\frmSearch.Designer.cs">
-      <DependentUpon>frmSearch.cs</DependentUpon>
+    <Compile Include="Views\SubForms\FrmSearch.Designer.cs">
+      <DependentUpon>FrmSearch.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\SubForms\frmSearchCompany.cs">
+    <Compile Include="Views\SubForms\FrmSearchCompany.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SubForms\frmSearchCompany.Designer.cs">
-      <DependentUpon>frmSearchCompany.cs</DependentUpon>
+    <Compile Include="Views\SubForms\FrmSearchCompany.Designer.cs">
+      <DependentUpon>FrmSearchCompany.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\SubForms\ISubForm.cs" />
-    <EmbeddedResource Include="Views\frmCreate.resx">
-      <DependentUpon>frmCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Views\FrmCreate.resx">
+      <DependentUpon>FrmCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmMainMenu.resx">
-      <DependentUpon>frmMainMenu.cs</DependentUpon>
+    <EmbeddedResource Include="Views\FrmMainMenu.resx">
+      <DependentUpon>FrmMainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmPrincipal.resx">
-      <DependentUpon>frmPrincipal.cs</DependentUpon>
+    <EmbeddedResource Include="Views\FrmPrincipal.resx">
+      <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -162,23 +162,23 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Views\SubForms\frmBots.resx">
-      <DependentUpon>frmBots.cs</DependentUpon>
+    <EmbeddedResource Include="Views\SubForms\FrmBots.resx">
+      <DependentUpon>FrmBots.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SubForms\frmHome.resx">
-      <DependentUpon>frmHome.cs</DependentUpon>
+    <EmbeddedResource Include="Views\SubForms\FrmHome.resx">
+      <DependentUpon>FrmHome.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SubForms\frmJobMarket.resx">
-      <DependentUpon>frmJobMarket.cs</DependentUpon>
+    <EmbeddedResource Include="Views\SubForms\FrmJobMarket.resx">
+      <DependentUpon>FrmJobMarket.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SubForms\frmResourceMarket.resx">
-      <DependentUpon>frmResourceMarket.cs</DependentUpon>
+    <EmbeddedResource Include="Views\SubForms\FrmResourceMarket.resx">
+      <DependentUpon>FrmResourceMarket.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SubForms\frmSearch.resx">
-      <DependentUpon>frmSearch.cs</DependentUpon>
+    <EmbeddedResource Include="Views\SubForms\FrmSearch.resx">
+      <DependentUpon>FrmSearch.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SubForms\frmSearchCompany.resx">
-      <DependentUpon>frmSearchCompany.cs</DependentUpon>
+    <EmbeddedResource Include="Views\SubForms\FrmSearchCompany.resx">
+      <DependentUpon>FrmSearchCompany.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

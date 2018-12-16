@@ -1,6 +1,6 @@
 ﻿namespace Simul.Views.SubForms
 {
-    partial class frmBots
+    partial class FrmBots
     {
         /// <summary>
         /// Required designer variable.

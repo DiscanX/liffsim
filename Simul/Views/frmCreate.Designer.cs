@@ -1,6 +1,6 @@
 ﻿namespace Simul.Views
 {
-    partial class frmCreate
+    partial class FrmCreate
     {
         /// <summary>
         /// Required designer variable.

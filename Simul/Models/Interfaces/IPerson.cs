@@ -2,15 +2,15 @@
 {
     public interface IPerson : IPlayer
     {
-        bool alreadyTrained { get; set; }
-        bool alreadyWorked { get; set; }
-        bool canResign { get; set; }
-        ICompany employer { get; set; }
+        bool AlreadyTrained { get; set; }
+        bool AlreadyWorked { get; set; }
+        bool CanResign { get; set; }
+        ICompany Employer { get; set; }
         int Energy { get; set; }
-        int jobStartDay { get; set; }
-        decimal salary { get; set; }
-        Skillset skillset { get; set; }
-        float strength { get; set; }
+        int JobStartDay { get; set; }
+        decimal Salary { get; set; }
+        Skillset Skillset { get; set; }
+        float Strength { get; set; }
 
         string DisplayProductivity();
         string DisplayCurrentEmployer();

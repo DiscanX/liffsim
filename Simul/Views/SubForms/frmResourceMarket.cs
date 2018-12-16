@@ -1,32 +1,25 @@
-﻿using Simul.Controllers;
+﻿using BrightIdeasSoftware;
+using Simul.Controllers;
 using Simul.Helpers;
 using Simul.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using BrightIdeasSoftware;
-using Simul.Views;
 
 namespace Simul.Views.SubForms
 {
-    public partial class frmResourceMarket : Form, ISubForm
+    public partial class FrmResourceMarket : Form, ISubForm
     {
-        frmPrincipal frmPrincipal;
-        ResourceMarketController resourceMarketController;
-        GameController gameController;
-        ResourceMarket selectedResourceMarket;
+        FrmPrincipal _frmPrincipal;
+        ResourceMarketController _resourceMarketController;
+        GameController _gameController;
+        ResourceMarket _selectedResourceMarket;
 
-        public frmResourceMarket(frmPrincipal frmPrincipal)
+        public FrmResourceMarket(FrmPrincipal frmPrincipal)
         {
-            this.frmPrincipal = frmPrincipal;
-            this.resourceMarketController = ResourceMarketController.Instance;
-            this.gameController = GameController.Instance;
+            _frmPrincipal = frmPrincipal;
+            _resourceMarketController = ResourceMarketController.Instance;
+            _gameController = GameController.Instance;
 
             InitializeComponent();
 
@@ -34,25 +27,25 @@ namespace Simul.Views.SubForms
             olvResources.ButtonClick += DlvResources_Buy;
             olvResources.FormatRow += OlvResources_FormatRow;
 
-            olvResourceImg.ImageGetter = delegate (object rowObject) { return ((ResourceOffer)rowObject).resource.name.ToString(); };
-            olvBuy.AspectGetter = delegate (object rowObject) { return "Buy"; };
+            olvResourceImg.ImageGetter = x => ((ResourceOffer)x).Resource.Name.ToString();
+            olvBuy.AspectGetter = x => "Buy";
         }
 
         private void OlvResources_FormatRow(object sender, FormatRowEventArgs e)
         {
-            ResourceOffer resourceOffer = (ResourceOffer)e.Model;
+            var resourceOffer = (ResourceOffer)e.Model;
             FormatRow(resourceOffer);
         }
 
         private void FormatRow(ResourceOffer resourceOffer)
         {
-            if (resourceOffer.unitPrice > gameController.controlledPerson.Money)
+            if (resourceOffer.UnitPrice > _gameController.ControlledPerson.Money)
             {
                 olvResources.FormatRow -= OlvResources_FormatRow;
                 olvResources.DisableObject(resourceOffer);
                 olvResources.FormatRow += OlvResources_FormatRow;
             }
-            else if (resourceOffer.unitPrice <= gameController.controlledPerson.Money)
+            else if (resourceOffer.UnitPrice <= _gameController.ControlledPerson.Money)
             {
                 olvResources.FormatRow -= OlvResources_FormatRow;
                 olvResources.EnableObject(resourceOffer);
@@ -62,13 +55,13 @@ namespace Simul.Views.SubForms
 
         private void DlvResources_Buy(object sender, CellClickEventArgs e)
         {
-            ResourceOffer resourceOffer = (ResourceOffer)e.Model;
+            var resourceOffer = (ResourceOffer)e.Model;
 
-            gameController.controlledPerson.Buy(selectedResourceMarket, resourceOffer, 1);
+            _gameController.ControlledPerson.Buy(_selectedResourceMarket, resourceOffer, 1);
 
-            frmPrincipal.ReloadMenu();
+            _frmPrincipal.ReloadMenu();
 
-            if(selectedResourceMarket.offers.Exists(x => x == e.Model))
+            if (_selectedResourceMarket.Offers.Exists(x => x == e.Model))
             {
                 olvResources.RefreshObject(e.Model);
             }
@@ -76,23 +69,23 @@ namespace Simul.Views.SubForms
             {
                 olvResources.RemoveObject(e.Model);
             }
-            
+
         }
 
         public void UpdateDisplay()
         {
             cboResourceMarkets.Items.Clear();
-            foreach (ResourceMarket resourceMarket in resourceMarketController.markets)
+            foreach (ResourceMarket resourceMarket in _resourceMarketController.Markets)
             {
-                cboResourceMarkets.Items.Add(resourceMarket.name);
+                cboResourceMarkets.Items.Add(resourceMarket.Name);
             }
-            cboResourceMarkets.Text = resourceMarketController.GetMarketOfCountry(gameController.controlledPerson.country.name).name;
+            cboResourceMarkets.Text = _resourceMarketController.GetMarketOfCountry(_gameController.ControlledPerson.Country.Name).Name;
         }
 
         private void cboResourceMarkets_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectedResourceMarket = resourceMarketController.markets.First(x => x.name == cboResourceMarkets.SelectedItem.ToString());
-            olvResources.SetObjects(selectedResourceMarket.offers);
+            _selectedResourceMarket = _resourceMarketController.Markets.First(x => x.Name == cboResourceMarkets.SelectedItem.ToString());
+            olvResources.SetObjects(_selectedResourceMarket.Offers);
 
             //As the event "FormatRow" is not triggered before a mouse hover
             foreach (ResourceOffer resourceOffer in olvResources.Objects)

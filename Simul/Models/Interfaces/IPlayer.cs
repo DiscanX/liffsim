@@ -5,11 +5,11 @@ namespace Simul.Models
 {
     public interface IPlayer
     {
-        Country country { get; set; }
-        Inventory inventory { get; set; }
-        bool isHumanControlled { get; set; }
+        Country Country { get; set; }
+        Inventory Inventory { get; set; }
+        bool IsHumanControlled { get; set; }
         decimal Money { get; set; }
-        string name { get; set; }
+        string Name { get; set; }
 
         void Buy(ResourceMarket resourceMarket, ResourceOffer offer, int quantity);
         void GiveTo(Player receiver, Resource resource, int quantity);

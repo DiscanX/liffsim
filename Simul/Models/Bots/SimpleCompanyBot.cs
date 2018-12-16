@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simul.Models.Bots
 {
@@ -16,81 +14,83 @@ namespace Simul.Models.Bots
 
     public class SimpleCompanyBot : Bot
     {
-        private ICompany myself;
-        private GameController gameController;
-        private PersonController personController;
-        private CompanyController companyController;
-        private ResourceMarketController resourceMarketController;
-        private JobMarketController jobMarketController;
-        private Random random;
+        private ICompany _myself;
+        private GameController _gameController;
+        private PersonController _personController;
+        private CompanyController _companyController;
+        private ResourceMarketController _resourceMarketController;
+        private JobMarketController _jobMarketController;
+        private Random _random;
 
-        public override string getBotTypeName()
+        public override string GetBotTypeName()
         {
             return Constants.SIMPLE_COMPANY_BOT_NAME;
         }
 
-        public override IPlayer getControlledPlayer()
+        public override IPlayer GetControlledPlayer()
         {
-            return myself;
+            return _myself;
         }
 
         public SimpleCompanyBot(ICompany myself, int passion, int greediness, int stability, Random random)
         {
-            this.myself = myself;
-            this.myself.isHumanControlled = false;
+            _myself = myself;
+            _myself.IsHumanControlled = false;
 
-            this.parameters = new Dictionary<string, int>();
-            parameters.Add(eSCBotParameters.passion.ToString(), passion);
-            parameters.Add(eSCBotParameters.greediness.ToString(), greediness);
-            parameters.Add(eSCBotParameters.stability.ToString(), stability);
+            Parameters = new Dictionary<string, int>
+            {
+                { nameof(eSCBotParameters.passion), passion },
+                { nameof(eSCBotParameters.greediness), greediness },
+                { nameof(eSCBotParameters.stability), stability }
+            };
 
-            this.gameController = GameController.Instance;
-            this.personController = PersonController.Instance;
-            this.companyController = CompanyController.Instance;
-            this.resourceMarketController = ResourceMarketController.Instance;
-            this.jobMarketController = JobMarketController.Instance;
+            _gameController = GameController.Instance;
+            _personController = PersonController.Instance;
+            _companyController = CompanyController.Instance;
+            _resourceMarketController = ResourceMarketController.Instance;
+            _jobMarketController = JobMarketController.Instance;
 
-            this.random = random;
+            _random = random;
         }
 
         public override void LiveDay()
         {
-            int passion = parameters[eSCBotParameters.passion.ToString()];
-            int greediness = parameters[eSCBotParameters.greediness.ToString()];
-            int stability = parameters[eSCBotParameters.stability.ToString()];
+            var passion = Parameters[nameof(eSCBotParameters.passion)];
+            var greediness = Parameters[nameof(eSCBotParameters.greediness)];
+            var stability = Parameters[nameof(eSCBotParameters.stability)];
 
-            if (passion > 0 && random.Next(1, 101) <= passion)
+            if (passion > 0 && _random.Next(1, 101) <= passion)
             {
-                ResourceMarket currentResourceMarket = resourceMarketController.GetMarketOfCountry(myself.country.name);
+                var currentResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
 
                 //Sell
-                float greedinessPercentage = 1 - (greediness * 0.01f);
-                float stabilityPercentage = random.Next(0, 100 - stability) * 0.01f;
-                int numberToSell = (int)Math.Floor(myself.inventory.stocks[myself.producedResource] * Math.Max(greedinessPercentage, stabilityPercentage));
+                var greedinessPercentage = 1 - (greediness * 0.01f);
+                var stabilityPercentage = _random.Next(0, 100 - stability) * 0.01f;
+                var numberToSell = (int)Math.Floor(_myself.Inventory.Stocks[_myself.ProducedResource] * Math.Max(greedinessPercentage, stabilityPercentage));
 
-                if(numberToSell > 0)
+                if (numberToSell > 0)
                 {
-                    myself.Sell(currentResourceMarket, new ResourceOffer(myself, myself.producedResource, numberToSell, 1));
+                    _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, _myself.ProducedResource, numberToSell, 1));
                 }
 
                 //Buy
-                Dictionary<Resource, int> requirements = myself.producedResource.GetRequirements();
+                var requirements = _myself.ProducedResource.GetRequirements();
                 if (requirements != null)
                 {
-                    var marketOfCountry = resourceMarketController.GetMarketOfCountry(myself.country.name);
+                    var marketOfCountry = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
                     foreach (var requirement in requirements)
                     {
-                        var resourcesToBuy = resourceMarketController.GetBestOffersOfMarket(marketOfCountry, requirement.Key.name, 2);
+                        var resourcesToBuy = _resourceMarketController.GetBestOffersOfMarket(marketOfCountry, requirement.Key.Name, 2);
                         if (resourcesToBuy.Count > 0)
                         {
-                            int maximumBuyable = myself.CalculateMaximumBuyable(resourcesToBuy);
+                            var maximumBuyable = _myself.CalculateMaximumBuyable(resourcesToBuy);
 
                             //Only buy food when able to buy the maximum
                             if (maximumBuyable == 2)
                             {
                                 foreach (var resource in resourcesToBuy)
                                 {
-                                    myself.Buy(marketOfCountry, resource.Item1, resource.Item2);
+                                    _myself.Buy(marketOfCountry, resource.Item1, resource.Item2);
                                 }
                             }
                         }
@@ -99,12 +99,12 @@ namespace Simul.Models.Bots
 
 
                 //Add job offers
-                if(myself.producedResource.edible)
+                if (_myself.ProducedResource.Edible)
                 {
-                    var jobMarketOfCountry = jobMarketController.GetMarketOfCountry(myself.country.name);
-                    while (jobMarketOfCountry.offers.Count(x => x.employer.name == myself.name) < 3)
+                    var jobMarketOfCountry = _jobMarketController.GetMarketOfCountry(_myself.Country.Name);
+                    while (jobMarketOfCountry.Offers.Count(x => x.Employer.Name == _myself.Name) < 3)
                     {
-                        jobMarketOfCountry.offers.Add(new JobOffer(myself, 1));
+                        jobMarketOfCountry.Offers.Add(new JobOffer(_myself, 1));
                     }
                 }
             }

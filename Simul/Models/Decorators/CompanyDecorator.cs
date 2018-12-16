@@ -1,46 +1,43 @@
 ﻿using Simul.Controllers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simul.Models.Decorators
 {
     public class CompanyDecorator : ICompany, IDecorator
     {
-        public List<Tuple<int, string>> actionHistory { get; set; }
+        public List<Tuple<int, string>> ActionHistory { get; set; }
 
         protected Company decoratedCompany;
 
         public CompanyDecorator(Company decoratedCompany)
         {
-            actionHistory = new List<Tuple<int, string>>();
+            ActionHistory = new List<Tuple<int, string>>();
             this.decoratedCompany = decoratedCompany;
         }
 
         public void Buy(ResourceMarket resourceMarket, ResourceOffer offer, int quantity)
         {
             decoratedCompany.Buy(resourceMarket, offer, quantity);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(Constants.ACTION_DESCRIPTION_BUY, quantity, offer.resource.name, resourceMarket.name)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_BUY, quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
         public void GiveTo(Player receiver, Resource resource, int quantity)
         {
             decoratedCompany.GiveTo(receiver, resource, quantity);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(Constants.ACTION_DESCRIPTION_GIVETO, quantity, resource.name, receiver.name)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_GIVETO, quantity, resource.Name, receiver.Name)));
         }
 
         public void RemoveOffer(ResourceMarket resourceMarket, ResourceOffer offer)
         {
             decoratedCompany.RemoveOffer(resourceMarket, offer);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(Constants.ACTION_DESCRIPTION_REMOVEOFFER, offer.quantity, offer.resource.name, resourceMarket.name)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_REMOVEOFFER, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
         public void Sell(ResourceMarket resourceMarket, ResourceOffer offer)
         {
             decoratedCompany.Sell(resourceMarket, offer);
-            actionHistory.Add(Tuple.Create(GameController.Instance.currentDay, String.Format(Constants.ACTION_DESCRIPTION_SELL, offer.quantity, offer.resource.name, resourceMarket.name)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_SELL, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
         public eWorkResult Produce(IPerson employee, decimal salary)
@@ -53,42 +50,42 @@ namespace Simul.Models.Decorators
             return decoratedCompany.CalculateMaximumBuyable(offers);
         }
 
-        public Country country
+        public Country Country
         {
             get
             {
-                return decoratedCompany.country;
+                return decoratedCompany.Country;
             }
 
             set
             {
-                decoratedCompany.country = value;
+                decoratedCompany.Country = value;
             }
         }
 
-        public Inventory inventory
+        public Inventory Inventory
         {
             get
             {
-                return decoratedCompany.inventory;
+                return decoratedCompany.Inventory;
             }
 
             set
             {
-                decoratedCompany.inventory = value;
+                decoratedCompany.Inventory = value;
             }
         }
 
-        public bool isHumanControlled
+        public bool IsHumanControlled
         {
             get
             {
-                return decoratedCompany.isHumanControlled;
+                return decoratedCompany.IsHumanControlled;
             }
 
             set
             {
-                decoratedCompany.isHumanControlled = value;
+                decoratedCompany.IsHumanControlled = value;
             }
         }
 
@@ -105,55 +102,55 @@ namespace Simul.Models.Decorators
             }
         }
 
-        public string name
+        public string Name
         {
             get
             {
-                return decoratedCompany.name;
+                return decoratedCompany.Name;
             }
 
             set
             {
-                decoratedCompany.name = value;  
+                decoratedCompany.Name = value;
             }
         }
 
-        public List<IPerson> employees
+        public List<IPerson> Employees
         {
             get
             {
-                return decoratedCompany.employees;
+                return decoratedCompany.Employees;
             }
 
             set
             {
-                decoratedCompany.employees = value;
+                decoratedCompany.Employees = value;
             }
         }
 
-        public Resource producedResource
+        public Resource ProducedResource
         {
             get
             {
-                return decoratedCompany.producedResource;
+                return decoratedCompany.ProducedResource;
             }
 
             set
             {
-                decoratedCompany.producedResource = value;
+                decoratedCompany.ProducedResource = value;
             }
         }
 
-        public float progress
+        public float Progress
         {
             get
             {
-                return decoratedCompany.progress;
+                return decoratedCompany.Progress;
             }
 
             set
             {
-                decoratedCompany.progress = value;
+                decoratedCompany.Progress = value;
             }
         }
     }

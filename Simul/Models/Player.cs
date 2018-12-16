@@ -1,106 +1,108 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simul.Models
 {
     public abstract class Player : IPlayer
     {
-        public string name { get; set; }
-        public Country country { get; set; }
-        public Inventory inventory { get; set; }
-        public bool isHumanControlled { get; set; }
-        private decimal money;
+        public string Name { get; set; }
+        public Country Country { get; set; }
+        public Inventory Inventory { get; set; }
+        public bool IsHumanControlled { get; set; }
+
+        private decimal _money;
+
         public decimal Money
         {
-            get { return money; }
-            set { if (money < 0) { throw new Exception("Money can't go below zero"); } else { money = value; } }
+            get { return _money; }
+            set { if (_money < 0) { throw new Exception("Money can't go below zero"); } else { _money = value; } }
         }
 
-        public Player(string name, Country country, decimal money, Inventory inventory, bool isHumanControlled = false)
+        protected Player(string name, Country country, decimal money, Inventory inventory, bool isHumanControlled = false)
         {
-            this.name = name;
-            this.country = country;
-            this.Money = money;
-            this.inventory = inventory;
-            this.isHumanControlled = isHumanControlled;
+            Name = name;
+            Country = country;
+            Money = money;
+            Inventory = inventory;
+            IsHumanControlled = isHumanControlled;
         }
 
         public void Buy(ResourceMarket resourceMarket, ResourceOffer offer, int quantity)
         {
-            decimal totalPrice = quantity * offer.unitPrice;
+            var totalPrice = quantity * offer.UnitPrice;
 
             if (totalPrice > Money)
             {
                 throw new Exception("The purchase is greater than the currency owned by the player");
             }
 
-            if(quantity > offer.quantity)
+            if (quantity > offer.Quantity)
             {
                 throw new Exception("The quantity requested is greater than the quantity offered");
             }
 
-            if(country != resourceMarket.country)
+            if (Country != resourceMarket.Country)
             {
                 throw new Exception("Can't buy from another's country market");
             }
 
-            offer.owner.Money += totalPrice;
+            offer.Owner.Money += totalPrice;
             Money -= totalPrice;
 
-            if(quantity == offer.quantity)
+            if (quantity == offer.Quantity)
             {
-                resourceMarket.offers.Remove(offer);
+                resourceMarket.Offers.Remove(offer);
             }
             else
             {
-                offer.quantity -= quantity;
+                offer.Quantity -= quantity;
             }
 
-            inventory.stocks[offer.resource] += quantity;
+            Inventory.Stocks[offer.Resource] += quantity;
         }
 
         public void Sell(ResourceMarket resourceMarket, ResourceOffer offer)
         {
-            if(offer.owner.name != name)
+            if (offer.Owner.Name != Name)
             {
                 throw new Exception("The player can only sell offers he owns");
             }
 
-            if(!inventory.stocks.Any(x => x.Key == offer.resource))
+            if (!Inventory.Stocks.Any(x => x.Key == offer.Resource))
             {
                 throw new Exception("The resource is not owned by the player");
             }
-            
-            if(inventory.stocks.Any(x => x.Key == offer.resource && offer.quantity > x.Value))
+
+            if (Inventory.Stocks.Any(x => x.Key == offer.Resource && offer.Quantity > x.Value))
             {
                 throw new Exception("The offer contains too much of this resource");
             }
 
-            inventory.stocks[offer.resource] -= offer.quantity;
+            Inventory.Stocks[offer.Resource] -= offer.Quantity;
 
-            ResourceOffer alreadyExistingOffer = resourceMarket.offers.FirstOrDefault(x => x.owner.name == name && x.resource == offer.resource && x.unitPrice == offer.unitPrice);
+            var alreadyExistingOffer = resourceMarket.Offers.FirstOrDefault(x => x.Owner.Name == Name &&
+                                                                                 x.Resource == offer.Resource &&
+                                                                                 x.UnitPrice == offer.UnitPrice);
             if (alreadyExistingOffer != null)
             {
-                alreadyExistingOffer.quantity += offer.quantity;
+                alreadyExistingOffer.Quantity += offer.Quantity;
             }
             else
             {
-                resourceMarket.offers.Add(offer);
+                resourceMarket.Offers.Add(offer);
             }
         }
 
         public void RemoveOffer(ResourceMarket resourceMarket, ResourceOffer offer)
         {
-            if (offer.owner != this)
+            if (offer.Owner != this)
             {
                 throw new Exception("The player can only remove offers he owns");
             }
 
-            resourceMarket.offers.Remove(offer);
-            inventory.stocks[offer.resource] += offer.quantity;
+            resourceMarket.Offers.Remove(offer);
+            Inventory.Stocks[offer.Resource] += offer.Quantity;
         }
 
         public void GiveTo(Player receiver, Resource resource, int quantity)
@@ -110,25 +112,22 @@ namespace Simul.Models
 
         public int CalculateMaximumBuyable(List<Tuple<ResourceOffer, int>> offers)
         {
-            int maximumBuyable = 0;
-            decimal moneyToSpend = money;
+            var maximumBuyable = 0;
 
-            for(int i = 0; i < offers.Count(); i++)
+            for (int i = 0; i < offers.Count(); i++)
             {
-                if(offers[i].Item2 > offers[i].Item1.quantity)
+                if (offers[i].Item2 > offers[i].Item1.Quantity)
                 {
                     throw new Exception("Can't buy more than what the quantity of the offer is");
                 }
 
-                if(offers[i].Item1.unitPrice * offers[i].Item2 > moneyToSpend)
+                if (offers[i].Item1.UnitPrice * offers[i].Item2 > _money)
                 {
-                    maximumBuyable += (int)Math.Floor(moneyToSpend / offers[i].Item1.unitPrice);
+                    maximumBuyable += (int)Math.Floor(_money / offers[i].Item1.UnitPrice);
                     break;
                 }
-                else
-                {
-                    maximumBuyable += offers[i].Item2;
-                }
+
+                maximumBuyable += offers[i].Item2;
             }
 
             return maximumBuyable;

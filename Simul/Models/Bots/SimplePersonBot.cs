@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simul.Models.Bots
 {
@@ -16,72 +14,79 @@ namespace Simul.Models.Bots
 
     public class SimplePersonBot : Bot
     {
-        private IPerson myself;
-        private List<ePersonalityTrait> personalityTraits;
+        private IPerson _myself;
+        private List<ePersonalityTrait> _personalityTraits;
 
-        private GameController gameController;
-        private PersonController personController;
-        private CompanyController companyController;
-        private ResourceMarketController resourceMarketController;
-        private JobMarketController jobMarketController;
+        private GameController _gameController;
+        private PersonController _personController;
+        private CompanyController _companyController;
+        private ResourceMarketController _resourceMarketController;
+        private JobMarketController _jobMarketController;
 
-        private Random random;
+        private Random _random;
 
-        public override string getBotTypeName()
+        public override string GetBotTypeName()
         {
             return Constants.SIMPLE_PERSON_BOT_NAME;
         }
 
-        public override IPlayer getControlledPlayer()
+        public override IPlayer GetControlledPlayer()
         {
-            return myself;
+            return _myself;
         }
 
-        public SimplePersonBot(IPerson myself, List<ePersonalityTrait> personalityTraits, int passion, int interestInEconomy, int interestInMilitary, Random random)
+        public SimplePersonBot(IPerson myself,
+            List<ePersonalityTrait> personalityTraits,
+            int passion,
+            int interestInEconomy,
+            int interestInMilitary,
+            Random random)
         {
-            this.myself = myself;
-            this.myself.isHumanControlled = false;
-            this.personalityTraits = personalityTraits;
+            _myself = myself;
+            _myself.IsHumanControlled = false;
+            _personalityTraits = personalityTraits;
 
-            this.parameters = new Dictionary<string, int>();
-            parameters.Add(eSPBotParameters.passion.ToString(), passion);
-            parameters.Add(eSPBotParameters.interestInEconomy.ToString(), interestInEconomy);
-            parameters.Add(eSPBotParameters.interestInMilitary.ToString(), interestInMilitary);
+            Parameters = new Dictionary<string, int>
+            {
+                { nameof(eSPBotParameters.passion), passion },
+                { nameof(eSPBotParameters.interestInEconomy), interestInEconomy },
+                { nameof(eSPBotParameters.interestInMilitary), interestInMilitary }
+            };
 
-            this.gameController = GameController.Instance;
-            this.personController = PersonController.Instance;
-            this.companyController = CompanyController.Instance;
-            this.resourceMarketController = ResourceMarketController.Instance;
-            this.jobMarketController = JobMarketController.Instance;
+            _gameController = GameController.Instance;
+            _personController = PersonController.Instance;
+            _companyController = CompanyController.Instance;
+            _resourceMarketController = ResourceMarketController.Instance;
+            _jobMarketController = JobMarketController.Instance;
 
-            this.random = random;
+            _random = random;
         }
 
         public override void LiveDay()
         {
-            int passion = parameters[eSPBotParameters.passion.ToString()];
-            int interestInEconomy = parameters[eSPBotParameters.interestInEconomy.ToString()];
-            int interestInMilitary = parameters[eSPBotParameters.interestInMilitary.ToString()];
+            var passion = Parameters[eSPBotParameters.passion.ToString()];
+            var interestInEconomy = Parameters[eSPBotParameters.interestInEconomy.ToString()];
+            var interestInMilitary = Parameters[eSPBotParameters.interestInMilitary.ToString()];
 
-            if (passion > 0 && random.Next(1, 101) <= passion)
+            if (passion > 0 && _random.Next(1, 101) <= passion)
             {
                 //Eat
-                myself.EatUntilFull();
+                _myself.EatUntilFull();
 
                 //Find a job if none
-                if(myself.employer == null)
+                if (_myself.Employer == null)
                 {
-                    Tuple<JobMarket, JobOffer> bestJob = FindBestJob();
+                    var bestJob = FindBestJob();
                     if (bestJob != null)
                     {
-                        myself.TakeJob(bestJob.Item1, bestJob.Item2, gameController.currentDay);
+                        _myself.TakeJob(bestJob.Item1, bestJob.Item2, _gameController.CurrentDay);
                     }
                 }
 
                 //Get an objective if none (TODO)
 
                 //Work & Train
-                if(interestInEconomy >= interestInMilitary)
+                if (interestInEconomy >= interestInMilitary)
                 {
                     TryToWork();
                     TryToTrain();
@@ -95,21 +100,21 @@ namespace Simul.Models.Bots
                 //Buy & Sell
 
                 //Food
-                if (myself.Energy < Constants.MAX_ENERGY / 2)
+                if (_myself.Energy < Constants.MAX_ENERGY / 2)
                 {
-                    ResourceMarket countryResourceMarket = resourceMarketController.GetMarketOfCountry(myself.country.name);
+                    ResourceMarket countryResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
 
-                    int quantityWanted = random.Next(1, 4);
-                    var foodToBuy = resourceMarketController.GetBestOffersOfMarket(countryResourceMarket, Helpers.eResourceName.bread, quantityWanted);
+                    var quantityWanted = _random.Next(1, 4);
+                    var foodToBuy = _resourceMarketController.GetBestOffersOfMarket(countryResourceMarket, Helpers.eResourceName.bread, quantityWanted);
 
-                    int maximumBuyable = myself.CalculateMaximumBuyable(foodToBuy);
+                    var maximumBuyable = _myself.CalculateMaximumBuyable(foodToBuy);
 
                     //Only buy food when able to buy the maximum
-                    if(maximumBuyable == quantityWanted)
+                    if (maximumBuyable == quantityWanted)
                     {
-                        foreach(var food in foodToBuy)
+                        foreach (var food in foodToBuy)
                         {
-                            myself.Buy(countryResourceMarket, food.Item1, food.Item2);
+                            _myself.Buy(countryResourceMarket, food.Item1, food.Item2);
                         }
                     }
                 }
@@ -121,20 +126,20 @@ namespace Simul.Models.Bots
 
         private Tuple<JobMarket, JobOffer> FindBestJob()
         {
-            JobOffer bestOffer = new JobOffer(null, Decimal.MinValue);
+            var bestOffer = new JobOffer(null, Decimal.MinValue);
             JobMarket bestJobMarketOfOffer = null;
 
-            foreach (JobMarket market in jobMarketController.markets.Where(x => x.country == myself.country))
+            foreach (JobMarket market in _jobMarketController.Markets.Where(x => x.Country == _myself.Country))
             {
-                JobOffer bestOfferOfThisMarket = market.offers.OrderByDescending(x => x.salary).FirstOrDefault();
-                if (bestOfferOfThisMarket != null && bestOfferOfThisMarket.salary > bestOffer.salary)
+                var bestOfferOfThisMarket = market.Offers.OrderByDescending(x => x.Salary).FirstOrDefault();
+                if (bestOfferOfThisMarket != null && bestOfferOfThisMarket.Salary > bestOffer.Salary)
                 {
                     bestOffer = bestOfferOfThisMarket;
                     bestJobMarketOfOffer = market;
                 }
             }
 
-            if(bestJobMarketOfOffer == null || bestOffer == null)
+            if (bestJobMarketOfOffer == null || bestOffer == null)
             {
                 return null;
             }
@@ -144,16 +149,16 @@ namespace Simul.Models.Bots
 
         private void TryToWork()
         {
-            if (myself.employer != null && myself.Energy - Constants.ENERGY_LOST_WORKING >= 0)
+            if (_myself.Employer != null && _myself.Energy - Constants.ENERGY_LOST_WORKING >= 0)
             {
-                if(myself.Work() != eWorkResult.Success)
+                if (_myself.Work() != eWorkResult.Success)
                 {
                     //Try to find another job
-                    Tuple<JobMarket, JobOffer> bestJob = FindBestJob();
+                    var bestJob = FindBestJob();
                     if (bestJob != null)
                     {
-                        myself.Resign(gameController.currentDay);
-                        myself.TakeJob(bestJob.Item1, bestJob.Item2, gameController.currentDay);
+                        _myself.Resign(_gameController.CurrentDay);
+                        _myself.TakeJob(bestJob.Item1, bestJob.Item2, _gameController.CurrentDay);
                     }
                 }
             }
@@ -161,9 +166,9 @@ namespace Simul.Models.Bots
 
         private void TryToTrain()
         {
-            if (myself.Energy - Constants.ENERGY_LOST_TRAINING >= 0)
+            if (_myself.Energy - Constants.ENERGY_LOST_TRAINING >= 0)
             {
-                myself.Train();
+                _myself.Train();
             }
         }
     }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace Simul.Models
 {
@@ -62,7 +58,7 @@ namespace Simul.Models
 
         public static float CalculateProductionProgress(ICompany company, IPerson employee)
         {
-            KeyValuePair<Skill, float> skill = employee.skillset.skills.First(x => x.Key == company.producedResource.improvedSkill);
+            var skill = employee.Skillset.Skills.First(x => x.Key == company.ProducedResource.ImprovedSkill);
             return skill.Value;
         }
     }

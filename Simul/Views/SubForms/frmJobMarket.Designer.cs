@@ -1,6 +1,6 @@
 ﻿namespace Simul.Views.SubForms
 {
-    partial class frmJobMarket
+    partial class FrmJobMarket
     {
         /// <summary>
         /// Required designer variable.
@@ -71,7 +71,7 @@
             // 
             // olvCompany
             // 
-            this.olvCompany.AspectName = "employer.name";
+            this.olvCompany.AspectName = "Employer.Name";
             this.olvCompany.FillsFreeSpace = true;
             this.olvCompany.Groupable = false;
             this.olvCompany.IsEditable = false;
@@ -80,7 +80,7 @@
             // 
             // olvSalary
             // 
-            this.olvSalary.AspectName = "salary";
+            this.olvSalary.AspectName = "Salary";
             this.olvSalary.AspectToStringFormat = "{0:C}";
             this.olvSalary.FillsFreeSpace = true;
             this.olvSalary.Groupable = false;

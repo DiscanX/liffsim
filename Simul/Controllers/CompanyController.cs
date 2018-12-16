@@ -1,24 +1,17 @@
-﻿using Simul.Helpers;
-using Simul.Models;
-using System;
+﻿using Simul.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simul.Controllers
 {
     public class CompanyController
     {
         static CompanyController() { }
-        private static CompanyController instance = new CompanyController();
-        public static CompanyController Instance { get { return instance; } }
-
-        public List<ICompany> companies { get; set; }
+        public static CompanyController Instance { get; } = new CompanyController();
+        public List<ICompany> Companies { get; set; }
 
         private CompanyController()
         {
-            companies = new List<ICompany>();
+            Companies = new List<ICompany>();
         }
     }
 }
