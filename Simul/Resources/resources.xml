@@ -17,11 +17,11 @@
     <name>bread</name>
     <type>tertiary</type>
     <improvedSkill>cooking</improvedSkill>
-    <productionCost>10</productionCost>
+    <productionCost>3</productionCost>
     <requirements>
       <requirement>
         <name>wheat</name>
-        <quantity>10</quantity>
+        <quantity>2</quantity>
       </requirement>
     </requirements>
     <edible />
@@ -30,11 +30,11 @@
     <name>weapon</name>
     <type>tertiary</type>
     <improvedSkill>manufacturing</improvedSkill>
-    <productionCost>50</productionCost>
+    <productionCost>5</productionCost>
     <requirements>
       <requirement>
         <name>iron</name>
-        <quantity>20</quantity>
+        <quantity>10</quantity>
       </requirement>
     </requirements>
   </resource>

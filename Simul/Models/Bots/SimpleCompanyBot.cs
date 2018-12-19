@@ -70,7 +70,8 @@ namespace Simul.Models.Bots
 
                 if (numberToSell > 0)
                 {
-                    _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, _myself.ProducedResource, numberToSell, 1));
+                    decimal price = _myself.ProducedResource.ProductionCost > 1 ? _myself.ProducedResource.ProductionCost + 2 : 1;
+                    _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, _myself.ProducedResource, numberToSell, price));
                 }
 
                 //Buy
