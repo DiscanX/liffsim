@@ -1,8 +1,6 @@
-﻿using Simul.Views;
+﻿using Simul.Config;
+using Simul.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Simul
@@ -15,9 +13,17 @@ namespace Simul
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmPrincipal());
+            var container = AutofacConfiguration.CreateContainer();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                using (var frmPrincipal = new FrmPrincipal())
+                {
+                    Application.Run(frmPrincipal);
+                }
+            }
         }
     }
 }
