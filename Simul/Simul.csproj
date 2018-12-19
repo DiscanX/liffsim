@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\CountryController.cs" />
+    <Compile Include="Models\Bots\SimpleCompanyBotBuilder.cs" />
     <Compile Include="Models\Bots\PersonalityTraits.cs" />
     <Compile Include="Models\Bots\SimpleCompanyBot.cs" />
     <Compile Include="Models\Bots\SimplePersonBot.cs" />

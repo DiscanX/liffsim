@@ -65,7 +65,6 @@ namespace Simul.Views
                 var decoratedPerson = new Person(name, country, Constants.BASE_MONEY, new Skillset(), new Inventory(), Constants.BASE_ENERGY, Constants.BASE_STRENGTH);
                 var person = new PersonDecorator(decoratedPerson);
 
-                var passion = rnd.Next(1, 101);
                 var interestInEconomy = rnd.Next(0, 101);
                 var interestInMilitary = 100 - interestInEconomy;
                 var SPBot = new SimplePersonBot(person, PersonalityTraits.GenerateRandomPersonalityTraits(rnd), 100, interestInEconomy, interestInMilitary, rnd);
@@ -93,13 +92,15 @@ namespace Simul.Views
                 var decoratedCompany = new Company(name, country, producedResource, 1000, new Inventory());
                 var company = new CompanyDecorator(decoratedCompany);
 
-                var passion = rnd.Next(1, 101);
-                var greediness = rnd.Next(0, 101);
-                var stability = rnd.Next(0, 101);
-                var SCBot = new SimpleCompanyBot(company, 100, greediness, stability, rnd);
-
                 companyController.Companies.Add(company);
-                _gameController.Bots.Add(SCBot);
+
+                var botBuilder = new SimpleCompanyBotBuilder();
+                botBuilder.SetCompany(company);
+                botBuilder.SetPassion(100);
+                botBuilder.SetGreediness(rnd.Next(0, 101));
+                botBuilder.SetStability(rnd.Next(0, 101));
+
+                _gameController.Bots.Add(botBuilder.Build());
             }
 
             //Temporary Markets Creator
