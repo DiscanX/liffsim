@@ -56,7 +56,7 @@ namespace Simul.Views
             _personController.Persons.Add(controlledPerson);
             _gameController.ControlledPerson = controlledPerson;
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 150; i++)
             {
                 var name = "Person " + (i + 1);
                 var country = _countryController.Countries.ElementAt(rnd.Next(0, _countryController.Countries.Count));
@@ -73,13 +73,13 @@ namespace Simul.Views
             }
 
             //Temporary Company Creator
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 15; i++)
             {
                 var name = "Company " + (i + 1);
                 var country = _countryController.Countries.ElementAt(i % 5);
 
                 Resource producedResource;
-                if (i % 2 == 0)
+                if (i % 3 == 0)
                 {
                     producedResource = ContentReader.GetResources().First(x => x.Name == eResourceName.wheat);
                 }

@@ -66,9 +66,43 @@ namespace Simul.Models.Bots
                     Buy(requirements);
                 }
 
-                if (_myself.ProducedResource.Edible)
+                if (_myself.Employees.Count < 10 && _myself.Money > 500)
                 {
-                    AddJobOffers();
+                    var bestJob = _jobMarketController.FindBestJob(_myself.Country);
+                    if (bestJob.jobOffer == null)
+                    {
+                        AddJobOffers(1);
+                    }
+                    else if (bestJob.jobOffer.Employer != _myself)
+                    {
+                        AddJobOffers(bestJob.jobOffer.Salary + 0.01m);
+                    }
+                }
+
+                if (_myself.Money < 500)
+                {
+                    foreach (var employee in _myself.Employees)
+                    {
+                        employee.Employer = null;
+                    }
+
+                    _myself.Employees.Clear();
+
+                    var currentResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
+                    var stocks = _myself.Inventory.Stocks;
+                    for (int i = 0; i < stocks.Count; i++)
+                    {
+                        var stock = stocks.ElementAt(i);
+                        var bestOffer = _resourceMarketController.GetBestOffersOfMarket(currentResourceMarket, stock.Key.Name, 1).FirstOrDefault();
+                        if (bestOffer == null)
+                        {
+                            _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, stock.Key, stock.Value, 1m));
+                        }
+                        else
+                        {
+                            _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, stock.Key, stock.Value, bestOffer.Item1.UnitPrice - 0.01m));
+                        }
+                    }
                 }
             }
         }
@@ -108,13 +142,10 @@ namespace Simul.Models.Bots
             }
         }
 
-        private void AddJobOffers()
+        private void AddJobOffers(decimal salary)
         {
             var jobMarketOfCountry = _jobMarketController.GetMarketOfCountry(_myself.Country.Name);
-            while (jobMarketOfCountry.Offers.Count(x => x.Employer.Name == _myself.Name) < 3)
-            {
-                jobMarketOfCountry.Offers.Add(new JobOffer(_myself, 1));
-            }
+            jobMarketOfCountry.Offers.Add(new JobOffer(_myself, salary));
         }
     }
 }
