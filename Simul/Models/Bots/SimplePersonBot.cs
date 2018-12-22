@@ -1,7 +1,6 @@
 ﻿using Simul.Controllers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Simul.Models.Bots
 {
@@ -76,10 +75,10 @@ namespace Simul.Models.Bots
                 //Find a job if none
                 if (_myself.Employer == null)
                 {
-                    var bestJob = FindBestJob();
-                    if (bestJob != null)
+                    var bestJob = _jobMarketController.FindBestJob(_myself.Country);
+                    if (bestJob.jobOffer != null)
                     {
-                        _myself.TakeJob(bestJob.Item1, bestJob.Item2, _gameController.CurrentDay);
+                        _myself.TakeJob(bestJob.jobMarket, bestJob.jobOffer, _gameController.CurrentDay);
                     }
                 }
 
@@ -102,7 +101,7 @@ namespace Simul.Models.Bots
                 //Food
                 if (_myself.Energy < Constants.MAX_ENERGY / 2)
                 {
-                    ResourceMarket countryResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
+                    var countryResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
 
                     var quantityWanted = _random.Next(1, 4);
                     var foodToBuy = _resourceMarketController.GetBestOffersOfMarket(countryResourceMarket, Helpers.eResourceName.bread, quantityWanted);
@@ -124,29 +123,6 @@ namespace Simul.Models.Bots
             }
         }
 
-        private Tuple<JobMarket, JobOffer> FindBestJob()
-        {
-            var bestOffer = new JobOffer(null, Decimal.MinValue);
-            JobMarket bestJobMarketOfOffer = null;
-
-            foreach (JobMarket market in _jobMarketController.Markets.Where(x => x.Country == _myself.Country))
-            {
-                var bestOfferOfThisMarket = market.Offers.OrderByDescending(x => x.Salary).FirstOrDefault();
-                if (bestOfferOfThisMarket != null && bestOfferOfThisMarket.Salary > bestOffer.Salary)
-                {
-                    bestOffer = bestOfferOfThisMarket;
-                    bestJobMarketOfOffer = market;
-                }
-            }
-
-            if (bestJobMarketOfOffer == null || bestOffer == null)
-            {
-                return null;
-            }
-
-            return new Tuple<JobMarket, JobOffer>(bestJobMarketOfOffer, bestOffer);
-        }
-
         private void TryToWork()
         {
             if (_myself.Employer != null && _myself.Energy - Constants.ENERGY_LOST_WORKING >= 0)
@@ -154,8 +130,8 @@ namespace Simul.Models.Bots
                 if (_myself.Work() != eWorkResult.Success)
                 {
                     //Try to find another job
-                    var bestJob = FindBestJob();
-                    if (bestJob != null)
+                    var bestJob = _jobMarketController.FindBestJob(_myself.Country);
+                    if (bestJob.jobOffer != null)
                     {
                         _myself.Resign(_gameController.CurrentDay);
                         _myself.TakeJob(bestJob.Item1, bestJob.Item2, _gameController.CurrentDay);

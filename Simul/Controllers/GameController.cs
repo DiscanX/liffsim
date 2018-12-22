@@ -12,6 +12,8 @@ namespace Simul.Controllers
         public static GameController Instance = new GameController();
 
         public IPerson ControlledPerson { get; set; }
+        public bool AutoWorkIsActivated { get; set; }
+        public bool AutoTrainIsActivated { get; set; }
         public List<Bot> Bots { get; set; }
         public int CurrentDay { get; set; }
         public Random Random { get; set; }
@@ -27,6 +29,30 @@ namespace Simul.Controllers
         {
             for (int i = 0; i < nbrDays; i++)
             {
+                if (AutoWorkIsActivated)
+                {
+                    if (ControlledPerson.CanWork())
+                    {
+                        ControlledPerson.Work();
+                    }
+                    else
+                    {
+                        AutoWorkIsActivated = false;
+                    }
+                }
+
+                if (AutoTrainIsActivated)
+                {
+                    if (ControlledPerson.CanTrain())
+                    {
+                        ControlledPerson.Train();
+                    }
+                    else
+                    {
+                        AutoTrainIsActivated = false;
+                    }
+                }
+
                 foreach (Bot bot in Bots.OrderBy(x => Random.Next()))
                 {
                     bot.LiveDay();
@@ -44,6 +70,7 @@ namespace Simul.Controllers
                         person.CanResign = true;
                     }
                 }
+
                 CurrentDay++;
             }
         }

@@ -40,13 +40,6 @@ namespace Simul.Views
             _jobMarketController = JobMarketController.Instance;
             _gameController = GameController.Instance;
 
-            _frmHome = new FrmHome(this);
-            _frmJobMarket = new FrmJobMarket(this);
-            _frmResourceMarket = new FrmResourceMarket(this);
-            _frmSearch = new FrmSearch();
-            _frmSearchCompany = new FrmSearchCompany();
-            _frmBots = new FrmBots();
-
             //Temporary Country Creator
             _countryController.Countries.Add(new Country("Alpha"));
             _countryController.Countries.Add(new Country("Beta"));
@@ -128,6 +121,13 @@ namespace Simul.Views
 
             //Temporary ControlledPersonne Setter
             _gameController.ControlledPerson = _personController.Persons.First(x => x.Name == "Keven");
+
+            _frmHome = new FrmHome(this);
+            _frmJobMarket = new FrmJobMarket(this);
+            _frmResourceMarket = new FrmResourceMarket(this);
+            _frmSearch = new FrmSearch();
+            _frmSearchCompany = new FrmSearchCompany();
+            _frmBots = new FrmBots();
 
             SetupMainPanels();
 

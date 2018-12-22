@@ -37,6 +37,10 @@
             this.txtCurrentEmployer = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnResign = new System.Windows.Forms.Button();
+            this.btnAutoWork = new System.Windows.Forms.Button();
+            this.btnAutoTrain = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.btnGetBestJob = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtProductivity
@@ -44,7 +48,7 @@
             this.txtProductivity.BackColor = System.Drawing.SystemColors.Control;
             this.txtProductivity.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtProductivity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProductivity.Location = new System.Drawing.Point(145, 375);
+            this.txtProductivity.Location = new System.Drawing.Point(314, 21);
             this.txtProductivity.Name = "txtProductivity";
             this.txtProductivity.ReadOnly = true;
             this.txtProductivity.Size = new System.Drawing.Size(100, 19);
@@ -56,7 +60,7 @@
             this.txtStrength.BackColor = System.Drawing.SystemColors.Control;
             this.txtStrength.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtStrength.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStrength.Location = new System.Drawing.Point(145, 23);
+            this.txtStrength.Location = new System.Drawing.Point(101, 22);
             this.txtStrength.Name = "txtStrength";
             this.txtStrength.ReadOnly = true;
             this.txtStrength.Size = new System.Drawing.Size(100, 19);
@@ -67,7 +71,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(38, 375);
+            this.label6.Location = new System.Drawing.Point(207, 21);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(101, 20);
             this.label6.TabIndex = 16;
@@ -77,7 +81,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(56, 22);
+            this.label7.Location = new System.Drawing.Point(12, 21);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(83, 20);
             this.label7.TabIndex = 15;
@@ -85,9 +89,9 @@
             // 
             // btnTrain
             // 
-            this.btnTrain.Location = new System.Drawing.Point(314, 133);
+            this.btnTrain.Location = new System.Drawing.Point(16, 76);
             this.btnTrain.Name = "btnTrain";
-            this.btnTrain.Size = new System.Drawing.Size(75, 23);
+            this.btnTrain.Size = new System.Drawing.Size(75, 40);
             this.btnTrain.TabIndex = 14;
             this.btnTrain.Text = "Train";
             this.btnTrain.UseVisualStyleBackColor = true;
@@ -95,9 +99,9 @@
             // 
             // btnWork
             // 
-            this.btnWork.Location = new System.Drawing.Point(314, 460);
+            this.btnWork.Location = new System.Drawing.Point(211, 76);
             this.btnWork.Name = "btnWork";
-            this.btnWork.Size = new System.Drawing.Size(75, 23);
+            this.btnWork.Size = new System.Drawing.Size(75, 40);
             this.btnWork.TabIndex = 13;
             this.btnWork.Text = "Work";
             this.btnWork.UseVisualStyleBackColor = true;
@@ -108,7 +112,7 @@
             this.txtCurrentEmployer.BackColor = System.Drawing.SystemColors.Control;
             this.txtCurrentEmployer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtCurrentEmployer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCurrentEmployer.Location = new System.Drawing.Point(145, 399);
+            this.txtCurrentEmployer.Location = new System.Drawing.Point(314, 45);
             this.txtCurrentEmployer.Name = "txtCurrentEmployer";
             this.txtCurrentEmployer.ReadOnly = true;
             this.txtCurrentEmployer.Size = new System.Drawing.Size(233, 19);
@@ -119,7 +123,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(42, 399);
+            this.label1.Location = new System.Drawing.Point(211, 45);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(97, 20);
             this.label1.TabIndex = 20;
@@ -127,19 +131,61 @@
             // 
             // btnResign
             // 
-            this.btnResign.Location = new System.Drawing.Point(395, 460);
+            this.btnResign.Location = new System.Drawing.Point(292, 76);
             this.btnResign.Name = "btnResign";
-            this.btnResign.Size = new System.Drawing.Size(75, 23);
+            this.btnResign.Size = new System.Drawing.Size(75, 40);
             this.btnResign.TabIndex = 21;
             this.btnResign.Text = "Resign";
             this.btnResign.UseVisualStyleBackColor = true;
             this.btnResign.Click += new System.EventHandler(this.btnResign_Click);
             // 
-            // frmHome
+            // btnAutoWork
+            // 
+            this.btnAutoWork.Location = new System.Drawing.Point(652, 12);
+            this.btnAutoWork.Name = "btnAutoWork";
+            this.btnAutoWork.Size = new System.Drawing.Size(119, 40);
+            this.btnAutoWork.TabIndex = 22;
+            this.btnAutoWork.Text = "Enable auto work";
+            this.btnAutoWork.UseVisualStyleBackColor = true;
+            this.btnAutoWork.Click += new System.EventHandler(this.btnAutoWork_Click);
+            // 
+            // btnAutoTrain
+            // 
+            this.btnAutoTrain.Location = new System.Drawing.Point(652, 58);
+            this.btnAutoTrain.Name = "btnAutoTrain";
+            this.btnAutoTrain.Size = new System.Drawing.Size(119, 40);
+            this.btnAutoTrain.TabIndex = 23;
+            this.btnAutoTrain.Text = "Enable auto train";
+            this.btnAutoTrain.UseVisualStyleBackColor = true;
+            this.btnAutoTrain.Click += new System.EventHandler(this.btnAutoTrain_Click);
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(777, 12);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(185, 511);
+            this.listBox1.TabIndex = 24;
+            // 
+            // btnGetBestJob
+            // 
+            this.btnGetBestJob.Location = new System.Drawing.Point(211, 122);
+            this.btnGetBestJob.Name = "btnGetBestJob";
+            this.btnGetBestJob.Size = new System.Drawing.Size(156, 40);
+            this.btnGetBestJob.TabIndex = 25;
+            this.btnGetBestJob.Text = "Get best job";
+            this.btnGetBestJob.UseVisualStyleBackColor = true;
+            this.btnGetBestJob.Click += new System.EventHandler(this.btnGetBestJob_Click);
+            // 
+            // FrmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 534);
+            this.Controls.Add(this.btnGetBestJob);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.btnAutoTrain);
+            this.Controls.Add(this.btnAutoWork);
             this.Controls.Add(this.btnResign);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtCurrentEmployer);
@@ -150,7 +196,7 @@
             this.Controls.Add(this.btnTrain);
             this.Controls.Add(this.btnWork);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmHome";
+            this.Name = "FrmHome";
             this.Text = "frmHome";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -168,5 +214,9 @@
         private System.Windows.Forms.TextBox txtCurrentEmployer;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnResign;
+        private System.Windows.Forms.Button btnAutoWork;
+        private System.Windows.Forms.Button btnAutoTrain;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button btnGetBestJob;
     }
 }
