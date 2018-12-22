@@ -172,19 +172,17 @@ namespace Simul.Models
                 var edibleResources = Inventory.Stocks.Where(x => x.Key.Edible && x.Value > 0);
                 var quantityToEat = Math.Min((Constants.MAX_ENERGY - _energy) / Constants.ENERGY_GAINED_AFTER_EATING, edibleResources.Count());
 
-                for (int i = 0; i < edibleResources.Count(); i++)
+                foreach (var edibleRessource in edibleResources)
                 {
-                    var edibleResource = edibleResources.ElementAt(i);
-
-                    if (edibleResource.Value >= quantityToEat)
+                    if (edibleRessource.Value >= quantityToEat)
                     {
-                        Eat(edibleResource.Key, quantityToEat);
+                        Eat(edibleRessource.Key, quantityToEat);
                         break;
                     }
                     else
                     {
-                        Eat(edibleResource.Key, edibleResource.Value);
-                        quantityToEat -= edibleResource.Value;
+                        Eat(edibleRessource.Key, edibleRessource.Value);
+                        quantityToEat -= edibleRessource.Value;
                     }
                 }
             }

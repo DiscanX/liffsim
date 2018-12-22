@@ -50,7 +50,12 @@ namespace Simul.Views
             var rnd = new Random();
 
             //Temporary Person Creator
-            _personController.Persons.Add(new Person("Keven", _countryController.Countries.Last(), Constants.BASE_MONEY, new Skillset(), new Inventory(), Constants.BASE_ENERGY, Constants.BASE_STRENGTH));
+            var decoratedControlledPerson = new Person("Keven", _countryController.Countries.Last(), Constants.BASE_MONEY, new Skillset(), new Inventory(), Constants.BASE_ENERGY, Constants.BASE_STRENGTH);
+            var controlledPerson = new PersonDecorator(decoratedControlledPerson);
+
+            _personController.Persons.Add(controlledPerson);
+            _gameController.ControlledPerson = controlledPerson;
+
             for (int i = 0; i < 50; i++)
             {
                 var name = "Person " + (i + 1);
@@ -118,9 +123,6 @@ namespace Simul.Views
                     }
                 }
             }
-
-            //Temporary ControlledPersonne Setter
-            _gameController.ControlledPerson = _personController.Persons.First(x => x.Name == "Keven");
 
             _frmHome = new FrmHome(this);
             _frmJobMarket = new FrmJobMarket(this);

@@ -14,6 +14,7 @@ namespace Simul.Controllers
         public IPerson ControlledPerson { get; set; }
         public bool AutoWorkIsActivated { get; set; }
         public bool AutoTrainIsActivated { get; set; }
+        public bool AutoEatIsActivated { get; set; }
         public List<Bot> Bots { get; set; }
         public int CurrentDay { get; set; }
         public Random Random { get; set; }
@@ -29,28 +30,19 @@ namespace Simul.Controllers
         {
             for (int i = 0; i < nbrDays; i++)
             {
-                if (AutoWorkIsActivated)
+                if (AutoEatIsActivated)
                 {
-                    if (ControlledPerson.CanWork())
-                    {
-                        ControlledPerson.Work();
-                    }
-                    else
-                    {
-                        AutoWorkIsActivated = false;
-                    }
+                    ControlledPerson.EatUntilFull();
                 }
 
-                if (AutoTrainIsActivated)
+                if (AutoWorkIsActivated && ControlledPerson.CanWork())
                 {
-                    if (ControlledPerson.CanTrain())
-                    {
-                        ControlledPerson.Train();
-                    }
-                    else
-                    {
-                        AutoTrainIsActivated = false;
-                    }
+                    ControlledPerson.Work();
+                }
+
+                if (AutoTrainIsActivated && ControlledPerson.CanTrain())
+                {
+                    ControlledPerson.Train();
                 }
 
                 foreach (Bot bot in Bots.OrderBy(x => Random.Next()))

@@ -6,12 +6,6 @@ namespace Simul.Models.Decorators
 {
     public class PersonDecorator : IPerson, IDecorator
     {
-        private const string ACTION_DESCRIPTION_RESIGN = "Resigned from {0}";
-        private const string ACTION_DESCRIPTION_TAKEJOB = "Took job of {0} with a salary of {1} from the market {2}";
-        private const string ACTION_DESCRIPTION_TRAIN = "Trained";
-        private const string ACTION_DESCRIPTION_CANT_WORK = "Tried to work but can't : {0}";
-        private const string ACTION_DESCRIPTION_WORK = "Worked";
-        private const string ACTION_DESCRIPTION_EAT = "Ate {0} {1} for {2} energy";
 
         public List<Tuple<int, string>> ActionHistory { get; set; }
         protected Person decoratedPerson;
@@ -42,7 +36,7 @@ namespace Simul.Models.Decorators
 
         public void Resign(int currentDay)
         {
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(ACTION_DESCRIPTION_RESIGN, decoratedPerson.Employer.Name)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, $"Resigned from {decoratedPerson.Employer.Name}"));
             decoratedPerson.Resign(currentDay);
         }
 
@@ -55,13 +49,13 @@ namespace Simul.Models.Decorators
         public void TakeJob(JobMarket jobMarket, JobOffer jobOffer, int currentDay)
         {
             decoratedPerson.TakeJob(jobMarket, jobOffer, currentDay);
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(ACTION_DESCRIPTION_TAKEJOB, jobOffer.Employer.Name, jobOffer.Salary, jobMarket.Name)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, $"Took job of {jobOffer.Employer.Name} with a salary of {jobOffer.Salary} from the market {jobMarket.Name}"));
         }
 
         public void Train()
         {
             decoratedPerson.Train();
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, ACTION_DESCRIPTION_TRAIN));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, "Trained"));
         }
 
         public eWorkResult Work()
@@ -70,11 +64,11 @@ namespace Simul.Models.Decorators
 
             if (workResult != eWorkResult.Success)
             {
-                ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(ACTION_DESCRIPTION_CANT_WORK, workResult.ToString())));
+                ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, $"Tried to work but can't : {workResult}"));
             }
             else
             {
-                ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, ACTION_DESCRIPTION_WORK));
+                ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, "Worked"));
             }
 
             return workResult;
@@ -83,8 +77,13 @@ namespace Simul.Models.Decorators
         public void Eat(Resource resource, int quantity)
         {
             decoratedPerson.Eat(resource, quantity);
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(ACTION_DESCRIPTION_EAT, quantity, resource.Name, quantity * Constants.ENERGY_GAINED_AFTER_EATING)));
+            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, $"Ate {quantity} {resource.Name} for {quantity * Constants.ENERGY_GAINED_AFTER_EATING} energy"));
 
+        }
+
+        public void EatUntilFull()
+        {
+            decoratedPerson.EatUntilFull();
         }
 
         public float Strength
@@ -199,11 +198,6 @@ namespace Simul.Models.Decorators
         public int CalculateMaximumBuyable(List<Tuple<ResourceOffer, int>> offers)
         {
             return decoratedPerson.CalculateMaximumBuyable(offers);
-        }
-
-        public void EatUntilFull()
-        {
-            decoratedPerson.EatUntilFull();
         }
     }
 }

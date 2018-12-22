@@ -1,6 +1,8 @@
 ﻿using Simul.Controllers;
+using Simul.Helpers;
 using Simul.Models;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Simul.Views.SubForms
@@ -20,12 +22,14 @@ namespace Simul.Views.SubForms
             _myself = _gameController.ControlledPerson;
 
             InitializeComponent();
+
+            olvInventory.SmallImageList = ContentReader.GetResourcesImages();
+            olvResourceImg.ImageGetter = x => ((KeyValuePair<Resource, int>)x).Key.Name.ToString();
         }
 
         public void UpdateDisplay()
         {
             txtStrength.Text = _myself.Strength.ToString();
-            txtProductivity.Text = _myself.DisplayProductivity();
             txtCurrentEmployer.Text = _myself.DisplayCurrentEmployer();
 
             btnWork.Enabled = _myself.CanWork();
@@ -33,8 +37,11 @@ namespace Simul.Views.SubForms
             btnTrain.Enabled = _myself.CanTrain();
 
             btnGetBestJob.Enabled = _myself.Employer == null;
+            UpdateLstControlledPersonActions();
             UpdateBtnAutoWorkDisplay();
             UpdateBtnAutoTrainDisplay();
+
+            UpdateInventory();
         }
 
         private void btnTrain_Click(object sender, EventArgs e)
@@ -79,6 +86,26 @@ namespace Simul.Views.SubForms
             UpdateBtnAutoTrainDisplay();
         }
 
+        private void btnAutoEat_Click(object sender, EventArgs e)
+        {
+            _gameController.AutoEatIsActivated = !_gameController.AutoEatIsActivated;
+            UpdateBtnAutoEatDisplay();
+        }
+
+        private void UpdateLstControlledPersonActions()
+        {
+            lstControlledPersonActions.Items.Clear();
+
+            var decorator = _myself as IDecorator;
+            if (decorator != null)
+            {
+                foreach (Tuple<int, string> action in decorator.ActionHistory)
+                {
+                    lstControlledPersonActions.Items.Add("Day " + action.Item1 + " : " + action.Item2);
+                }
+            }
+        }
+
         private void UpdateBtnAutoWorkDisplay()
         {
             btnAutoWork.Text = _gameController.AutoWorkIsActivated ?
@@ -90,5 +117,19 @@ namespace Simul.Views.SubForms
             btnAutoTrain.Text = _gameController.AutoTrainIsActivated ?
                 "Disable auto train" : "Enable auto train";
         }
+
+        private void UpdateBtnAutoEatDisplay()
+        {
+            btnAutoEat.Text = _gameController.AutoEatIsActivated ?
+                "Disable auto eat" : "Enable auto eat";
+        }
+
+        private void UpdateInventory()
+        {
+            dlvSkills.SetObjects(_myself.Skillset.Skills);
+            olvInventory.SetObjects(_myself.Inventory.Stocks);
+        }
+
+
     }
 }

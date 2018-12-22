@@ -64,39 +64,16 @@ namespace Simul.Models.Bots
         public override void LiveDay()
         {
             var passion = Parameters[eSPBotParameters.passion.ToString()];
-            var interestInEconomy = Parameters[eSPBotParameters.interestInEconomy.ToString()];
-            var interestInMilitary = Parameters[eSPBotParameters.interestInMilitary.ToString()];
 
             if (passion > 0 && _random.Next(1, 101) <= passion)
             {
-                //Eat
                 _myself.EatUntilFull();
-
-                //Find a job if none
-                if (_myself.Employer == null)
-                {
-                    var bestJob = _jobMarketController.FindBestJob(_myself.Country);
-                    if (bestJob.jobOffer != null)
-                    {
-                        _myself.TakeJob(bestJob.jobMarket, bestJob.jobOffer, _gameController.CurrentDay);
-                    }
-                }
 
                 //Get an objective if none (TODO)
 
-                //Work & Train
-                if (interestInEconomy >= interestInMilitary)
-                {
-                    TryToWork();
-                    TryToTrain();
-                }
-                else
-                {
-                    TryToTrain();
-                    TryToWork();
-                }
+                WorkAndTrain();
 
-                //Buy & Sell
+                //Buy & Sell (TODO)
 
                 //Food
                 if (_myself.Energy < Constants.MAX_ENERGY / 2)
@@ -123,26 +100,49 @@ namespace Simul.Models.Bots
             }
         }
 
+        private void WorkAndTrain()
+        {
+            var interestInEconomy = Parameters[eSPBotParameters.interestInEconomy.ToString()];
+            var interestInMilitary = Parameters[eSPBotParameters.interestInMilitary.ToString()];
+
+            if (interestInEconomy >= interestInMilitary)
+            {
+                TryToWork();
+                TryToTrain();
+            }
+            else
+            {
+                TryToTrain();
+                TryToWork();
+            }
+        }
+
         private void TryToWork()
         {
-            if (_myself.Employer != null && _myself.Energy - Constants.ENERGY_LOST_WORKING >= 0)
+            if (_myself.Employer == null)
             {
-                if (_myself.Work() != eWorkResult.Success)
+                var bestJob = _jobMarketController.FindBestJob(_myself.Country);
+                if (bestJob.jobOffer != null)
                 {
-                    //Try to find another job
-                    var bestJob = _jobMarketController.FindBestJob(_myself.Country);
-                    if (bestJob.jobOffer != null)
-                    {
-                        _myself.Resign(_gameController.CurrentDay);
-                        _myself.TakeJob(bestJob.Item1, bestJob.Item2, _gameController.CurrentDay);
-                    }
+                    _myself.TakeJob(bestJob.jobMarket, bestJob.jobOffer, _gameController.CurrentDay);
+                }
+            }
+
+            if (_myself.CanWork() && _myself.Work() != eWorkResult.Success)
+            {
+                //Try to find another job
+                var bestJob = _jobMarketController.FindBestJob(_myself.Country);
+                if (bestJob.jobOffer != null)
+                {
+                    _myself.Resign(_gameController.CurrentDay);
+                    _myself.TakeJob(bestJob.Item1, bestJob.Item2, _gameController.CurrentDay);
                 }
             }
         }
 
         private void TryToTrain()
         {
-            if (_myself.Energy - Constants.ENERGY_LOST_TRAINING >= 0)
+            if (_myself.CanTrain())
             {
                 _myself.Train();
             }

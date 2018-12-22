@@ -56,58 +56,64 @@ namespace Simul.Models.Bots
         public override void LiveDay()
         {
             var passion = Parameters[nameof(eSCBotParameters.passion)];
-            var greediness = Parameters[nameof(eSCBotParameters.greediness)];
-            var stability = Parameters[nameof(eSCBotParameters.stability)];
-
             if (passion > 0 && _random.Next(1, 101) <= passion)
             {
-                var currentResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
+                Sell();
 
-                //Sell
-                var greedinessPercentage = 1 - (greediness * 0.01f);
-                var stabilityPercentage = _random.Next(0, 100 - stability) * 0.01f;
-                var numberToSell = (int)Math.Floor(_myself.Inventory.Stocks[_myself.ProducedResource] * Math.Max(greedinessPercentage, stabilityPercentage));
-
-                if (numberToSell > 0)
-                {
-                    decimal price = _myself.ProducedResource.ProductionCost > 1 ? _myself.ProducedResource.ProductionCost + 2 : 1;
-                    _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, _myself.ProducedResource, numberToSell, price));
-                }
-
-                //Buy
                 var requirements = _myself.ProducedResource.GetRequirements();
                 if (requirements != null)
                 {
-                    var marketOfCountry = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
-                    foreach (var requirement in requirements)
-                    {
-                        var resourcesToBuy = _resourceMarketController.GetBestOffersOfMarket(marketOfCountry, requirement.Key.Name, 2);
-                        if (resourcesToBuy.Count > 0)
-                        {
-                            var maximumBuyable = _myself.CalculateMaximumBuyable(resourcesToBuy);
-
-                            //Only buy food when able to buy the maximum
-                            if (maximumBuyable == 2)
-                            {
-                                foreach (var resource in resourcesToBuy)
-                                {
-                                    _myself.Buy(marketOfCountry, resource.Item1, resource.Item2);
-                                }
-                            }
-                        }
-                    }
+                    Buy(requirements);
                 }
 
-
-                //Add job offers
                 if (_myself.ProducedResource.Edible)
                 {
-                    var jobMarketOfCountry = _jobMarketController.GetMarketOfCountry(_myself.Country.Name);
-                    while (jobMarketOfCountry.Offers.Count(x => x.Employer.Name == _myself.Name) < 3)
+                    AddJobOffers();
+                }
+            }
+        }
+
+        private void Sell()
+        {
+            var greediness = Parameters[nameof(eSCBotParameters.greediness)];
+            var stability = Parameters[nameof(eSCBotParameters.stability)];
+
+            var currentResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
+            var greedinessPercentage = 1 - (greediness * 0.01f);
+            var stabilityPercentage = _random.Next(0, 100 - stability) * 0.01f;
+            var numberToSell = (int)Math.Floor(_myself.Inventory.Stocks[_myself.ProducedResource] * Math.Max(greedinessPercentage, stabilityPercentage));
+
+            if (numberToSell > 0)
+            {
+                decimal price = _myself.ProducedResource.ProductionCost > 1 ? _myself.ProducedResource.ProductionCost + 2 : 1;
+                _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, _myself.ProducedResource, numberToSell, price));
+            }
+        }
+
+        private void Buy(Dictionary<Resource, int> requirements)
+        {
+            var marketOfCountry = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
+            foreach (var requirement in requirements)
+            {
+                var resourcesToBuy = _resourceMarketController.GetBestOffersOfMarket(marketOfCountry, requirement.Key.Name, (int)_myself.Money / 10);
+                if (resourcesToBuy.Count > 0)
+                {
+                    var maximumBuyable = _myself.CalculateMaximumBuyable(resourcesToBuy);
+
+                    foreach (var resource in resourcesToBuy)
                     {
-                        jobMarketOfCountry.Offers.Add(new JobOffer(_myself, 1));
+                        _myself.Buy(marketOfCountry, resource.Item1, resource.Item2);
                     }
                 }
+            }
+        }
+
+        private void AddJobOffers()
+        {
+            var jobMarketOfCountry = _jobMarketController.GetMarketOfCountry(_myself.Country.Name);
+            while (jobMarketOfCountry.Offers.Count(x => x.Employer.Name == _myself.Name) < 3)
+            {
+                jobMarketOfCountry.Offers.Add(new JobOffer(_myself, 1));
             }
         }
     }
