@@ -81,7 +81,7 @@ namespace Simul.Models.Bots
                     var countryResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
 
                     var quantityWanted = _random.Next(1, 4);
-                    var foodToBuy = _resourceMarketController.GetBestOffersOfMarket(countryResourceMarket, Helpers.eResourceName.bread, quantityWanted);
+                    var foodToBuy = ResourceMarketController.GetBestOffersOfMarket(countryResourceMarket, Helpers.eResourceName.bread, quantityWanted);
 
                     var maximumBuyable = _myself.CalculateMaximumBuyable(foodToBuy);
 

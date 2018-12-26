@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Simul.Models
 {
@@ -15,6 +14,6 @@ namespace Simul.Models
         void GiveTo(Player receiver, Resource resource, int quantity);
         void RemoveOffer(ResourceMarket resourceMarket, ResourceOffer offer);
         void Sell(ResourceMarket resourceMarket, ResourceOffer offer);
-        int CalculateMaximumBuyable(List<Tuple<ResourceOffer, int>> offers);
+        int CalculateMaximumBuyable(List<(ResourceOffer ressourceOffer, int quantity)> offers);
     }
 }

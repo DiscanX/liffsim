@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Simul.Models
 {
     interface IDecorator
     {
-        List<Tuple<int, string>> ActionHistory { get; set; }
+        List<(int day, string description)> ActionHistory { get; set; }
     }
 
 }

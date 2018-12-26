@@ -99,9 +99,9 @@ namespace Simul.Views.SubForms
             var decorator = _myself as IDecorator;
             if (decorator != null)
             {
-                foreach (Tuple<int, string> action in decorator.ActionHistory)
+                foreach (var action in decorator.ActionHistory)
                 {
-                    lstControlledPersonActions.Items.Add("Day " + action.Item1 + " : " + action.Item2);
+                    lstControlledPersonActions.Items.Add("Day " + action.day + " : " + action.description);
                 }
             }
         }

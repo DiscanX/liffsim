@@ -1,6 +1,5 @@
 ﻿using Simul.Helpers;
 using Simul.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,23 +22,21 @@ namespace Simul.Controllers
             return Markets.First(x => x.Country.Name == countryName);
         }
 
-        public List<Tuple<ResourceOffer, int>> GetBestOffersOfMarket(ResourceMarket resourceMarket, eResourceName resourceName, int quantity)
+        public static List<(ResourceOffer ressourceOffer, int quantity)> GetBestOffersOfMarket(ResourceMarket resourceMarket, eResourceName resourceName, int quantity)
         {
-            var offersToReturn = new List<Tuple<ResourceOffer, int>>();
+            var offersToReturn = new List<(ResourceOffer, int)>();
             var allBestOffers = resourceMarket.Offers.Where(x => x.Resource.Name == resourceName).OrderBy(x => x.UnitPrice).ToList();
 
-            for (int i = 0; i < allBestOffers.Count(); i++)
+            for (int i = 0; i < allBestOffers.Count; i++)
             {
                 if (allBestOffers[i].Quantity > quantity)
                 {
-                    offersToReturn.Add(Tuple.Create(allBestOffers[i], quantity));
-                    break;
+                    offersToReturn.Add((allBestOffers[i], quantity));
+                    return offersToReturn;
                 }
-                else
-                {
-                    quantity -= allBestOffers[i].Quantity;
-                    offersToReturn.Add(Tuple.Create(allBestOffers[i], allBestOffers[i].Quantity));
-                }
+
+                quantity -= allBestOffers[i].Quantity;
+                offersToReturn.Add((allBestOffers[i], allBestOffers[i].Quantity));
             }
 
             return offersToReturn;

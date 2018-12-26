@@ -93,8 +93,8 @@ namespace Simul.Models.Bots
                     for (int i = 0; i < stocks.Count; i++)
                     {
                         var stock = stocks.ElementAt(i);
-                        var bestOffer = _resourceMarketController.GetBestOffersOfMarket(currentResourceMarket, stock.Key.Name, 1).FirstOrDefault();
-                        if (bestOffer == null)
+                        var bestOffer = ResourceMarketController.GetBestOffersOfMarket(currentResourceMarket, stock.Key.Name, 1).FirstOrDefault();
+                        if (bestOffer.ressourceOffer == null)
                         {
                             _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, stock.Key, stock.Value, 1m));
                         }
@@ -129,7 +129,7 @@ namespace Simul.Models.Bots
             var marketOfCountry = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
             foreach (var requirement in requirements)
             {
-                var resourcesToBuy = _resourceMarketController.GetBestOffersOfMarket(marketOfCountry, requirement.Key.Name, (int)_myself.Money / 10);
+                var resourcesToBuy = ResourceMarketController.GetBestOffersOfMarket(marketOfCountry, requirement.Key.Name, (int)_myself.Money / 10);
                 if (resourcesToBuy.Count > 0)
                 {
                     var maximumBuyable = _myself.CalculateMaximumBuyable(resourcesToBuy);

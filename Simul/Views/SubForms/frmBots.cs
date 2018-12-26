@@ -40,9 +40,9 @@ namespace Simul.Views.SubForms
             var decorator = bot.GetControlledPlayer() as IDecorator;
             if (decorator != null)
             {
-                foreach (Tuple<int, string> action in decorator.ActionHistory)
+                foreach (var action in decorator.ActionHistory)
                 {
-                    lstActionHistory.Items.Add("Day " + action.Item1 + " : " + action.Item2);
+                    lstActionHistory.Items.Add("Day " + action.day + " : " + action.description);
                 }
             }
         }

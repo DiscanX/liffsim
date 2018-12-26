@@ -7,55 +7,55 @@ namespace Simul.Models.Decorators
     public class PersonDecorator : IPerson, IDecorator
     {
 
-        public List<Tuple<int, string>> ActionHistory { get; set; }
+        public List<(int day, string description)> ActionHistory { get; set; }
         protected Person decoratedPerson;
 
         public PersonDecorator(Person decoratedPerson)
         {
-            ActionHistory = new List<Tuple<int, string>>();
+            ActionHistory = new List<(int, string)>();
             this.decoratedPerson = decoratedPerson;
         }
 
         public void Buy(ResourceMarket resourceMarket, ResourceOffer offer, int quantity)
         {
             decoratedPerson.Buy(resourceMarket, offer, quantity);
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_BUY, quantity, offer.Resource.Name, resourceMarket.Name)));
+            ActionHistory.Add((GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_BUY, quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
         public void GiveTo(Player receiver, Resource resource, int quantity)
         {
             decoratedPerson.GiveTo(receiver, resource, quantity);
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_GIVETO, quantity, resource.Name, receiver.Name)));
+            ActionHistory.Add((GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_GIVETO, quantity, resource.Name, receiver.Name)));
         }
 
         public void RemoveOffer(ResourceMarket resourceMarket, ResourceOffer offer)
         {
             decoratedPerson.RemoveOffer(resourceMarket, offer);
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_REMOVEOFFER, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
+            ActionHistory.Add((GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_REMOVEOFFER, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
         public void Resign(int currentDay)
         {
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, $"Resigned from {decoratedPerson.Employer.Name}"));
+            ActionHistory.Add((GameController.Instance.CurrentDay, $"Resigned from {decoratedPerson.Employer.Name}"));
             decoratedPerson.Resign(currentDay);
         }
 
         public void Sell(ResourceMarket resourceMarket, ResourceOffer offer)
         {
             decoratedPerson.Sell(resourceMarket, offer);
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_SELL, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
+            ActionHistory.Add((GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_SELL, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
         public void TakeJob(JobMarket jobMarket, JobOffer jobOffer, int currentDay)
         {
             decoratedPerson.TakeJob(jobMarket, jobOffer, currentDay);
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, $"Took job of {jobOffer.Employer.Name} with a salary of {jobOffer.Salary} from the market {jobMarket.Name}"));
+            ActionHistory.Add((GameController.Instance.CurrentDay, $"Took job of {jobOffer.Employer.Name} with a salary of {jobOffer.Salary} from the market {jobMarket.Name}"));
         }
 
         public void Train()
         {
             decoratedPerson.Train();
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, "Trained"));
+            ActionHistory.Add((GameController.Instance.CurrentDay, "Trained"));
         }
 
         public eWorkResult Work()
@@ -64,11 +64,11 @@ namespace Simul.Models.Decorators
 
             if (workResult != eWorkResult.Success)
             {
-                ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, $"Tried to work but can't : {workResult}"));
+                ActionHistory.Add((GameController.Instance.CurrentDay, $"Tried to work but can't : {workResult}"));
             }
             else
             {
-                ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, "Worked"));
+                ActionHistory.Add((GameController.Instance.CurrentDay, "Worked"));
             }
 
             return workResult;
@@ -77,7 +77,7 @@ namespace Simul.Models.Decorators
         public void Eat(Resource resource, int quantity)
         {
             decoratedPerson.Eat(resource, quantity);
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, $"Ate {quantity} {resource.Name} for {quantity * Constants.ENERGY_GAINED_AFTER_EATING} energy"));
+            ActionHistory.Add((GameController.Instance.CurrentDay, $"Ate {quantity} {resource.Name} for {quantity * Constants.ENERGY_GAINED_AFTER_EATING} energy"));
 
         }
 
@@ -195,7 +195,7 @@ namespace Simul.Models.Decorators
             return decoratedPerson.CanTrain();
         }
 
-        public int CalculateMaximumBuyable(List<Tuple<ResourceOffer, int>> offers)
+        public int CalculateMaximumBuyable(List<(ResourceOffer ressourceOffer, int quantity)> offers)
         {
             return decoratedPerson.CalculateMaximumBuyable(offers);
         }

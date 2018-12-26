@@ -6,38 +6,38 @@ namespace Simul.Models.Decorators
 {
     public class CompanyDecorator : ICompany, IDecorator
     {
-        public List<Tuple<int, string>> ActionHistory { get; set; }
+        public List<(int day, string description)> ActionHistory { get; set; }
 
         protected Company decoratedCompany;
 
         public CompanyDecorator(Company decoratedCompany)
         {
-            ActionHistory = new List<Tuple<int, string>>();
+            ActionHistory = new List<(int, string)>();
             this.decoratedCompany = decoratedCompany;
         }
 
         public void Buy(ResourceMarket resourceMarket, ResourceOffer offer, int quantity)
         {
             decoratedCompany.Buy(resourceMarket, offer, quantity);
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_BUY, quantity, offer.Resource.Name, resourceMarket.Name)));
+            ActionHistory.Add((GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_BUY, quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
         public void GiveTo(Player receiver, Resource resource, int quantity)
         {
             decoratedCompany.GiveTo(receiver, resource, quantity);
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_GIVETO, quantity, resource.Name, receiver.Name)));
+            ActionHistory.Add((GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_GIVETO, quantity, resource.Name, receiver.Name)));
         }
 
         public void RemoveOffer(ResourceMarket resourceMarket, ResourceOffer offer)
         {
             decoratedCompany.RemoveOffer(resourceMarket, offer);
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_REMOVEOFFER, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
+            ActionHistory.Add((GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_REMOVEOFFER, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
         public void Sell(ResourceMarket resourceMarket, ResourceOffer offer)
         {
             decoratedCompany.Sell(resourceMarket, offer);
-            ActionHistory.Add(Tuple.Create(GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_SELL, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
+            ActionHistory.Add((GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_SELL, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
         public eWorkResult Produce(IPerson employee, decimal salary)
@@ -45,7 +45,7 @@ namespace Simul.Models.Decorators
             return decoratedCompany.Produce(employee, salary);
         }
 
-        public int CalculateMaximumBuyable(List<Tuple<ResourceOffer, int>> offers)
+        public int CalculateMaximumBuyable(List<(ResourceOffer ressourceOffer, int quantity)> offers)
         {
             return decoratedCompany.CalculateMaximumBuyable(offers);
         }
