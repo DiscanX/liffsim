@@ -45,7 +45,7 @@ namespace Simul.Models.Decorators
             return decoratedCompany.Produce(employee, salary);
         }
 
-        public int CalculateMaximumBuyable(List<(ResourceOffer ressourceOffer, int quantity)> offers)
+        public int CalculateMaximumBuyable(List<(ResourceOffer ressourceOffer, int quantityToBuy)> offers)
         {
             return decoratedCompany.CalculateMaximumBuyable(offers);
         }

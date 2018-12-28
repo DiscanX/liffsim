@@ -1,14 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Simul.Controllers;
+﻿using Simul.Controllers;
 using Simul.Helpers;
 using Simul.Models;
+using Xunit;
 
 namespace SimulTests
 {
-    [TestClass]
     public class GameControllerTests
     {
-        [TestMethod]
+        [Fact]
         public void ForwardDays_OnNextDay_EnergyGained()
         {
             var gameController = GameController.Instance;
@@ -19,10 +18,10 @@ namespace SimulTests
 
             gameController.ForwardDays(personController.Persons);
 
-            Assert.AreEqual(Constants.ENERGY_GAINED_AFTER_DAY, person.Energy);
+            Assert.Equal(Constants.ENERGY_GAINED_AFTER_DAY, person.Energy);
         }
 
-        [TestMethod]
+        [Fact]
         public void ForwardDays_OnNextDayAfterTraining_AlreadyTrainedFalse()
         {
             var gameController = GameController.Instance;
@@ -34,10 +33,10 @@ namespace SimulTests
             person.Train();
             gameController.ForwardDays(personController.Persons);
 
-            Assert.AreEqual(person.AlreadyTrained, false);
+            Assert.False(person.AlreadyTrained);
         }
 
-        [TestMethod]
+        [Fact]
         public void ForwardDays_OnNextDayAfterWorking_AlreadyWorkedFalse()
         {
             var gameController = GameController.Instance;
@@ -55,7 +54,7 @@ namespace SimulTests
             person.Work();
             gameController.ForwardDays(personController.Persons);
 
-            Assert.AreEqual(person.AlreadyWorked, false);
+            Assert.False(person.AlreadyWorked);
         }
     }
 }

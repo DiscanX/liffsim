@@ -195,7 +195,7 @@ namespace Simul.Models.Decorators
             return decoratedPerson.CanTrain();
         }
 
-        public int CalculateMaximumBuyable(List<(ResourceOffer ressourceOffer, int quantity)> offers)
+        public int CalculateMaximumBuyable(List<(ResourceOffer ressourceOffer, int quantityToBuy)> offers)
         {
             return decoratedPerson.CalculateMaximumBuyable(offers);
         }

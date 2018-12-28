@@ -110,24 +110,24 @@ namespace Simul.Models
 
         }
 
-        public int CalculateMaximumBuyable(List<(ResourceOffer ressourceOffer, int quantity)> offers)
+        public int CalculateMaximumBuyable(List<(ResourceOffer ressourceOffer, int quantityToBuy)> offers)
         {
             var maximumBuyable = 0;
 
             for (int i = 0; i < offers.Count; i++)
             {
-                if (offers[i].quantity > offers[i].ressourceOffer.Quantity)
+                if (offers[i].quantityToBuy > offers[i].ressourceOffer.Quantity)
                 {
                     throw new Exception("Can't buy more than what the quantity of the offer is");
                 }
 
-                if (offers[i].ressourceOffer.UnitPrice * offers[i].quantity > _money)
+                if (offers[i].ressourceOffer.UnitPrice * offers[i].quantityToBuy > _money)
                 {
                     maximumBuyable += (int)Math.Floor(_money / offers[i].ressourceOffer.UnitPrice);
                     break;
                 }
 
-                maximumBuyable += offers[i].quantity;
+                maximumBuyable += offers[i].quantityToBuy;
             }
 
             return maximumBuyable;

@@ -14,6 +14,6 @@ namespace Simul.Models
         void GiveTo(Player receiver, Resource resource, int quantity);
         void RemoveOffer(ResourceMarket resourceMarket, ResourceOffer offer);
         void Sell(ResourceMarket resourceMarket, ResourceOffer offer);
-        int CalculateMaximumBuyable(List<(ResourceOffer ressourceOffer, int quantity)> offers);
+        int CalculateMaximumBuyable(List<(ResourceOffer ressourceOffer, int quantityToBuy)> offers);
     }
 }

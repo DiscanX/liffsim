@@ -2,8 +2,8 @@
 {
     public class ResourceOffer
     {
-        public IPlayer Owner { get; set; }
-        public Resource Resource { get; set; }
+        public IPlayer Owner { get; }
+        public Resource Resource { get; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
 
