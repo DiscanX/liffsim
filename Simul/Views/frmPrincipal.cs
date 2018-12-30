@@ -3,6 +3,7 @@ using Simul.Helpers;
 using Simul.Models;
 using Simul.Models.Bots;
 using Simul.Models.Decorators;
+using Simul.Models.Factories;
 using Simul.Views.SubForms;
 using System;
 using System.Collections.Generic;
@@ -50,25 +51,19 @@ namespace Simul.Views
             var rnd = new Random();
 
             //Temporary Person Creator
-            var decoratedControlledPerson = new Person("Keven", _countryController.Countries.Last(), Constants.BASE_MONEY, new Skillset(), new Inventory(), Constants.BASE_ENERGY, Constants.BASE_STRENGTH);
-            var controlledPerson = new PersonDecorator(decoratedControlledPerson);
+            var controlledPerson = PersonFactory.Create(rnd);
+            controlledPerson.Name = "Keven";
+            controlledPerson.Country = _countryController.Countries.Last();
 
             _personController.Persons.Add(controlledPerson);
             _gameController.ControlledPerson = controlledPerson;
 
             for (int i = 0; i < 150; i++)
             {
-                var name = "Person " + (i + 1);
-                var country = _countryController.Countries.ElementAt(rnd.Next(0, _countryController.Countries.Count));
-                var decoratedPerson = new Person(name, country, Constants.BASE_MONEY, new Skillset(), new Inventory(), Constants.BASE_ENERGY, Constants.BASE_STRENGTH);
-                var person = new PersonDecorator(decoratedPerson);
-
-                var passion = rnd.Next(1, 101);
-                var interestInEconomy = rnd.Next(0, 101);
-                var interestInMilitary = 100 - interestInEconomy;
-                var SPBot = new SimplePersonBot(person, PersonalityTraits.GenerateRandomPersonalityTraits(rnd), 100, interestInEconomy, interestInMilitary, rnd);
-
+                var person = PersonFactory.Create(rnd);
                 _personController.Persons.Add(person);
+
+                var SPBot = BotFactory.CreateSimplePersonBot(rnd, person);
                 _gameController.Bots.Add(SPBot);
             }
 

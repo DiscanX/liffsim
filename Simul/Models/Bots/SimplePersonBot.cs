@@ -64,40 +64,44 @@ namespace Simul.Models.Bots
         public override void LiveDay()
         {
             var passion = Parameters[eSPBotParameters.passion.ToString()];
-
-            if (passion > 0 && _random.Next(1, 101) <= passion)
+            if (passion == 0 || _random.Next(1, 101) > passion)
             {
-                _myself.EatUntilFull();
+                IdleDays++;
+                return;
+            }
 
-                //Get an objective if none (TODO)
+            IdleDays = 0;
 
-                WorkAndTrain();
+            _myself.EatUntilFull();
 
-                //Buy & Sell (TODO)
+            //Get an objective if none (TODO)
 
-                //Food
-                if (_myself.Energy < Constants.MAX_ENERGY / 2)
+            WorkAndTrain();
+
+            //Buy & Sell (TODO)
+
+            //Food
+            if (_myself.Energy < Constants.MAX_ENERGY / 2)
+            {
+                var countryResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
+
+                var quantityWanted = _random.Next(1, 4);
+                var foodToBuy = ResourceMarketController.GetBestOffersOfMarket(countryResourceMarket, Helpers.eResourceName.bread, quantityWanted);
+
+                var maximumBuyable = _myself.CalculateMaximumBuyable(foodToBuy);
+
+                //Only buy food when able to buy the maximum
+                if (maximumBuyable == quantityWanted)
                 {
-                    var countryResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
-
-                    var quantityWanted = _random.Next(1, 4);
-                    var foodToBuy = ResourceMarketController.GetBestOffersOfMarket(countryResourceMarket, Helpers.eResourceName.bread, quantityWanted);
-
-                    var maximumBuyable = _myself.CalculateMaximumBuyable(foodToBuy);
-
-                    //Only buy food when able to buy the maximum
-                    if (maximumBuyable == quantityWanted)
+                    foreach (var food in foodToBuy)
                     {
-                        foreach (var food in foodToBuy)
-                        {
-                            _myself.Buy(countryResourceMarket, food.Item1, food.Item2);
-                        }
+                        _myself.Buy(countryResourceMarket, food.Item1, food.Item2);
                     }
                 }
-
-
-                //Weapons
             }
+
+
+            //Weapons
         }
 
         private void WorkAndTrain()
@@ -119,24 +123,23 @@ namespace Simul.Models.Bots
 
         private void TryToWork()
         {
-            if (_myself.Employer == null)
+            var bestJob = _jobMarketController.FindBestJob(_myself.Country);
+
+            if (_myself.Employer == null && bestJob.jobOffer != null)
             {
-                var bestJob = _jobMarketController.FindBestJob(_myself.Country);
-                if (bestJob.jobOffer != null)
-                {
-                    _myself.TakeJob(bestJob.jobMarket, bestJob.jobOffer, _gameController.CurrentDay);
-                }
+                _myself.TakeJob(bestJob.jobMarket, bestJob.jobOffer, _gameController.CurrentDay);
             }
 
-            if (_myself.CanWork() && _myself.Work() != eWorkResult.Success)
+            if (_myself.CanResign && bestJob.jobOffer != null && bestJob.jobOffer.Salary > _myself.Salary)
             {
-                //Try to find another job
-                var bestJob = _jobMarketController.FindBestJob(_myself.Country);
-                if (bestJob.jobOffer != null)
-                {
-                    _myself.Resign(_gameController.CurrentDay);
-                    _myself.TakeJob(bestJob.Item1, bestJob.Item2, _gameController.CurrentDay);
-                }
+                _myself.Resign(_gameController.CurrentDay);
+                _myself.TakeJob(bestJob.jobMarket, bestJob.jobOffer, _gameController.CurrentDay);
+            }
+
+            if (_myself.CanWork() && _myself.Work() != eWorkResult.Success && bestJob.jobOffer != null)
+            {
+                _myself.Resign(_gameController.CurrentDay);
+                _myself.TakeJob(bestJob.jobMarket, bestJob.jobOffer, _gameController.CurrentDay);
             }
         }
 

@@ -72,7 +72,8 @@ namespace Simul.Models
 
         private eWorkResult PayEmployee(IPerson employee, decimal salary)
         {
-            var moneyAfterPay = Money - salary;
+            var employeeSkill = (decimal)employee.Skillset.Skills[ProducedResource.ImprovedSkill];
+            var moneyAfterPay = Money - (salary * employeeSkill);
 
             if (moneyAfterPay < 0)
             {
@@ -80,7 +81,8 @@ namespace Simul.Models
             }
 
             Money = moneyAfterPay;
-            employee.Money += salary;
+            employee.Money += salary * employeeSkill;
+
             return eWorkResult.Success;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Simul.Models;
 using Simul.Models.Bots;
+using Simul.Models.Factories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,8 +46,31 @@ namespace Simul.Controllers
                     ControlledPerson.Train();
                 }
 
-                foreach (Bot bot in Bots.OrderBy(x => Random.Next()))
+                foreach (Bot bot in Bots.OrderBy(x => Random.Next()).ToList())
                 {
+                    if (bot.IdleDays == 7)
+                    {
+                        var simplePersonBot = bot as SimplePersonBot;
+                        //For now it can only be the person bot, but obviously there's a lot of refactoring todo here
+                        if (simplePersonBot != null)
+                        {
+                            persons.Remove((IPerson)simplePersonBot.GetControlledPlayer());
+                            Bots.Remove(simplePersonBot);
+
+                            var newPerson = PersonFactory.Create(Random);
+                            var newBot = BotFactory.CreateSimplePersonBot(Random, newPerson);
+
+                            persons.Add(newPerson);
+                            Bots.Add(newBot);
+
+                            newBot.LiveDay();
+                        }
+                        else
+                        {
+                            throw new Exception("Can't recognize the type of the bot");
+                        }
+                    }
+
                     bot.LiveDay();
                 }
 

@@ -56,52 +56,72 @@ namespace Simul.Models.Bots
         public override void LiveDay()
         {
             var passion = Parameters[nameof(eSCBotParameters.passion)];
-            if (passion > 0 && _random.Next(1, 101) <= passion)
+            if (passion == 0 || _random.Next(1, 101) > passion)
             {
-                Sell();
+                IdleDays++;
+                return;
+            }
 
-                var requirements = _myself.ProducedResource.GetRequirements();
-                if (requirements != null)
+            IdleDays = 0;
+
+            Sell();
+
+            var requirements = _myself.ProducedResource.GetRequirements();
+            if (requirements != null)
+            {
+                Buy(requirements);
+            }
+
+            var bestJob = _jobMarketController.FindBestJob(_myself.Country);
+
+            if (_myself.Employees.Count < 10 && _myself.Money > 500)
+            {
+                if (bestJob.jobOffer == null)
                 {
-                    Buy(requirements);
+                    AddJobOffer(1);
+                }
+                else if (bestJob.jobOffer.Employer != _myself)
+                {
+                    AddJobOffer(bestJob.jobOffer.Salary + 0.01m);
+                }
+            }
+
+            if (_myself.Money < 500)
+            {
+                foreach (var employee in _myself.Employees)
+                {
+                    employee.Employer = null;
                 }
 
-                if (_myself.Employees.Count < 10 && _myself.Money > 500)
+                _myself.Employees.Clear();
+
+                if (bestJob.jobOffer == null)
                 {
-                    var bestJob = _jobMarketController.FindBestJob(_myself.Country);
-                    if (bestJob.jobOffer == null)
-                    {
-                        AddJobOffers(1);
-                    }
-                    else if (bestJob.jobOffer.Employer != _myself)
-                    {
-                        AddJobOffers(bestJob.jobOffer.Salary + 0.01m);
-                    }
+                    AddJobOffer(0.5m);
+                }
+                else if (bestJob.jobOffer.Employer != _myself)
+                {
+                    AddJobOffer(bestJob.jobOffer.Salary);
                 }
 
-                if (_myself.Money < 500)
+                var currentResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
+                var stocks = _myself.Inventory.Stocks;
+                for (int i = 0; i < stocks.Count; i++)
                 {
-                    foreach (var employee in _myself.Employees)
+                    var stock = stocks.ElementAt(i);
+                    if (stock.Value == 0)
                     {
-                        employee.Employer = null;
+                        continue;
                     }
 
-                    _myself.Employees.Clear();
-
-                    var currentResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
-                    var stocks = _myself.Inventory.Stocks;
-                    for (int i = 0; i < stocks.Count; i++)
+                    var bestOffer = ResourceMarketController.GetBestOffersOfMarket(currentResourceMarket, stock.Key.Name, 1).FirstOrDefault();
+                    if (bestOffer.ressourceOffer == null)
                     {
-                        var stock = stocks.ElementAt(i);
-                        var bestOffer = ResourceMarketController.GetBestOffersOfMarket(currentResourceMarket, stock.Key.Name, 1).FirstOrDefault();
-                        if (bestOffer.ressourceOffer == null)
-                        {
-                            _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, stock.Key, stock.Value, 1m));
-                        }
-                        else
-                        {
-                            _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, stock.Key, stock.Value, bestOffer.Item1.UnitPrice - 0.01m));
-                        }
+                        _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, stock.Key, stock.Value, 1m));
+                    }
+                    else if (bestOffer.ressourceOffer.UnitPrice > 0.5m)
+                    {
+                        _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, stock.Key, stock.Value, bestOffer.Item1.UnitPrice - 0.01m));
                     }
                 }
             }
@@ -129,6 +149,11 @@ namespace Simul.Models.Bots
             var marketOfCountry = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
             foreach (var requirement in requirements)
             {
+                if (_myself.Inventory.Stocks[requirement.Key] > 100)
+                {
+                    continue;
+                }
+
                 var resourcesToBuy = ResourceMarketController.GetBestOffersOfMarket(marketOfCountry, requirement.Key.Name, (int)_myself.Money / 10);
                 if (resourcesToBuy.Count > 0)
                 {
@@ -142,7 +167,7 @@ namespace Simul.Models.Bots
             }
         }
 
-        private void AddJobOffers(decimal salary)
+        private void AddJobOffer(decimal salary)
         {
             var jobMarketOfCountry = _jobMarketController.GetMarketOfCountry(_myself.Country.Name);
             jobMarketOfCountry.Offers.Add(new JobOffer(_myself, salary));

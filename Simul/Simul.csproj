@@ -68,6 +68,8 @@
     <Compile Include="Models\Bots\Bot.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Decorators\CompanyDecorator.cs" />
+    <Compile Include="Models\Factories\BotFactory.cs" />
+    <Compile Include="Models\Factories\PersonFactory.cs" />
     <Compile Include="Models\Interfaces\IDecorator.cs" />
     <Compile Include="Models\Decorators\PersonDecorator.cs" />
     <Compile Include="Models\Interfaces\ICompany.cs" />
