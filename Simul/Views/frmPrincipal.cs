@@ -68,13 +68,13 @@ namespace Simul.Views
             }
 
             //Temporary Company Creator
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 20; i++)
             {
                 var name = "Company " + (i + 1);
                 var country = _countryController.Countries.ElementAt(i % 5);
 
                 Resource producedResource;
-                if (i % 3 == 0)
+                if (i % 2 == 0)
                 {
                     producedResource = ContentReader.GetResources().First(x => x.Name == eResourceName.wheat);
                 }

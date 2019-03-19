@@ -9,7 +9,7 @@ namespace Simul.Controllers
 {
     public class GameController
     {
-        static GameController() { }
+        private static JobMarketController jobMarketController = JobMarketController.Instance;
         public static GameController Instance = new GameController();
 
         public IPerson ControlledPerson { get; set; }
@@ -36,9 +36,21 @@ namespace Simul.Controllers
                     ControlledPerson.EatUntilFull();
                 }
 
-                if (AutoWorkIsActivated && ControlledPerson.CanWork())
+                if (AutoWorkIsActivated)
                 {
-                    ControlledPerson.Work();
+                    if (ControlledPerson.Employer == null)
+                    {
+                        var bestJob = jobMarketController.FindBestJob(ControlledPerson.Country);
+                        if (bestJob.jobOffer != null)
+                        {
+                            ControlledPerson.TakeJob(bestJob.jobMarket, bestJob.jobOffer, CurrentDay);
+                        }
+                    }
+
+                    if (ControlledPerson.CanWork())
+                    {
+                        ControlledPerson.Work();
+                    }
                 }
 
                 if (AutoTrainIsActivated && ControlledPerson.CanTrain())

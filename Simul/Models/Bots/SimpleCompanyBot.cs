@@ -74,19 +74,19 @@ namespace Simul.Models.Bots
 
             var bestJob = _jobMarketController.FindBestJob(_myself.Country);
 
-            if (_myself.Employees.Count < 10 && _myself.Money > 500)
+            if (_myself.Money > 500)
             {
                 if (bestJob.jobOffer == null)
                 {
-                    AddJobOffer(1);
+                    AddJobOffer(1m);
                 }
-                else if (bestJob.jobOffer.Employer != _myself)
+                else if (bestJob.jobOffer.Employer != _myself && _myself.Employees.Count < 5)
                 {
                     AddJobOffer(bestJob.jobOffer.Salary + 0.01m);
                 }
             }
 
-            if (_myself.Money < 500)
+            if (_myself.Money < 200)
             {
                 foreach (var employee in _myself.Employees)
                 {
@@ -139,8 +139,10 @@ namespace Simul.Models.Bots
 
             if (numberToSell > 0)
             {
-                decimal price = _myself.ProducedResource.ProductionCost > 1 ? _myself.ProducedResource.ProductionCost + 2 : 1;
-                _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, _myself.ProducedResource, numberToSell, price));
+                var price = _myself.ProducedResource.ProductionCost > 1 ? _myself.ProducedResource.ProductionCost + 2 : 1;
+                var adjustedPriceWithSalary = _myself.Employees.Count == 0 ? 1 : price * _myself.Employees.Select(x => x.Salary).Average();
+
+                _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, _myself.ProducedResource, numberToSell, adjustedPriceWithSalary));
             }
         }
 
