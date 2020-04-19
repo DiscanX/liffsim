@@ -14,21 +14,19 @@ namespace Simul.Views
 {
     public partial class FrmPrincipal : Form
     {
-        GameController _gameController;
-        CountryController _countryController;
-        PersonController _personController;
-        CompanyController companyController;
-        ResourceMarketController _resourceMarketController;
-        JobMarketController _jobMarketController;
-
-        FrmHome _frmHome;
-        FrmJobMarket _frmJobMarket;
-        FrmResourceMarket _frmResourceMarket;
-        FrmSearch _frmSearch;
-        FrmSearchCompany _frmSearchCompany;
-        FrmBots _frmBots;
-
-        Form _currentSubForm;
+        private readonly GameController _gameController;
+        private readonly CountryController _countryController;
+        private readonly PersonController _personController;
+        private readonly CompanyController companyController;
+        private readonly ResourceMarketController _resourceMarketController;
+        private readonly JobMarketController _jobMarketController;
+        private readonly FrmHome _frmHome;
+        private readonly FrmJobMarket _frmJobMarket;
+        private readonly FrmResourceMarket _frmResourceMarket;
+        private readonly FrmSearch _frmSearch;
+        private readonly FrmSearchCompany _frmSearchCompany;
+        private readonly FrmBots _frmBots;
+        private Form _currentSubForm;
 
         public FrmPrincipal()
         {
@@ -68,31 +66,28 @@ namespace Simul.Views
             }
 
             //Temporary Company Creator
-            for (int i = 0; i < 20; i++)
+            int companyNumber = 1;
+            foreach (var country in _countryController.Countries)
             {
-                var name = "Company " + (i + 1);
-                var country = _countryController.Countries.ElementAt(i % 5);
-
-                Resource producedResource;
-                if (i % 2 == 0)
+                foreach (var resource in Enum.GetValues(typeof(ResourceName)) as IEnumerable<ResourceName>)
                 {
-                    producedResource = ContentReader.GetResources().First(x => x.Name == ResourceName.wheat);
+                    var name = "Company " + companyNumber;
+
+                    var resourcesCount = Enum.GetValues(typeof(ResourceName)).Length;
+                    var producedResource = ContentReader.GetResources().First(x => x.Name == resource);
+
+                    var decoratedCompany = new Company(name, country, producedResource, 1000, new Inventory());
+                    var company = new CompanyDecorator(decoratedCompany);
+
+                    var passion = rnd.Next(1, 101);
+                    var greediness = rnd.Next(0, 101);
+                    var stability = rnd.Next(0, 101);
+                    var SCBot = new SimpleCompanyBot(company, 100, greediness, stability, rnd);
+
+                    companyController.Companies.Add(company);
+                    _gameController.Bots.Add(SCBot);
+                    companyNumber++;
                 }
-                else
-                {
-                    producedResource = ContentReader.GetResources().First(x => x.Name == ResourceName.bread);
-                }
-
-                var decoratedCompany = new Company(name, country, producedResource, 1000, new Inventory());
-                var company = new CompanyDecorator(decoratedCompany);
-
-                var passion = rnd.Next(1, 101);
-                var greediness = rnd.Next(0, 101);
-                var stability = rnd.Next(0, 101);
-                var SCBot = new SimpleCompanyBot(company, 100, greediness, stability, rnd);
-
-                companyController.Companies.Add(company);
-                _gameController.Bots.Add(SCBot);
             }
 
             //Temporary Markets Creator
@@ -167,7 +162,7 @@ namespace Simul.Views
 
         public void ReloadMenu()
         {
-            txtMoney.Text = String.Format("{0:C}", _gameController.ControlledPerson.Money);
+            txtMoney.Text = string.Format("{0:C}", _gameController.ControlledPerson.Money);
             txtEnergy.Text = "Energy : " + _gameController.ControlledPerson.Energy + "%";
             txtCurrentDay.Text = "Day " + _gameController.CurrentDay;
         }

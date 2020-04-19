@@ -40,7 +40,7 @@ namespace Simul.Models.Decorators
             ActionHistory.Add((GameController.Instance.CurrentDay, String.Format(Constants.ACTION_DESCRIPTION_SELL, offer.Quantity, offer.Resource.Name, resourceMarket.Name)));
         }
 
-        public eWorkResult Produce(IPerson employee, decimal salary)
+        public WorkResult Produce(IPerson employee, decimal salary)
         {
             return decoratedCompany.Produce(employee, salary);
         }

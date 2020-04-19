@@ -14,13 +14,11 @@ namespace Simul.Models.Bots
 
     public class SimpleCompanyBot : Bot
     {
-        private ICompany _myself;
-        private GameController _gameController;
-        private PersonController _personController;
-        private CompanyController _companyController;
-        private ResourceMarketController _resourceMarketController;
-        private JobMarketController _jobMarketController;
-        private Random _random;
+        private readonly ICompany _myself;
+        private readonly ResourceMarketController _resourceMarketController;
+        private readonly JobMarketController _jobMarketController;
+        private readonly Random _random;
+        private decimal _yesterdayMoney;
 
         public override string GetBotTypeName()
         {
@@ -44,13 +42,11 @@ namespace Simul.Models.Bots
                 { nameof(eSCBotParameters.stability), stability }
             };
 
-            _gameController = GameController.Instance;
-            _personController = PersonController.Instance;
-            _companyController = CompanyController.Instance;
             _resourceMarketController = ResourceMarketController.Instance;
             _jobMarketController = JobMarketController.Instance;
-
             _random = random;
+
+            _yesterdayMoney = _myself.Money;
         }
 
         public override void LiveDay()
@@ -88,12 +84,7 @@ namespace Simul.Models.Bots
 
             if (_myself.Money < 200)
             {
-                foreach (var employee in _myself.Employees)
-                {
-                    employee.Employer = null;
-                }
-
-                _myself.Employees.Clear();
+                FireEmployees();
 
                 if (bestJob.jobOffer == null)
                 {
@@ -125,6 +116,8 @@ namespace Simul.Models.Bots
                     }
                 }
             }
+
+            _yesterdayMoney = _myself.Money;
         }
 
         private void Sell()
@@ -132,18 +125,36 @@ namespace Simul.Models.Bots
             var greediness = Parameters[nameof(eSCBotParameters.greediness)];
             var stability = Parameters[nameof(eSCBotParameters.stability)];
 
-            var currentResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
             var greedinessPercentage = 1 - (greediness * 0.01f);
             var stabilityPercentage = _random.Next(0, 100 - stability) * 0.01f;
             var numberToSell = (int)Math.Floor(_myself.Inventory.Stocks[_myself.ProducedResource] * Math.Max(greedinessPercentage, stabilityPercentage));
 
-            if (numberToSell > 0)
+            if (numberToSell == 0)
             {
-                var price = _myself.ProducedResource.ProductionCost > 1 ? _myself.ProducedResource.ProductionCost + 2 : 1;
-                var adjustedPriceWithSalary = _myself.Employees.Count == 0 ? 1 : price * _myself.Employees.Select(x => x.Salary).Average();
-
-                _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, _myself.ProducedResource, numberToSell, adjustedPriceWithSalary));
+                return;
             }
+
+            decimal unitPrice;
+            var currentResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
+
+            var bestExistingMarketOffer = currentResourceMarket.Offers.OrderBy(x => x.UnitPrice).FirstOrDefault(x => x.Resource == _myself.ProducedResource);
+            if (bestExistingMarketOffer != null)
+            {
+                unitPrice = bestExistingMarketOffer.UnitPrice - bestExistingMarketOffer.UnitPrice * 0.01m;
+            }
+            else if (_myself.Money - _yesterdayMoney <= 0)
+            {
+                var moneyLost = Math.Abs(_myself.Money - _yesterdayMoney);
+                unitPrice = moneyLost / numberToSell * (1 + moneyLost / _yesterdayMoney);
+            }
+            else
+            {
+                var moneyGained = Math.Abs(_myself.Money - _yesterdayMoney);
+                var totalEmployesSalaries = _myself.Employees.Sum(x => x.Salary);
+                unitPrice = (moneyGained + totalEmployesSalaries) / numberToSell;
+            }
+
+            _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, _myself.ProducedResource, numberToSell, unitPrice));
         }
 
         private void Buy(Dictionary<Resource, int> requirements)
@@ -163,7 +174,7 @@ namespace Simul.Models.Bots
 
                     foreach (var resource in resourcesToBuy)
                     {
-                        _myself.Buy(marketOfCountry, resource.Item1, resource.Item2);
+                        _myself.Buy(marketOfCountry, resource.ressourceOffer, Math.Min(maximumBuyable, resource.quantity));
                     }
                 }
             }
@@ -173,6 +184,16 @@ namespace Simul.Models.Bots
         {
             var jobMarketOfCountry = _jobMarketController.GetMarketOfCountry(_myself.Country.Name);
             jobMarketOfCountry.Offers.Add(new JobOffer(_myself, salary));
+        }
+
+        private void FireEmployees()
+        {
+            foreach (var employee in _myself.Employees)
+            {
+                employee.Employer = null;
+            }
+
+            _myself.Employees.Clear();
         }
     }
 }

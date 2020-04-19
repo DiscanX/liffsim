@@ -185,6 +185,9 @@
     <EmbeddedResource Include="Views\SubForms\FrmSearchCompany.resx">
       <DependentUpon>FrmSearchCompany.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

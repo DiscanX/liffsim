@@ -41,11 +41,8 @@ namespace Simul.Helpers
 
                 foreach (XElement resource in xmlDoc.Elements("resources").Nodes())
                 {
-                    ResourceName name;
-                    Enum.TryParse(resource.Element("name").Value, out name);
-
-                    ResourceType type;
-                    Enum.TryParse(resource.Element("type").Value, out type);
+                    Enum.TryParse(resource.Element("name").Value, out ResourceName name);
+                    Enum.TryParse(resource.Element("type").Value, out ResourceType type);
 
                     var improvedSkill = new Skill(resource.Element("improvedSkill").Value);
                     var productionCost = int.Parse(resource.Element("productionCost").Value);

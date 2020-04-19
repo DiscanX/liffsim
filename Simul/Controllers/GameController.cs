@@ -9,7 +9,7 @@ namespace Simul.Controllers
 {
     public class GameController
     {
-        private static JobMarketController jobMarketController = JobMarketController.Instance;
+        private static readonly JobMarketController jobMarketController = JobMarketController.Instance;
         public static GameController Instance = new GameController();
 
         public IPerson ControlledPerson { get; set; }
@@ -62,9 +62,8 @@ namespace Simul.Controllers
                 {
                     if (bot.IdleDays == 7)
                     {
-                        var simplePersonBot = bot as SimplePersonBot;
                         //For now it can only be the person bot, but obviously there's a lot of refactoring todo here
-                        if (simplePersonBot != null)
+                        if (bot is SimplePersonBot simplePersonBot)
                         {
                             persons.Remove((IPerson)simplePersonBot.GetControlledPlayer());
                             Bots.Remove(simplePersonBot);

@@ -11,16 +11,16 @@ namespace Simul.Models
 
         public Company(string name, Country country, Resource producedResource, decimal money, Inventory inventory, bool isHumanControlled = false) : base(name, country, money, inventory, isHumanControlled)
         {
-            this.ProducedResource = producedResource;
+            ProducedResource = producedResource;
             Employees = new List<IPerson>();
         }
 
-        private eWorkResult CanWork(IPerson employee)
+        private WorkResult CanWork(IPerson employee)
         {
             var requirements = ProducedResource.GetRequirements();
             if (requirements == null)
             {
-                return eWorkResult.Success;
+                return WorkResult.Success;
             }
 
             foreach (KeyValuePair<Resource, int> requirement in requirements)
@@ -31,17 +31,17 @@ namespace Simul.Models
 
                 if (stockAfterProduction < 0)
                 {
-                    return eWorkResult.FailureStocksTooLow;
+                    return WorkResult.FailureStocksTooLow;
                 }
             }
 
-            return eWorkResult.Success;
+            return WorkResult.Success;
         }
 
-        public eWorkResult Produce(IPerson employee, decimal salary)
+        public WorkResult Produce(IPerson employee, decimal salary)
         {
             var workResult = CanWork(employee);
-            if (workResult != eWorkResult.Success)
+            if (workResult != WorkResult.Success)
             {
                 return workResult;
             }
@@ -70,20 +70,20 @@ namespace Simul.Models
             return workResult;
         }
 
-        private eWorkResult PayEmployee(IPerson employee, decimal salary)
+        private WorkResult PayEmployee(IPerson employee, decimal salary)
         {
             var employeeSkill = (decimal)employee.Skillset.Skills[ProducedResource.ImprovedSkill];
             var moneyAfterPay = Money - (salary * employeeSkill);
 
             if (moneyAfterPay < 0)
             {
-                return eWorkResult.FailureNotEnoughMoney;
+                return WorkResult.FailureNotEnoughMoney;
             }
 
             Money = moneyAfterPay;
             employee.Money += salary * employeeSkill;
 
-            return eWorkResult.Success;
+            return WorkResult.Success;
         }
     }
 }

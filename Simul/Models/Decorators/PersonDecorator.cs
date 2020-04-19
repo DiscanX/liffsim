@@ -58,11 +58,11 @@ namespace Simul.Models.Decorators
             ActionHistory.Add((GameController.Instance.CurrentDay, "Trained"));
         }
 
-        public eWorkResult Work()
+        public WorkResult Work()
         {
             var workResult = decoratedPerson.Work();
 
-            if (workResult != eWorkResult.Success)
+            if (workResult != WorkResult.Success)
             {
                 ActionHistory.Add((GameController.Instance.CurrentDay, $"Tried to work but can't : {workResult}"));
             }

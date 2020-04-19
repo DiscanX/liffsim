@@ -136,7 +136,7 @@ namespace Simul.Models.Bots
                 _myself.TakeJob(bestJob.jobMarket, bestJob.jobOffer, _gameController.CurrentDay);
             }
 
-            if (_myself.CanWork() && _myself.Work() != eWorkResult.Success && bestJob.jobOffer != null)
+            if (_myself.CanWork() && _myself.Work() != WorkResult.Success && bestJob.jobOffer != null)
             {
                 _myself.Resign(_gameController.CurrentDay);
                 _myself.TakeJob(bestJob.jobMarket, bestJob.jobOffer, _gameController.CurrentDay);

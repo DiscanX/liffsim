@@ -19,7 +19,7 @@
         void Resign(int currentDay);
         void TakeJob(JobMarket jobMarket, JobOffer jobOffer, int currentDay);
         void Train();
-        eWorkResult Work();
+        WorkResult Work();
         void Eat(Resource resource, int quantity);
         void EatUntilFull();
         bool CanWork();

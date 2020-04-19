@@ -13,9 +13,9 @@ namespace SimulTests.Models
         private readonly Country _country;
         private readonly Inventory _inventory;
         private readonly Resource _resource;
-        private string _name;
+        private readonly string _name;
         private decimal _money;
-        private bool _isHumanControlled;
+        private readonly bool _isHumanControlled;
         private int _quantity;
         private decimal _unitPrice;
 

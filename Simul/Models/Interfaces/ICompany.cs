@@ -8,6 +8,6 @@ namespace Simul.Models
         Resource ProducedResource { get; set; }
         float Progress { get; set; }
 
-        eWorkResult Produce(IPerson employee, decimal salary);
+        WorkResult Produce(IPerson employee, decimal salary);
     }
 }

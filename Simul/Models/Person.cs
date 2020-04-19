@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Simul.Models
 {
-    public enum eWorkResult
+    public enum WorkResult
     {
         Success,
         FailureStocksTooLow,
@@ -88,7 +88,7 @@ namespace Simul.Models
             CanResign = false;
         }
 
-        public eWorkResult Work()
+        public WorkResult Work()
         {
             if (AlreadyWorked)
             {
@@ -96,7 +96,7 @@ namespace Simul.Models
             }
 
             var workResult = Employer.Produce(this, Salary);
-            if (workResult == eWorkResult.Success)
+            if (workResult == WorkResult.Success)
             {
                 IncrementSkill(Employer.ProducedResource.ImprovedSkill);
                 Energy -= Constants.ENERGY_LOST_WORKING;

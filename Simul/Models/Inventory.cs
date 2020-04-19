@@ -13,13 +13,8 @@ namespace Simul.Models
 
             foreach (Resource resource in ContentReader.GetResources())
             {
-                Stocks.Add(resource, 5);
+                Stocks.Add(resource, 0);
             }
-        }
-
-        public Inventory(Dictionary<Resource, int> stocks)
-        {
-            Stocks = stocks;
         }
     }
 }
