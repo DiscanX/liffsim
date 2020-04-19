@@ -12,6 +12,7 @@ namespace Simul.Views.SubForms
     {
         GameController _gameController;
         CompanyController _companyController;
+        private object _currentSelectedItem;
 
         public FrmSearchCompany()
         {
@@ -35,18 +36,15 @@ namespace Simul.Views.SubForms
                 lstCompanies.Items.Add(company.Name);
             }
 
-            if (_gameController.ControlledPerson.Employer != null)
+            if (_currentSelectedItem != null)
             {
-                lstCompanies.SelectedIndex = lstCompanies.FindStringExact(_gameController.ControlledPerson.Employer.Name);
-            }
-            else
-            {
-                lstCompanies.SelectedIndex = 0;
+                lstCompanies.SelectedItem = _currentSelectedItem;
             }
         }
 
         private void lstCompanies_SelectedIndexChanged(object sender, EventArgs e)
         {
+            _currentSelectedItem = lstCompanies.SelectedItem;
             DisplayCompany();
         }
 

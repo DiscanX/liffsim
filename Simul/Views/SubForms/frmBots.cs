@@ -8,7 +8,8 @@ namespace Simul.Views.SubForms
 {
     public partial class FrmBots : Form, ISubForm
     {
-        GameController _gameController;
+        private readonly GameController _gameController;
+        private object _currentSelectedItem;
 
         public FrmBots()
         {
@@ -23,10 +24,16 @@ namespace Simul.Views.SubForms
             {
                 lstBots.Items.Add(bot.GetControlledPlayer().Name + " (" + bot.GetBotTypeName() + ")");
             }
+
+            if (_currentSelectedItem != null)
+            {
+                lstBots.SelectedItem = _currentSelectedItem;
+            }
         }
 
         private void lstBots_SelectedIndexChanged(object sender, EventArgs e)
         {
+            _currentSelectedItem = lstBots.SelectedItem;
             DisplayBot();
         }
 

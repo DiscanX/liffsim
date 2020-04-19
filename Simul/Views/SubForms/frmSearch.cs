@@ -10,12 +10,11 @@ namespace Simul.Views.SubForms
 {
     public partial class FrmSearch : Form, ISubForm
     {
-        GameController _gameController;
-        PersonController _personController;
+        private readonly PersonController _personController;
+        private object _currentSelectedItem;
 
         public FrmSearch()
         {
-            _gameController = GameController.Instance;
             _personController = PersonController.Instance;
 
             InitializeComponent();
@@ -32,11 +31,15 @@ namespace Simul.Views.SubForms
                 lstPersons.Items.Add(person.Name);
             }
 
-            lstPersons.SelectedIndex = lstPersons.FindStringExact(_gameController.ControlledPerson.Name);
+            if (_currentSelectedItem != null)
+            {
+                lstPersons.SelectedItem = _currentSelectedItem;
+            }
         }
 
         private void lstPersons_SelectedIndexChanged(object sender, EventArgs e)
         {
+            _currentSelectedItem = lstPersons.SelectedItem;
             DisplayPerson();
         }
 

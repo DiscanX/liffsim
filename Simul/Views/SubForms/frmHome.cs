@@ -9,10 +9,10 @@ namespace Simul.Views.SubForms
 {
     public partial class FrmHome : Form, ISubForm
     {
-        FrmPrincipal _frmPrincipal;
-        GameController _gameController;
-        JobMarketController _jobMarketController;
-        IPerson _myself;
+        private readonly FrmPrincipal _frmPrincipal;
+        private readonly GameController _gameController;
+        private readonly JobMarketController _jobMarketController;
+        private readonly IPerson _myself;
 
         public FrmHome(FrmPrincipal frmPrincipal)
         {

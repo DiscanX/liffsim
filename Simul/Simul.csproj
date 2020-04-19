@@ -147,6 +147,12 @@
     <Compile Include="Views\SubForms\FrmSearchCompany.Designer.cs">
       <DependentUpon>FrmSearchCompany.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\SubForms\FrmStats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SubForms\FrmStats.Designer.cs">
+      <DependentUpon>FrmStats.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\SubForms\ISubForm.cs" />
     <EmbeddedResource Include="Views\FrmCreate.resx">
       <DependentUpon>FrmCreate.cs</DependentUpon>
@@ -184,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SubForms\FrmSearchCompany.resx">
       <DependentUpon>FrmSearchCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SubForms\FrmStats.resx">
+      <DependentUpon>FrmStats.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>

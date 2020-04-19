@@ -10,10 +10,10 @@ namespace Simul.Views.SubForms
 {
     public partial class FrmJobMarket : Form, ISubForm
     {
-        FrmPrincipal _frmPrincipal;
-        JobMarketController _jobMarketController;
-        GameController _gameController;
-        JobMarket _selectedJobMarket;
+        private readonly FrmPrincipal _frmPrincipal;
+        private readonly JobMarketController _jobMarketController;
+        private readonly GameController _gameController;
+        private JobMarket _selectedJobMarket;
 
         public FrmJobMarket(FrmPrincipal frmPrincipal)
         {

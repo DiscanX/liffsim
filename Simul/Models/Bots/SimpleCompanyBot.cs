@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace Simul.Models.Bots
 {
+    ///<remarks>For now greediness and stability doesn't do anything</remarks>
     public enum eSCBotParameters
     {
         passion,
@@ -122,12 +123,7 @@ namespace Simul.Models.Bots
 
         private void Sell()
         {
-            var greediness = Parameters[nameof(eSCBotParameters.greediness)];
-            var stability = Parameters[nameof(eSCBotParameters.stability)];
-
-            var greedinessPercentage = 1 - (greediness * 0.01f);
-            var stabilityPercentage = _random.Next(0, 100 - stability) * 0.01f;
-            var numberToSell = (int)Math.Floor(_myself.Inventory.Stocks[_myself.ProducedResource] * Math.Max(greedinessPercentage, stabilityPercentage));
+            var numberToSell = _myself.Inventory.Stocks[_myself.ProducedResource];
 
             if (numberToSell == 0)
             {
