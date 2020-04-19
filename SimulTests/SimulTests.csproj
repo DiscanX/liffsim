@@ -98,6 +98,7 @@
     <Compile Include="Controllers\CompanyControllerTests.cs" />
     <Compile Include="Customizations\InventoryCustomization.cs" />
     <Compile Include="Customizations\ResourceCustomization.cs" />
+    <Compile Include="Models\CalculatorTest.cs" />
     <Compile Include="Models\PlayerTest.cs" />
     <Compile Include="Models\PlayerTestClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -76,11 +76,11 @@ namespace Simul.Views
                 Resource producedResource;
                 if (i % 2 == 0)
                 {
-                    producedResource = ContentReader.GetResources().First(x => x.Name == eResourceName.wheat);
+                    producedResource = ContentReader.GetResources().First(x => x.Name == ResourceName.wheat);
                 }
                 else
                 {
-                    producedResource = ContentReader.GetResources().First(x => x.Name == eResourceName.bread);
+                    producedResource = ContentReader.GetResources().First(x => x.Name == ResourceName.bread);
                 }
 
                 var decoratedCompany = new Company(name, country, producedResource, 1000, new Inventory());

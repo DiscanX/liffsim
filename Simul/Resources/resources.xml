@@ -14,6 +14,18 @@
     <productionCost>2</productionCost>
   </resource>
   <resource>
+    <name>steel</name>
+    <type>secondary</type>
+    <improvedSkill>manufacturing</improvedSkill>
+    <productionCost>5</productionCost>
+    <requirements>
+      <requirement>
+        <name>iron</name>
+        <quantity>3</quantity>
+      </requirement>
+    </requirements>
+  </resource>
+  <resource>
     <name>bread</name>
     <type>tertiary</type>
     <improvedSkill>cooking</improvedSkill>
@@ -30,11 +42,23 @@
     <name>weapon</name>
     <type>tertiary</type>
     <improvedSkill>manufacturing</improvedSkill>
-    <productionCost>5</productionCost>
+    <productionCost>10</productionCost>
     <requirements>
       <requirement>
         <name>iron</name>
         <quantity>10</quantity>
+      </requirement>
+    </requirements>
+  </resource>
+  <resource>
+    <name>airplane</name>
+    <type>tertiary</type>
+    <improvedSkill>engineering</improvedSkill>
+    <productionCost>1000</productionCost>
+    <requirements>
+      <requirement>
+        <name>steel</name>
+        <quantity>500</quantity>
       </requirement>
     </requirements>
   </resource>

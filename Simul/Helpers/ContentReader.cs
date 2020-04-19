@@ -10,15 +10,17 @@ using System.Xml.Linq;
 
 namespace Simul.Helpers
 {
-    public enum eResourceName
+    public enum ResourceName
     {
         wheat,
         iron,
+        steel,
         bread,
-        weapon
+        weapon,
+        airplane
     }
 
-    public enum eResourceType
+    public enum ResourceType
     {
         primary,
         secondary,
@@ -39,10 +41,10 @@ namespace Simul.Helpers
 
                 foreach (XElement resource in xmlDoc.Elements("resources").Nodes())
                 {
-                    eResourceName name;
+                    ResourceName name;
                     Enum.TryParse(resource.Element("name").Value, out name);
 
-                    eResourceType type;
+                    ResourceType type;
                     Enum.TryParse(resource.Element("type").Value, out type);
 
                     var improvedSkill = new Skill(resource.Element("improvedSkill").Value);
@@ -62,13 +64,13 @@ namespace Simul.Helpers
                     Resource createdResource;
                     switch (type)
                     {
-                        case eResourceType.primary:
+                        case ResourceType.primary:
                             createdResource = new PrimaryResource(name, improvedSkill, productionCost, isEdible);
                             break;
-                        case eResourceType.secondary:
+                        case ResourceType.secondary:
                             createdResource = new SecondaryResource(name, improvedSkill, productionCost, requirements, isEdible);
                             break;
-                        case eResourceType.tertiary:
+                        case ResourceType.tertiary:
                             createdResource = new TertiaryResource(name, improvedSkill, productionCost, requirements, isEdible);
                             break;
                         default:
@@ -105,10 +107,12 @@ namespace Simul.Helpers
             if (_resourcesImages == null)
             {
                 _resourcesImages = new ImageList();
-                _resourcesImages.Images.Add(eResourceName.wheat.ToString(), Resources.wheat);
-                _resourcesImages.Images.Add(eResourceName.iron.ToString(), Resources.iron);
-                _resourcesImages.Images.Add(eResourceName.bread.ToString(), Resources.bread);
-                _resourcesImages.Images.Add(eResourceName.weapon.ToString(), Resources.weapon);
+                _resourcesImages.Images.Add(ResourceName.wheat.ToString(), Resources.wheat);
+                _resourcesImages.Images.Add(ResourceName.iron.ToString(), Resources.iron);
+                _resourcesImages.Images.Add(ResourceName.bread.ToString(), Resources.bread);
+                _resourcesImages.Images.Add(ResourceName.weapon.ToString(), Resources.weapon);
+                _resourcesImages.Images.Add(ResourceName.steel.ToString(), Resources.steel);
+                _resourcesImages.Images.Add(ResourceName.airplane.ToString(), Resources.airplane);
                 _resourcesImages.ImageSize = new Size(50, 50);
                 _resourcesImages.ColorDepth = ColorDepth.Depth24Bit;
             }

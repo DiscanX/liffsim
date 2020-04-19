@@ -5,12 +5,12 @@ namespace Simul.Models
 {
     public abstract class Resource
     {
-        public eResourceName Name { get; set; }
+        public ResourceName Name { get; set; }
         public Skill ImprovedSkill { get; set; }
         public int ProductionCost { get; set; }
         public bool Edible { get; set; }
 
-        internal Resource(eResourceName name, Skill improvedSkill, int productionCost, bool edible)
+        internal Resource(ResourceName name, Skill improvedSkill, int productionCost, bool edible)
         {
             Name = name;
             ImprovedSkill = improvedSkill;
