@@ -13,16 +13,13 @@ namespace Simul.Models.Bots
 
     public class SimplePersonBot : Bot
     {
-        private IPerson _myself;
-        private List<ePersonalityTrait> _personalityTraits;
+        private readonly IPerson _myself;
 
-        private GameController _gameController;
-        private PersonController _personController;
-        private CompanyController _companyController;
-        private ResourceMarketController _resourceMarketController;
-        private JobMarketController _jobMarketController;
+        private readonly GameController _gameController;
+        private readonly ResourceMarketController _resourceMarketController;
+        private readonly JobMarketController _jobMarketController;
 
-        private Random _random;
+        private readonly Random _random;
 
         public override string GetBotTypeName()
         {
@@ -35,7 +32,6 @@ namespace Simul.Models.Bots
         }
 
         public SimplePersonBot(IPerson myself,
-            List<ePersonalityTrait> personalityTraits,
             int passion,
             int interestInEconomy,
             int interestInMilitary,
@@ -43,7 +39,6 @@ namespace Simul.Models.Bots
         {
             _myself = myself;
             _myself.IsHumanControlled = false;
-            _personalityTraits = personalityTraits;
 
             Parameters = new Dictionary<string, int>
             {
@@ -53,8 +48,6 @@ namespace Simul.Models.Bots
             };
 
             _gameController = GameController.Instance;
-            _personController = PersonController.Instance;
-            _companyController = CompanyController.Instance;
             _resourceMarketController = ResourceMarketController.Instance;
             _jobMarketController = JobMarketController.Instance;
 
@@ -86,7 +79,7 @@ namespace Simul.Models.Bots
                 var countryResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
 
                 var quantityWanted = _random.Next(1, 4);
-                var foodToBuy = ResourceMarketController.GetBestOffersOfMarket(countryResourceMarket, Helpers.ResourceName.bread, quantityWanted);
+                var foodToBuy = _resourceMarketController.GetBestOffersOfMarket(countryResourceMarket, Helpers.ResourceName.bread, quantityWanted);
 
                 var maximumBuyable = _myself.CalculateMaximumBuyable(foodToBuy);
 
@@ -95,7 +88,7 @@ namespace Simul.Models.Bots
                 {
                     foreach (var food in foodToBuy)
                     {
-                        _myself.Buy(countryResourceMarket, food.Item1, food.Item2);
+                        _myself.Buy(countryResourceMarket, food.ressourceOffer, food.quantity);
                     }
                 }
             }

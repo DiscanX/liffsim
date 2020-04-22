@@ -67,6 +67,16 @@ namespace Simul.Views
                 _gameController.Bots.Add(SPBot);
             }
 
+            //Temporary Markets Creator
+            for (int i = 0; i < 5; i++)
+            {
+                var ressourceMarket = new ResourceMarket(_countryController.Countries[i].Name + " Resource Market", _countryController.Countries[i], new List<ResourceOffer>());
+                _resourceMarketController.Markets.Add(ressourceMarket);
+
+                var jobMarket = new JobMarket(_countryController.Countries[i].Name + " Job Market", _countryController.Countries[i], new List<JobOffer>());
+                _jobMarketController.Markets.Add(jobMarket);
+            }
+
             //Temporary Company Creator
             int companyNumber = 1;
             foreach (var country in _countryController.Countries)
@@ -78,7 +88,7 @@ namespace Simul.Views
                     var resourcesCount = Enum.GetValues(typeof(ResourceName)).Length;
                     var producedResource = ContentReader.GetResources().First(x => x.Name == resource);
 
-                    var decoratedCompany = new Company(name, country, producedResource, 1000, new Inventory());
+                    var decoratedCompany = new Company(name, country, producedResource, 1000 * producedResource.ProductionCost, new Inventory());
                     var company = new CompanyDecorator(decoratedCompany);
 
                     var passion = rnd.Next(1, 101);
@@ -90,16 +100,6 @@ namespace Simul.Views
                     _gameController.Bots.Add(SCBot);
                     companyNumber++;
                 }
-            }
-
-            //Temporary Markets Creator
-            for (int i = 0; i < 5; i++)
-            {
-                var ressourceMarket = new ResourceMarket(_countryController.Countries[i].Name + " Resource Market", _countryController.Countries[i], new List<ResourceOffer>());
-                _resourceMarketController.Markets.Add(ressourceMarket);
-
-                var jobMarket = new JobMarket(_countryController.Countries[i].Name + " Job Market", _countryController.Countries[i], new List<JobOffer>());
-                _jobMarketController.Markets.Add(jobMarket);
             }
 
             foreach (JobMarket market in _jobMarketController.Markets)

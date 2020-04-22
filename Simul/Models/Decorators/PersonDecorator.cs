@@ -86,7 +86,7 @@ namespace Simul.Models.Decorators
             decoratedPerson.EatUntilFull();
         }
 
-        public float Strength
+        public decimal Strength
         {
             get { return decoratedPerson.Strength; }
             set { decoratedPerson.Strength = value; }
@@ -175,7 +175,7 @@ namespace Simul.Models.Decorators
             return decoratedPerson.DisplayProductivity();
         }
 
-        public float GetCurrentUsedSkillLevel()
+        public decimal GetCurrentUsedSkillLevel()
         {
             return decoratedPerson.GetCurrentUsedSkillLevel();
         }

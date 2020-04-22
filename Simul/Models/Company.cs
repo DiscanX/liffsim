@@ -6,7 +6,7 @@ namespace Simul.Models
     public class Company : Player, ICompany
     {
         public Resource ProducedResource { get; set; }
-        public float Progress { get; set; }
+        public decimal Progress { get; set; }
         public List<IPerson> Employees { get; set; }
 
         public Company(string name, Country country, Resource producedResource, decimal money, Inventory inventory, bool isHumanControlled = false) : base(name, country, money, inventory, isHumanControlled)

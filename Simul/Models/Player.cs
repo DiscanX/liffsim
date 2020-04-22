@@ -96,7 +96,7 @@ namespace Simul.Models
 
         public void RemoveOffer(ResourceMarket resourceMarket, ResourceOffer offer)
         {
-            if (offer.Owner != this)
+            if (offer.Owner.Name != Name)
             {
                 throw new Exception("The player can only remove offers he owns");
             }

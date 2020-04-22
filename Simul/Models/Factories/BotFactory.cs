@@ -13,7 +13,6 @@ namespace Simul.Models.Factories
 
             return new SimplePersonBot(
                 person,
-                PersonalityTraits.GenerateRandomPersonalityTraits(rnd),
                 passion,
                 interestInEconomy,
                 interestInMilitary,

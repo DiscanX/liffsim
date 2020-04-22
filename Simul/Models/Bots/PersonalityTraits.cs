@@ -11,6 +11,9 @@ namespace Simul.Models.Bots
         dumb
     }
 
+    /// <summary>
+    /// TODO : Check if we need this, could be great but dead code for now
+    /// </summary>
     public static class PersonalityTraits
     {
         private static Dictionary<ePersonalityTrait, int> _personalityTraitsChances = new Dictionary<ePersonalityTrait, int>

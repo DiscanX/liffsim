@@ -22,7 +22,7 @@ namespace Simul.Controllers
             return Markets.First(x => x.Country.Name == countryName);
         }
 
-        public static List<(ResourceOffer ressourceOffer, int quantity)> GetBestOffersOfMarket(ResourceMarket resourceMarket, ResourceName resourceName, int quantity)
+        public List<(ResourceOffer ressourceOffer, int quantity)> GetBestOffersOfMarket(ResourceMarket resourceMarket, ResourceName resourceName, int quantity)
         {
             var offersToReturn = new List<(ResourceOffer, int)>();
             var allBestOffers = resourceMarket.Offers.Where(x => x.Resource.Name == resourceName).OrderBy(x => x.UnitPrice).ToList();

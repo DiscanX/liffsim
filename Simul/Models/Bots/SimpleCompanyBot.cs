@@ -19,7 +19,8 @@ namespace Simul.Models.Bots
         private readonly ResourceMarketController _resourceMarketController;
         private readonly JobMarketController _jobMarketController;
         private readonly Random _random;
-        private decimal _yesterdayMoney;
+        private readonly decimal _initialMoney;
+        private readonly ResourceMarket _marketOfCountry;
 
         public override string GetBotTypeName()
         {
@@ -47,7 +48,8 @@ namespace Simul.Models.Bots
             _jobMarketController = JobMarketController.Instance;
             _random = random;
 
-            _yesterdayMoney = _myself.Money;
+            _initialMoney = _myself.Money;
+            _marketOfCountry = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
         }
 
         public override void LiveDay()
@@ -61,7 +63,7 @@ namespace Simul.Models.Bots
 
             IdleDays = 0;
 
-            Sell();
+            ExecuteSellLogic();
 
             var requirements = _myself.ProducedResource.GetRequirements();
             if (requirements != null)
@@ -96,7 +98,6 @@ namespace Simul.Models.Bots
                     AddJobOffer(bestJob.jobOffer.Salary);
                 }
 
-                var currentResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
                 var stocks = _myself.Inventory.Stocks;
                 for (int i = 0; i < stocks.Count; i++)
                 {
@@ -106,22 +107,20 @@ namespace Simul.Models.Bots
                         continue;
                     }
 
-                    var bestOffer = ResourceMarketController.GetBestOffersOfMarket(currentResourceMarket, stock.Key.Name, 1).FirstOrDefault();
+                    var bestOffer = _resourceMarketController.GetBestOffersOfMarket(_marketOfCountry, stock.Key.Name, 1).FirstOrDefault();
                     if (bestOffer.ressourceOffer == null)
                     {
-                        _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, stock.Key, stock.Value, 1m));
+                        Sell(new ResourceOffer(_myself, stock.Key, stock.Value, 1m));
                     }
                     else if (bestOffer.ressourceOffer.UnitPrice > 0.5m)
                     {
-                        _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, stock.Key, stock.Value, bestOffer.ressourceOffer.UnitPrice - 0.01m));
+                        Sell(new ResourceOffer(_myself, stock.Key, stock.Value, bestOffer.ressourceOffer.UnitPrice - 0.01m));
                     }
                 }
             }
-
-            _yesterdayMoney = _myself.Money;
         }
 
-        private void Sell()
+        private void ExecuteSellLogic()
         {
             var numberToSell = _myself.Inventory.Stocks[_myself.ProducedResource];
 
@@ -131,31 +130,24 @@ namespace Simul.Models.Bots
             }
 
             decimal unitPrice;
-            var currentResourceMarket = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
 
-            var bestExistingMarketOffer = currentResourceMarket.Offers.OrderBy(x => x.UnitPrice).FirstOrDefault(x => x.Resource == _myself.ProducedResource);
-            if (bestExistingMarketOffer != null)
+            var bestExistingMarketOffer = _marketOfCountry.Offers.OrderBy(x => x.UnitPrice).FirstOrDefault(x => x.Resource == _myself.ProducedResource);
+            if (bestExistingMarketOffer != null && bestExistingMarketOffer.Owner.Name != _myself.Name)
             {
                 unitPrice = bestExistingMarketOffer.UnitPrice - bestExistingMarketOffer.UnitPrice * 0.01m;
             }
-            else if (_myself.Money - _yesterdayMoney <= 0)
-            {
-                var moneyLost = Math.Abs(_myself.Money - _yesterdayMoney);
-                unitPrice = moneyLost / numberToSell * (1 + moneyLost / _yesterdayMoney);
-            }
             else
             {
-                var moneyGained = Math.Abs(_myself.Money - _yesterdayMoney);
-                var totalEmployesSalaries = _myself.Employees.Sum(x => x.Salary);
-                unitPrice = (moneyGained + totalEmployesSalaries) / numberToSell;
+                var numberOfOurOffers = _marketOfCountry.Offers.Count(x => x.Owner.Name == _myself.Name);
+                var moneyDifference = Math.Abs(_myself.Money - _initialMoney);
+                unitPrice = moneyDifference / (numberToSell + numberOfOurOffers);
             }
 
-            _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, _myself.ProducedResource, numberToSell, unitPrice));
+            Sell(new ResourceOffer(_myself, _myself.ProducedResource, numberToSell, unitPrice));
         }
 
         private void Buy(Dictionary<Resource, int> requirements)
         {
-            var marketOfCountry = _resourceMarketController.GetMarketOfCountry(_myself.Country.Name);
             foreach (var requirement in requirements)
             {
                 if (_myself.Inventory.Stocks[requirement.Key] > 100)
@@ -163,14 +155,23 @@ namespace Simul.Models.Bots
                     continue;
                 }
 
-                var resourcesToBuy = ResourceMarketController.GetBestOffersOfMarket(marketOfCountry, requirement.Key.Name, (int)_myself.Money / 10);
+                var resourcesToBuy = _resourceMarketController.GetBestOffersOfMarket(_marketOfCountry, requirement.Key.Name, (int)_myself.Money / 10);
                 if (resourcesToBuy.Count > 0)
                 {
                     var maximumBuyable = _myself.CalculateMaximumBuyable(resourcesToBuy);
 
+                    int numberBought = 0;
                     foreach (var resource in resourcesToBuy)
                     {
-                        _myself.Buy(marketOfCountry, resource.ressourceOffer, Math.Min(maximumBuyable, resource.quantity));
+                        var numberToBuy = Math.Min(maximumBuyable, resource.quantity);
+
+                        if (numberBought + numberToBuy > maximumBuyable)
+                        {
+                            break;
+                        }
+
+                        _myself.Buy(_marketOfCountry, resource.ressourceOffer, numberToBuy);
+                        numberBought += numberToBuy;
                     }
                 }
             }
@@ -190,6 +191,18 @@ namespace Simul.Models.Bots
             }
 
             _myself.Employees.Clear();
+        }
+
+        private void Sell(ResourceOffer offer)
+        {
+            var resourcesToRemove = _marketOfCountry.Offers.Where(x => x.Owner == _myself && x.Resource == offer.Resource).ToList();
+            foreach (var resource in resourcesToRemove)
+            {
+                _myself.RemoveOffer(_marketOfCountry, resource);
+            }
+
+            _myself.Sell(_marketOfCountry,
+                new ResourceOffer(offer.Owner, offer.Resource, offer.Quantity + resourcesToRemove.Sum(x => x.Quantity), offer.UnitPrice));
         }
     }
 }

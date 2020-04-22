@@ -141,7 +141,7 @@ namespace Simul.Models.Decorators
             }
         }
 
-        public float Progress
+        public decimal Progress
         {
             get
             {

@@ -12,7 +12,7 @@ namespace Simul.Models
 
     public class Person : Player, IPerson
     {
-        public float Strength { get; set; }
+        public decimal Strength { get; set; }
         public ICompany Employer { get; set; }
         public decimal Salary { get; set; }
         public Skillset Skillset { get; set; }
@@ -39,7 +39,7 @@ namespace Simul.Models
             Skillset skillset,
             Inventory inventory,
             int energy,
-            float strength,
+            decimal strength,
             bool isHumanControlled = false) : base(name, country, money, inventory, isHumanControlled)
         {
             Skillset = skillset;
@@ -57,7 +57,7 @@ namespace Simul.Models
             return Skillset.Skills.OrderByDescending(x => x.Value).First().Value.ToString();
         }
 
-        public float GetCurrentUsedSkillLevel()
+        public decimal GetCurrentUsedSkillLevel()
         {
             if (Employer == null)
             {

@@ -5,11 +5,11 @@ namespace Simul.Models
 {
     public class Skillset
     {
-        public Dictionary<Skill, float> Skills { get; set; }
+        public Dictionary<Skill, decimal> Skills { get; set; }
 
         public Skillset()
         {
-            Skills = new Dictionary<Skill, float>();
+            Skills = new Dictionary<Skill, decimal>();
 
             foreach (Skill skill in ContentReader.GetSkills())
             {
@@ -17,7 +17,7 @@ namespace Simul.Models
             }
         }
 
-        public Skillset(Dictionary<Skill, float> skills)
+        public Skillset(Dictionary<Skill, decimal> skills)
         {
             Skills = skills;
         }

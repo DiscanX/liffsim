@@ -10,12 +10,12 @@
         int JobStartDay { get; set; }
         decimal Salary { get; set; }
         Skillset Skillset { get; set; }
-        float Strength { get; set; }
+        decimal Strength { get; set; }
 
         string DisplayProductivity();
         string DisplayCurrentEmployer();
 
-        float GetCurrentUsedSkillLevel();
+        decimal GetCurrentUsedSkillLevel();
         void Resign(int currentDay);
         void TakeJob(JobMarket jobMarket, JobOffer jobOffer, int currentDay);
         void Train();

@@ -1,9 +1,4 @@
 ﻿using Simul.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace SimulTests.Models
@@ -21,7 +16,7 @@ namespace SimulTests.Models
         [InlineData(8, 8.25)]
         [InlineData(20, 20.10)]
         [InlineData(150, 150.05)]
-        public void CalculateSkillIncrement_DependingOnSkill_RightIncrement(float skillInput, float skillOutput)
+        public void CalculateSkillIncrement_DependingOnSkill_RightIncrement(decimal skillInput, decimal skillOutput)
         {
             var result = Calculator.CalculateSkillIncrement(skillInput);
 
@@ -34,7 +29,7 @@ namespace SimulTests.Models
         [InlineData(87, 87.25)]
         [InlineData(200, 200.10)]
         [InlineData(10543, 10543.05)]
-        public void CalculateStrengthIncrement_DependingOnStrength_RightIncrement(float strengthInput, float strengthOutput)
+        public void CalculateStrengthIncrement_DependingOnStrength_RightIncrement(decimal strengthInput, decimal strengthOutput)
         {
             var result = Calculator.CalculateStrengthIncrement(strengthInput);
 

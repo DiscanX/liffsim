@@ -6,7 +6,7 @@ namespace Simul.Models
     {
         List<IPerson> Employees { get; set; }
         Resource ProducedResource { get; set; }
-        float Progress { get; set; }
+        decimal Progress { get; set; }
 
         WorkResult Produce(IPerson employee, decimal salary);
     }
