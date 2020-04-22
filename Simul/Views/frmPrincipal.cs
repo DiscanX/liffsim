@@ -5,10 +5,12 @@ using Simul.Models.Bots;
 using Simul.Models.Decorators;
 using Simul.Models.Factories;
 using Simul.Views.SubForms;
+using Simul.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 
 namespace Simul.Views
 {
@@ -207,6 +209,13 @@ namespace Simul.Views
         private void btnBots_Click(object sender, EventArgs e)
         {
             SetCurrentSubForm(_frmBots);
+        }
+
+        private void tsmStatsGeneral_Click(object sender, EventArgs e)
+        {
+            var statsWindow = new GeneralStats();
+            ElementHost.EnableModelessKeyboardInterop(statsWindow);
+            statsWindow.Show();
         }
     }
 }

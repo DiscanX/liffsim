@@ -40,6 +40,8 @@
             this.tsmMarkets = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmResourceMarket = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmJobMarket = new System.Windows.Forms.ToolStripMenuItem();
+            this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmStatsGeneral = new System.Windows.Forms.ToolStripMenuItem();
             this.panMain = new System.Windows.Forms.Panel();
             this.txtCurrentDay = new System.Windows.Forms.TextBox();
             this.txtMoney = new System.Windows.Forms.TextBox();
@@ -86,7 +88,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmSimulation,
             this.tsmSearch,
-            this.tsmMarkets});
+            this.tsmMarkets,
+            this.statisticsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(995, 24);
@@ -143,16 +146,31 @@
             // tsmResourceMarket
             // 
             this.tsmResourceMarket.Name = "tsmResourceMarket";
-            this.tsmResourceMarket.Size = new System.Drawing.Size(162, 22);
+            this.tsmResourceMarket.Size = new System.Drawing.Size(180, 22);
             this.tsmResourceMarket.Text = "Resource Market";
             this.tsmResourceMarket.Click += new System.EventHandler(this.tsmResourceMarket_Click);
             // 
             // tsmJobMarket
             // 
             this.tsmJobMarket.Name = "tsmJobMarket";
-            this.tsmJobMarket.Size = new System.Drawing.Size(162, 22);
+            this.tsmJobMarket.Size = new System.Drawing.Size(180, 22);
             this.tsmJobMarket.Text = "Job Market";
             this.tsmJobMarket.Click += new System.EventHandler(this.tsmJobMarket_Click);
+            // 
+            // statisticsToolStripMenuItem
+            // 
+            this.statisticsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmStatsGeneral});
+            this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
+            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.statisticsToolStripMenuItem.Text = "Statistics";
+            // 
+            // tsmStatsGeneral
+            // 
+            this.tsmStatsGeneral.Name = "tsmStatsGeneral";
+            this.tsmStatsGeneral.Size = new System.Drawing.Size(180, 22);
+            this.tsmStatsGeneral.Text = "General";
+            this.tsmStatsGeneral.Click += new System.EventHandler(this.tsmStatsGeneral_Click);
             // 
             // panMain
             // 
@@ -200,7 +218,7 @@
             this.btnBots.UseVisualStyleBackColor = true;
             this.btnBots.Click += new System.EventHandler(this.btnBots_Click);
             // 
-            // frmPrincipal
+            // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -214,7 +232,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.panMain);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "frmPrincipal";
+            this.Name = "FrmPrincipal";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Liff Sim";
@@ -242,6 +260,8 @@
         private System.Windows.Forms.ToolStripMenuItem tsmResourceMarket;
         private System.Windows.Forms.ToolStripMenuItem tsmJobMarket;
         private System.Windows.Forms.Button btnBots;
+        private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmStatsGeneral;
     }
 }
 

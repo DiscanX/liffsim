@@ -113,7 +113,7 @@ namespace Simul.Models.Bots
                     }
                     else if (bestOffer.ressourceOffer.UnitPrice > 0.5m)
                     {
-                        _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, stock.Key, stock.Value, bestOffer.Item1.UnitPrice - 0.01m));
+                        _myself.Sell(currentResourceMarket, new ResourceOffer(_myself, stock.Key, stock.Value, bestOffer.ressourceOffer.UnitPrice - 0.01m));
                     }
                 }
             }

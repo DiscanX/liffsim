@@ -82,6 +82,24 @@ namespace SimulTests.Models
             Assert.Equal(8, result);
         }
 
+        [Fact]
+        public void CalculateMaximumBuyable_2OffersNotEnoughForTheSecond_ReturnsBuy1()
+        {
+            _quantity = 5;
+            _unitPrice = 1.5m;
+            _money = 13.45m;
+            var quantityToBuy = 5;
+            var offers = new List<(ResourceOffer, int)>
+            {
+                (CreateResourceOffer(), quantityToBuy),
+                (CreateResourceOffer(), quantityToBuy)
+            };
+
+            var result = CreatePlayerTestClass().CalculateMaximumBuyable(offers);
+
+            Assert.Equal(8, result);
+        }
+
         private Player CreatePlayerTestClass()
         {
             return new PlayerTestClass(
